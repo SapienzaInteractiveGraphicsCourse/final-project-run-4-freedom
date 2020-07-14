@@ -1,0 +1,171 @@
+body {
+  margin: 0;
+  height: 100%;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: xx-large;
+  font-family: sans-serif;
+}
+
+.progress {
+  width: 50vw;
+  border: 1px solid black;
+}
+
+#progressbar {
+  width: 0;
+  transition: width ease-out .5s;
+  height: 1em;
+  background-color: #888;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, .5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, .5) 50%,
+    rgba(255, 255, 255, .5) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 50px 50px;
+  animation: progressanim 2s linear infinite;
+}
+
+@keyframes progressanim {
+  0%   { background-position: 50px 50px; }
+  100% { background-position: 0 0; }
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /*-ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);*/
+}
+
+.hide {
+  display: none;
+}
+
+.clickable {
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+
+/* Import from Bootstrap */
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 10px 20px;
+  font-size: 14px;
+  line-height: 1.42857;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.btn:focus, .btn.focus, .btn:active:focus, .btn:active.focus, .btn.active:focus, .btn.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn:active, .btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+/* Import from previous theme */
+.btn {
+  margin-right: 4px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  padding: 8px 20px; }
+  .btn.btn-md {
+    padding: 8px 20px !important; }
+  .btn.btn-lg {
+    padding: 18px 36px !important; }
+  .btn:hover, .btn:active, .btn:focus {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline: none !important; }
+
+.btn-primary {
+  background: #4aca85;
+  color: #fff;
+  border: 1px solid #4aca85; }
+  .btn-primary:hover/*, .btn-primary:focus, .btn-primary:active*/ {
+    background: #7bed9f /*#5ed092*/ !important;
+    border-color: #7bed9f /*#5ed092*/ !important; }
+  .btn-primary.btn-outline {
+    background: transparent;
+    color: #4aca85;
+    border: 1px solid #4aca85; }
+  .btn-primary.btn-outline:hover, .btn-primary.btn-outline:focus, .btn-primary.btn-outline:active {
+    background: #4aca85;
+    color: #fff; }
+
+/* My addition */
+.btn-secondary {
+  background: #3498db;
+  color: #fff;
+  border: 1px solid #3498db; }
+  .btn-secondary:hover/*, .btn-secondary:focus, .btn-secondary:active*/ {
+    background: #74b9ff !important;
+    border-color: #74b9ff !important; }
+  .btn-secondary.btn-outline {
+    background: transparent;
+    color: #3498db;
+    border: 1px solid #3498db; }
+  .btn-secondary.btn-outline:hover, .btn-secondary.btn-outline:focus, .btn-secondary.btn-outline:active {
+    background: #3498db;
+    color: #fff; }
+
+.btn-custom {
+  font-size: 16px;
+  text-decoration: none; /* My addition */
+}
+
+.btn-lg > .btn {
+  padding: 10px 20px;
+  font-size: 18px;
+  line-height: 1.33333;
+  border-radius: 6px;
+}
