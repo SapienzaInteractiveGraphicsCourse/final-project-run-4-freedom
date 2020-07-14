@@ -1,51 +1,15 @@
 import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.module.js";
 import { GLTFLoader }    from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from 'https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js';
-import {GUI} from 'https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js';
+import { GUI } from 'https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js';
 
 import * as UTILS from "./Utils.js";
+import { InputManager } from "./InputManager.js";
+import { Game } from "./Game.js";
+import { Player } from "./Player.js";
+import { Car } from "./Car.js";
 
 "use strict"
-
-/*var scene1 = new THREE.Scene();
-
-var models = [];
-
-// PER SAMUELE: ORA QUESTA FUNZIONE E' INUTILE, GUARDA DOPO COME E' STATA SOSTITUITA
-function loadGLTF(url, px, py, pz, dx, dy, dz, rx, ry, rz, num)
-{
-    var loader = new GLTFLoader();
-        loader.load(url, function ( gltf )
-        {
-            models[num] = gltf.scene;
-            const mesh = gltf.scene;
-            mesh.castShadow = true;
-            mesh.position.set(px,py,pz);
-            mesh.scale.set(dx,dy,dz)
-            mesh.rotation.set(rx, ry, rz);
-            scene1.add(mesh);
-            console.log(dumpObject(mesh).join('\n'));
-
-
-        },
-        // called while loading is progressing
-        function ( xhr )
-        {
-
-            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
-        },
-        // called when loading has errors
-        function ( error )
-        {
-            console.log(error);
-            console.log( 'An error happened' );
-
-        }
-    );
-
-}*/
-
 
 /*
 var cubes = [
@@ -116,11 +80,11 @@ window.onload = function main() {
     };
 
     const models = {
-      road:               { url: 'src/environment/road/scene.gltf',
+      /*road:               { url: 'src/environment/road/scene.gltf',
                             position: [0, 0, 0],
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, 0, 0],
-                          },
+                          },*/
       building:           { url: 'src/environment/building/scene.gltf',
                             position: [-8, 0, 0],
                             scale:    [2, 2, 2],
@@ -128,19 +92,19 @@ window.onload = function main() {
                           },
 
       //policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf' },
-      /*bmwCar:             { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
-                            position: [5, 0, 0],
-                            scale:    [1, 1, 1],
-                            rotation: [0, 0, 0],
-                          },*/
+      bmwCar:             { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
+                            position: [0, 2.1, 0],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, Math.PI, 0],
+                          },
       //lamborghiniCar:     { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf' },
       //teslaCar:           { url: 'src/vehicles/cars/tesla_model_s/scene.gltf' }
 
-      bike:               { url: 'src/vehicles/bikes/bike/scene.gltf',
+      /*bike:               { url: 'src/vehicles/bikes/bike/scene.gltf',
                             position: [0, 0, 0],
                             scale:    [1, 1, 1],
                             rotation: [0, -Math.PI/2, 0],
-                          },
+                          },*/
     };
 
     // Load the models
@@ -154,6 +118,7 @@ window.onload = function main() {
       });
     }
 
+    // Called when all models are loaded
     function init() {
       // Hide the loading bar
       const loading = document.getElementById('loading');
@@ -178,6 +143,10 @@ window.onload = function main() {
     let policeCar, policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel;
 
     let bike;
+
+    const inputManager = new InputManager();
+    const game         = new Game(inputManager, "easy");
+    const player       = new Player(game);
 
     function start() {
       for (const model of Object.values(models)) {
@@ -271,14 +240,8 @@ window.onload = function main() {
     }*/
 
 
-    // PER SAMUELE: FUNZIONE DI PRIMA INUTILE, ORA HAI VISTO COME E' STATA SOSTITUITA
-    //update final numer for models[num]
-    /*loadGLTF('src/vehicles/bikes/bike/scene.gltf', 0, 0, 0, 1, 1, 1, 0, -Math.PI/2, 0, 0);
-    loadGLTF('src/environment/road/scene.gltf', 0, 0, 0, 0.2, 0.2, 0.2, 0, 0, 0, 1);
-    loadGLTF('src/environment/building/scene.gltf', -8, 0, 0, 2, 2, 2, 0, 0, 0, 2);*/
 
-
-    //Infinite terrain with a texture
+    // Infinite terrain with a texture
     const tex = new THREE.TextureLoader().load("../src/textures/road_texture.jpg")
     tex.anisotropy = 2;
     tex.repeat.set(300, 300)
@@ -296,31 +259,8 @@ window.onload = function main() {
 
 
 
-    // movement - please calibrate these values
-    const xSpeed = 4;
-    const ySpeed = 4;
 
-    document.addEventListener("keydown", onDocumentKeyDown, false);
-    function onDocumentKeyDown(event) {
-        const keyCode = event.which;
-        if (keyCode == 87) {
-            if(bike)
-            bike.position.z -= ySpeed;
-        } else if (keyCode == 83) {
-            if(bike)
-            bike.position.z += ySpeed;
-        } else if (keyCode == 65) {
-            if(bike)
-            bike.position.x -= xSpeed;
-        } else if (keyCode == 68) {
-            if(bike)
-            bike.position.x += xSpeed;
-        }
-    };
-
-
-
-    var cubeWidth  = 1;
+    /*var cubeWidth  = 1;
     var cubeHeight = 1;
     var cubeDepth  = 1;
 
@@ -351,14 +291,13 @@ window.onload = function main() {
         else
         makeInstance(geometryCube, 0x0000FF,  2, 1, -(j*20));
 
-    }
+    }*/
 
 
 
 
 
-
-
+    let before = 0, deltaTime = 0;
     render();
 
     function render(time) {
@@ -368,17 +307,35 @@ window.onload = function main() {
         camera.updateProjectionMatrix();
       }
 
-      time *= 0.001;  // convert to seconds
+      // Convert current time to seconds
+      time *= 0.001;
+
+      // Make sure delta time isn't too big.
+      deltaTime = Math.min(time - before, 1/20);
+      before = time;
+
+      //console.log("time: " + time + "\n");
+      //console.log("before: " + before + "\n");
+      //console.log("deltaTime: " + deltaTime + "\n");
+
 
       if (car) {
+        // TEMP, MUST BE SET WHEN car CHANGES
+        if (!player.getModel())
+          player.setModel(new Car(car, "bmw", [frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel]));
+
+        player.update(deltaTime);
+
         //car.position.y -= 0.01;
-        frontLeftWheel.rotation.x  = time;
+        /*frontLeftWheel.rotation.x  = time;
         frontRightWheel.rotation.x = time;
 
         backLeftWheel.rotation.x  = time;
-        backRightWheel.rotation.x = time;
+        backRightWheel.rotation.x = time;*/
 
         //door.rotation.x = time;
+
+        //updateCameraPosition();
       }
 
       if (policeCar) {
@@ -399,14 +356,16 @@ window.onload = function main() {
         blink();
       }
 
-      if (bike) {
+      /*if (bike) {
           var myPos = bike.position;
           var relativeCameraOffset = new THREE.Vector3(0,10,10);
           camera.position.lerp(relativeCameraOffset, 0.1);
           camera.lookAt(myPos);
           camera.position.set(myPos.x, myPos.y + 10, myPos.z + 12);
           bike.position.z -= 1;
-      }
+      }*/
+
+      inputManager.update();
 
       renderer.render( scene, camera );
       requestAnimationFrame( render );
@@ -438,6 +397,16 @@ window.onload = function main() {
 
       // finally add the sound to the mesh
       mesh.add( sound );
+    }
+
+    function updateCameraPosition() {
+      const vehicle = getCurrentVehicle();
+      const myPos = vehicle.position;
+      const relativeCameraOffset = new THREE.Vector3(0,10,10);
+
+      camera.position.lerp(relativeCameraOffset, 0.1);
+      camera.lookAt(myPos);
+      camera.position.set(myPos.x, myPos.y + 10, myPos.z + 12);
     }
 
     function loadStaticModel(modelScene, model) {
@@ -503,7 +472,7 @@ window.onload = function main() {
       frontRightWheel.rotation.z = 0;
 
       // compute the box that contains all the stuff from model and below
-      const box = new THREE.Box3().setFromObject(scene);
+      const box = new THREE.Box3().setFromObject(modelScene);
 
       const boxSize   = box.getSize(new THREE.Vector3()).length();
       const boxCenter = box.getCenter(new THREE.Vector3());

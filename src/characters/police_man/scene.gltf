@@ -1,0 +1,440 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 9897,
+      "max": [
+        96.831871032714844,
+        13.067456245422363,
+        180.23271179199219
+      ],
+      "min": [
+        -96.835037231445312,
+        -18.683111190795898,
+        4.1037468910217285
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 118764,
+      "componentType": 5126,
+      "count": 9897,
+      "max": [
+        0.99992650747299194,
+        0.9999421238899231,
+        0.99876421689987183
+      ],
+      "min": [
+        -0.99981397390365601,
+        -0.9999731183052063,
+        -0.99999022483825684
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 9897,
+      "max": [
+        1,
+        0.99998557567596436,
+        0.99825310707092285,
+        1
+      ],
+      "min": [
+        -0.99999982118606567,
+        -0.99997603893280029,
+        -0.99999397993087769,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 9897,
+      "max": [
+        0.74750399589538574,
+        0.9989280104637146
+      ],
+      "min": [
+        0.0024949999060481787,
+        0.53491497039794922
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 44538,
+      "max": [
+        9896
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 237528,
+      "componentType": 5126,
+      "count": 9182,
+      "max": [
+        25.191003799438477,
+        16.102069854736328,
+        182.27999877929688
+      ],
+      "min": [
+        -25.590387344360352,
+        -19.745529174804688,
+        -1.4433310031890869
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 347712,
+      "componentType": 5126,
+      "count": 9182,
+      "max": [
+        0.99994921684265137,
+        0.99963861703872681,
+        0.9997791051864624
+      ],
+      "min": [
+        -0.99985337257385254,
+        -0.99984622001647949,
+        -0.99917834997177124
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 158352,
+      "componentType": 5126,
+      "count": 9182,
+      "max": [
+        0.99997848272323608,
+        0.99984699487686157,
+        0.99973607063293457,
+        1
+      ],
+      "min": [
+        -0.99999576807022095,
+        -0.99990594387054443,
+        -0.99982190132141113,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 79176,
+      "componentType": 5126,
+      "count": 9182,
+      "max": [
+        0.99768400192260742,
+        0.99914902448654175
+      ],
+      "min": [
+        0.0012260000221431255,
+        0.0035500000230967999
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 178152,
+      "componentType": 5125,
+      "count": 37110,
+      "max": [
+        9181
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 457896,
+      "componentType": 5126,
+      "count": 2580,
+      "max": [
+        76.382453918457031,
+        18.15301513671875,
+        162.82647705078125
+      ],
+      "min": [
+        -77.051078796386719,
+        -23.55023193359375,
+        93.968482971191406
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 488856,
+      "componentType": 5126,
+      "count": 2580,
+      "max": [
+        0.99924510717391968,
+        0.99925911426544189,
+        0.99846667051315308
+      ],
+      "min": [
+        -0.99597114324569702,
+        -0.99972200393676758,
+        -0.99995589256286621
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 305264,
+      "componentType": 5126,
+      "count": 2580,
+      "max": [
+        0.9999995231628418,
+        0.99992465972900391,
+        0.99999743700027466,
+        1
+      ],
+      "min": [
+        -0.99999988079071045,
+        -0.99981594085693359,
+        -0.99862962961196899,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 152632,
+      "componentType": 5126,
+      "count": 2580,
+      "max": [
+        0.99485599994659424,
+        0.83428198099136353
+      ],
+      "min": [
+        0.25104999542236328,
+        0.25176599621772766
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 326592,
+      "componentType": 5125,
+      "count": 10656,
+      "max": [
+        2579
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Daniel (https://sketchfab.com/hamuyelamatias6055032cbc684036)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/police-man-dafbb6a171d1429aa74e27bda6aac872",
+      "title": "Police Man"
+    },
+    "generator": "Sketchfab-6.49.1",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 369216,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 173272,
+      "byteOffset": 369216,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 519816,
+      "byteOffset": 542488,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 346544,
+      "byteOffset": 1062304,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1408848,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "extensionsUsed": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "images": [
+    {
+      "uri": "textures/PackedMaterial0_diffuse.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "diffuseTexture": {
+            "index": 0,
+            "texCoord": 0
+          },
+          "glossinessFactor": 0.40000000000000002,
+          "specularFactor": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "name": "PackedMaterial0"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 11,
+            "POSITION": 10,
+            "TANGENT": 12,
+            "TEXCOORD_0": 13
+          },
+          "indices": 14,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3,
+        4,
+        5
+      ],
+      "name": "police men.obj.cleaner.materialmerger.gles"
+    },
+    {
+      "mesh": 0,
+      "name": ""
+    },
+    {
+      "mesh": 1,
+      "name": ""
+    },
+    {
+      "mesh": 2,
+      "name": ""
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ]
+}
+

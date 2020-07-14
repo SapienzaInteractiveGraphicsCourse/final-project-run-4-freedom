@@ -1,3 +1,5 @@
+import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.module.js";
+
 // Prints the tree of the object
 export function dumpObject(obj, lines = [], isLast = true, prefix = '') {
   const localPrefix = isLast ? '└─' : '├─';
