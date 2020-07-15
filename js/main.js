@@ -2,12 +2,14 @@ import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.modul
 import { GLTFLoader }    from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from 'https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js';
 import { GUI } from 'https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js';
+import Stats from 'https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js';
 
 import * as UTILS from "./Utils.js";
 import { InputManager } from "./InputManager.js";
 import { Game } from "./Game.js";
 import { Player } from "./Player.js";
 import { Car } from "./Car.js";
+import { PoliceCar } from "./PoliceCar.js";
 
 "use strict"
 
@@ -43,8 +45,11 @@ window.onload = function main() {
     const listener = new THREE.AudioListener();
     camera.add(listener);
 
-    // Create the PositionalAudio object (passing in the listener)
-    const sound = new THREE.PositionalAudio(listener);
+    // Create an AudioLoader
+    const audioLoader = new THREE.AudioLoader();
+
+    // Create a set of audio objects to handle multiple audio
+    const audioObjects = {};
 
     // GUI controls
     const gui = new GUI();
@@ -63,11 +68,13 @@ window.onload = function main() {
     settingsGUI.add(options, 'Settings');
 
     function updateVolume(value) {
-      sound.setVolume(value);
+      for (audio of audioObjects)
+        audio.setVolume(value);
     }
 
     function updateMute(value) {
-      value ? sound.pause() : sound.play();
+      for (audio of audioObjects)
+        value ? audio.pause() : audio.play();
     }
 
     // Create loading manager for models
@@ -85,13 +92,17 @@ window.onload = function main() {
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, 0, 0],
                           },*/
-      building:           { url: 'src/environment/building/scene.gltf',
+      /*building:           { url: 'src/environment/building/scene.gltf',
                             position: [-8, 0, 0],
                             scale:    [2, 2, 2],
                             rotation: [0, 0, 0],
-                          },
+                          },*/
 
-      //policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf' },
+      policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
+                            position: [-1.5, 0, 25],
+                            scale:    [2.2, 2.2, 2.2],
+                            rotation: [0, Math.PI, 0],
+                          },
       bmwCar:             { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                             position: [0, 2.1, 0],
                             scale:    [0.03, 0.03, 0.03],
@@ -188,48 +199,17 @@ window.onload = function main() {
       }
     }
 
+    { // Ambient light (enable only if nightlight)
+      const light = new THREE.AmbientLight( 0x404040, 0.3 ); // color, intensity
+      scene.add( light );
+    }
 
     { // Sunlight
-      const color = 0xFFFFFF;
-      const intensity = 2;
-      const light = new THREE.DirectionalLight(color, intensity);
+      const light = new THREE.DirectionalLight(0xFFFFFF, 0.8);
       light.position.set(0, 3, 0.3);
       scene.add(light);
       light.castShadow = true;
     }
-
-    // Pointlights for police car
-    /*let color = 0xFF0000;
-    let intensity = 1;
-    const roofLightRed = new THREE.PointLight(color, intensity);
-    roofLightRed.position.set(-0.1, 2.1, -0.34);
-    scene.add(roofLightRed);
-    //light.castShadow = true;
-
-    color = 0x0000FF;
-    intensity = 1;
-    const roofLightBlue = new THREE.PointLight(color, intensity);
-    roofLightBlue.position.set(-0.8, 2.1, -0.34);
-    scene.add(roofLightBlue);
-    //light.castShadow = true;
-
-    let addIntensity = true;
-    let deltaIntensity = 0;
-    let augment = 0.05;
-    let roofLightsThreshold = 2;*/
-
-    /*const helper = new THREE.PointLightHelper(roofLightRed);
-    scene.add(helper);
-
-    function updateLight() {
-      helper.update();
-    }
-
-    const gui = new GUI();
-    gui.add(roofLightRed, 'intensity', 0, 2, 0.01);
-    gui.add(roofLightRed, 'distance', 0, 40).onChange(updateLight);
-
-    UTILS.makeXYZGUI(gui, roofLightRed.position, 'position');//*/
 
     /*{ // Fog
       const near = 1;
@@ -294,13 +274,17 @@ window.onload = function main() {
     }*/
 
 
-
-
+    // Show app stats
+    var stats = new Stats();
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( stats.dom );
 
     let before = 0, deltaTime = 0;
-    render();
+    animate();
 
-    function render(time) {
+    function animate(time) {
+      stats.begin();
+
       if (UTILS.resizeRendererToDisplaySize(renderer)) {
         const canvas = renderer.domElement;
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -326,34 +310,30 @@ window.onload = function main() {
 
         player.update(deltaTime);
 
-        //car.position.y -= 0.01;
-        /*frontLeftWheel.rotation.x  = time;
-        frontRightWheel.rotation.x = time;
+        //console.log("car.position.z: " + car.position.z);
+        camera.position.z -= player.getModel().getMoveSpeed() * deltaTime * 0.029;
 
-        backLeftWheel.rotation.x  = time;
-        backRightWheel.rotation.x = time;*/
 
-        //door.rotation.x = time;
+        // compute the box that contains all the stuff from model and below
+        /*const box = new THREE.Box3().setFromObject(player.getModel().getModel());
 
-        //updateCameraPosition();
+        const boxSize   = box.getSize(new THREE.Vector3()).length();
+        const boxCenter = box.getCenter(new THREE.Vector3());
+
+        // set the camera to frame the box
+        UTILS.frameArea(boxSize, boxSize, boxCenter, camera);
+
+        // update the Trackball controls to handle the new size
+        controls.maxDistance = boxSize * 10;
+        controls.target.copy(boxCenter);
+        controls.update();*/
+
+        //console.log("camera.position.z: " + camera.position.z);
       }
 
       if (policeCar) {
-        //policeCar.position.y -= 0.01;
-        policeFrontLeftWheel.rotation.x  = time;
-        policeFrontRightWheel.rotation.x = time;
-
-        policeBackLeftWheel.rotation.x  = time;
-        policeBackRightWheel.rotation.x = time;
-
-        if(deltaIntensity >= roofLightsThreshold) {
-          deltaIntensity = 0;
-          roofLightsThreshold = 2.5;
-          addIntensity = !addIntensity;
-        }
-
-        deltaIntensity += augment;
-        blink();
+        policeCar.update(deltaTime);
+        //console.log("policeCar.get3DModel().position.z: " + policeCar.get3DModel().position.z);
       }
 
       /*if (bike) {
@@ -367,27 +347,16 @@ window.onload = function main() {
 
       inputManager.update();
 
+      stats.end();
+      requestAnimationFrame( animate );
       renderer.render( scene, camera );
-      requestAnimationFrame( render );
-    }
-
-
-    // Blinks police roof lights
-    function blink() {
-      if(addIntensity) {
-        roofLightRed.intensity  += augment;
-        roofLightBlue.intensity += augment;
-      }
-      else {
-        roofLightRed.intensity  -= augment;
-        roofLightBlue.intensity -= augment;
-      }
     }
 
     // Apply a sound to a mesh
-    function applySound(mesh, filename) {
-      // load a sound and set it as the PositionalAudio object's buffer
-      const audioLoader = new THREE.AudioLoader();
+    function applySound(mesh, filename, sound) {
+      if(!mesh || !filename || !sound)  return;
+
+      // Load a sound and set it as the PositionalAudio object's buffer
       audioLoader.load(filename, function( buffer ) {
       	sound.setBuffer( buffer );
         sound.setLoop( true );
@@ -395,19 +364,25 @@ window.onload = function main() {
       	sound.play();
       });
 
-      // finally add the sound to the mesh
+      // Finally add the sound to the mesh
       mesh.add( sound );
     }
 
+
+
+
     function updateCameraPosition() {
-      const vehicle = getCurrentVehicle();
-      const myPos = vehicle.position;
-      const relativeCameraOffset = new THREE.Vector3(0,10,10);
+      const myPos = player.getPosition();
+      const relativeCameraOffset = new THREE.Vector3(0, 10, 10);
 
       camera.position.lerp(relativeCameraOffset, 0.1);
       camera.lookAt(myPos);
       camera.position.set(myPos.x, myPos.y + 10, myPos.z + 12);
     }
+
+
+
+
 
     function loadStaticModel(modelScene, model) {
       modelScene.position.set(...model.position);
@@ -423,15 +398,30 @@ window.onload = function main() {
     }
 
     function loadPoliceCar(modelScene) {
-      policeCar = modelScene.getObjectByName('Car_Rig');
+      //policeCar = modelScene.getObjectByName('Car_Rig');
+
+      modelScene.position.set(...models.policeCar.position);
+      modelScene.scale.set(...models.policeCar.scale)
+      modelScene.rotation.set(...models.policeCar.rotation);
+
+      /*console.log("policeCar.position.x: " + policeCar.position.x);
+      console.log("policeCar.position.y: " + policeCar.position.y);
+      console.log("policeCar.position.z: " + policeCar.position.z);*/
+
+      /*console.log("modelScene.position.x: " + modelScene.position.x);
+      console.log("modelScene.position.y: " + modelScene.position.y);
+      console.log("modelScene.position.z: " + modelScene.position.z);*/
 
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
           o.receiveShadow = true;
 
-          if (o.name === "Roof_light_bar_0")
-            applySound(o, 'src/sounds/Police siren.mka');
+          if (o.name === "Roof_light_bar_0") {
+            // Create the PositionalAudio object (passing in the listener)
+            audioObjects.policeCar = new THREE.PositionalAudio(listener);
+            applySound(o, 'src/sounds/Police siren.mka', audioObjects.policeCar);
+          }
         }
 
         // Reference the four wheels
@@ -440,6 +430,9 @@ window.onload = function main() {
         else if (o.isBone && o.name === 'DEF-WheelBkL_Car_Rig')   policeBackLeftWheel  = o;
         else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig')   policeBackRightWheel = o;
       });
+
+      //policeCar = new PoliceCar(policeCar, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
+      policeCar = new PoliceCar(modelScene, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
     }
 
     function loadBmwCar(modelScene) {
@@ -449,7 +442,9 @@ window.onload = function main() {
       modelScene.scale.set(...models.bmwCar.scale)
       modelScene.rotation.set(...models.bmwCar.rotation);
 
-      applySound(car, 'src/sounds/Car acceleration.mka');
+      // Create the PositionalAudio object (passing in the listener)
+      audioObjects.car = new THREE.PositionalAudio(listener);
+      applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       modelScene.traverse(o => {
         if (o.isMesh) {
@@ -458,8 +453,8 @@ window.onload = function main() {
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel028')        frontLeftWheel  = o;
-        else if (o.name === 'wheel020')   frontRightWheel = o;
+        if (o.name === 'wheel020')        frontLeftWheel  = o;
+        else if (o.name === 'wheel028')   frontRightWheel = o;
         else if (o.name === 'wheel012')   backLeftWheel  = o;
         else if (o.name === 'wheel004')   backRightWheel = o;
 

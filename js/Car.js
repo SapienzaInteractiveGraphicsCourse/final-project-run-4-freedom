@@ -1,10 +1,12 @@
 import { Model } from "./Model.js";
 
 class Car extends Model {
-  constructor(model, name, wheels) {
-    super(model);
-    this.name = name;
-    this.wheels = wheels;
+  constructor(model3D, name, wheels) {
+    super(model3D);
+    this.name      = name;
+    this.wheels    = wheels;
+    this.moveSpeed = 1000;
+    this.turnSpeed = 4;
   }
 
   getName() {
@@ -29,6 +31,14 @@ class Car extends Model {
 
   getBackRightWheel() {
     return this.wheels[3];
+  }
+
+  getMoveSpeed() {
+    return this.moveSpeed;
+  }
+
+  getTurnSpeed() {
+    return this.turnSpeed;
   }
 
 }

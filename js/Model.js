@@ -1,10 +1,14 @@
 class Model {
-  constructor(model) {
-    this.model = model;
+  constructor(model3D) {
+    this.model3D = model3D;
   }
 
-  getModel() {
-    return this.model;
+  get3DModel() {
+    return this.model3D;
+  }
+
+  getPosition() {
+    return this.model3D.position;
   }
 
 }

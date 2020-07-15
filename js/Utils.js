@@ -21,8 +21,10 @@ export function resizeRendererToDisplaySize(renderer) {
   const width  = canvas.clientWidth  * pixelRatio | 0;
   const height = canvas.clientHeight * pixelRatio | 0;
   const needResize = canvas.width !== width || canvas.height !== height;
+
   if (needResize)
     renderer.setSize(width, height, false);
+
   return needResize;
 }
 
@@ -32,31 +34,40 @@ export function frameArea(sizeToFitOnScreen, boxSize, boxCenter, camera) {
   const halfFovY = THREE.MathUtils.degToRad(camera.fov * .5);
   const distance = halfSizeToFitOnScreen / Math.tan(halfFovY);
 
-  // compute a unit vector that points in the direction the camera is now
-  // in the xz plane from the center of the box
+  // Compute a unit vector that points in the direction the camera is now
+  // in the X,Z plane from the center of the box
   const direction = (new THREE.Vector3())
       .subVectors(camera.position, boxCenter)
       .multiply(new THREE.Vector3(1, 0, 1))
       .normalize();
 
-  // move the camera to a position distance units way from the center
+  // Move the camera to a position distance units way from the center
   // in whatever direction the camera was from the center already
   camera.position.copy(direction.multiplyScalar(distance).add(boxCenter));
 
-  // pick some near and far values for the frustum that will contain the box.
+  // Set camera up and back the box
+  camera.position.y += 8;
+  camera.position.z += 21; //3;
+
+  //console.log("camera.position.x: " + camera.position.x);
+  //console.log("camera.position.y: " + camera.position.y);
+  //console.log("camera.position.z: " + camera.position.z);
+
+  // Pick some near and far values for the frustum that will contain the box.
   camera.near = boxSize / 100;
-  camera.far = boxSize * 100;
+  camera.far  = boxSize * 100;
 
   camera.updateProjectionMatrix();
 
-  // point the camera to look at the center of the box
+  // Point the camera to look at the center of the box
   camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
 }
 
+// Make a coordinates GUI
 export function makeXYZGUI(gui, vector3, name, onChangeFn) {
   const folder = gui.addFolder(name);
-  folder.add(vector3, 'x', -10, 10).onChange(onChangeFn);
-  folder.add(vector3, 'y', 0, 10).onChange(onChangeFn);
-  folder.add(vector3, 'z', -10, 10).onChange(onChangeFn);
+  folder.add(vector3, 'x', -100, 100).onChange(onChangeFn);
+  folder.add(vector3, 'y', 0, 100).onChange(onChangeFn);
+  folder.add(vector3, 'z', -100, 100).onChange(onChangeFn);
   folder.open();
 }

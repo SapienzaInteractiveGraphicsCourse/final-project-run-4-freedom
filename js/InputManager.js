@@ -1,5 +1,4 @@
 class InputManager {
-
   constructor() {
     this.keys = {};
     const keyMap = new Map();
