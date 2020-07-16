@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<title>Run 4 Freedom</title>
 
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<meta name="description" content="Final project of the Interactive Graphics 19-20 course @ Sapienza University of Rome">
+		<meta name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description"
+			content="Final project of the Interactive Graphics 19-20 course @ Sapienza University of Rome">
 		<meta name="keywords" content="">
 		<meta name="author" content="Ivan Fardin, Francesco Ottaviani and Samuele Olivieri Pennesi">
 
@@ -13,18 +16,31 @@
 
 		<script src="js/main.js" type="module"></script>
 	</head>
+
 	<body>
 		<div id="loading">
-      <div>Loading...</div>
-      <div class="progress">
+			<div id="loadingText" class="wavy">
+				<span style="--i:1;">L</span>
+				<span style="--i:2;">o</span>
+				<span style="--i:3;">a</span>
+				<span style="--i:4;">d</span>
+				<span style="--i:5;">i</span>
+				<span style="--i:6;">n</span>
+				<span style="--i:7;">g</span>
+				<span style="--i:8;">.</span>
+				<span style="--i:9;">.</span>
+				<span style="--i:10;">.</span>
+			</div>
+			<div id="loadingBar" class="progress">
 				<div id="progressbar"></div>
 			</div>
-  	</div>
+		</div>
 
 		<p id="playBtn" class="hide center">
-      <span class="btn btn-primary btn-lg btn-custom">Play</span>
-    </p>
+			<span class="btn btn-primary btn-lg btn-custom">Play</span>
+		</p>
 
 		<canvas id="canvas"></canvas>
 	</body>
+
 </html>

@@ -8,18 +8,44 @@ canvas {
   display: block;
 }
 
-#loading {
+/* Loading phase */
+#loadingBar {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 100px;
   width: 100%;
   height: 100%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-size: xx-large;
   font-family: sans-serif;
+}
+
+#loadingText {
+  font-family: consolas;
+  display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #000;
+}
+
+.wavy{
+	position: relative;
+	-webkit-box-reflect: below -30px linear-gradient(transparent, rgba(0,0,0,0.2));
+}
+
+.wavy span{
+	position: relative;
+	display: inline-block;
+	color: #fff;
+	font-size: 5em;
+	text-transform: uppercase;
+	animation: animate 1s ease-in-out infinite;
+	animation-delay: calc(0.1s * var(--i));
 }
 
 .progress {
@@ -44,6 +70,12 @@ canvas {
   );
   background-size: 50px 50px;
   animation: progressanim 2s linear infinite;
+}
+
+@keyframes animate {
+	0%        { transform: translateY(0px);   }
+	20%       { transform: translateY(-50px); }
+	40%,100%  { transform: translateY(0px);   }
 }
 
 @keyframes progressanim {
