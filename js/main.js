@@ -158,6 +158,28 @@ window.onload = function main() {
     const inputManager = new InputManager();
     const game         = new Game(inputManager, "easy");
     const player       = new Player(game);
+    
+    
+    //Skybox
+
+    var myGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
+    var cubeMaterials = 
+    [
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_ft.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_bk.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_up.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_dn.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_rt.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_lf.jpg"), side: THREE.DoubleSide}),
+    ];
+
+    var myCube = new THREE.Mesh(myGeometry, cubeMaterials);
+    
+    //change this to see "more" background
+    myCube.position.set(0,0,0);
+    myCube.rotation.set(0, Math.PI, 0);
+
+    scene.add(myCube); 
 
     function start() {
       for (const model of Object.values(models)) {
