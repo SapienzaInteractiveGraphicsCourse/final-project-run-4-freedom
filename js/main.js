@@ -165,12 +165,12 @@ window.onload = function main() {
     var myGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
     var cubeMaterials = 
     [
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_ft.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_bk.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_up.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_dn.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_rt.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../skybox/arid2_lf.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_ft.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_bk.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_up.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_dn.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_rt.jpg"), side: THREE.DoubleSide}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_lf.jpg"), side: THREE.DoubleSide}),
     ];
 
     var myCube = new THREE.Mesh(myGeometry, cubeMaterials);
