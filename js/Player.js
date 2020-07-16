@@ -1,5 +1,6 @@
 import * as THREE   from "https://unpkg.com/three@0.118.3/build/three.module.js";
 import { Car }      from "./Car.js";
+import { Utils }    from "./Utils.js";
 
 class Player {
     constructor(game) {
@@ -35,11 +36,8 @@ class Player {
         const backLeftWheel  = this.model.getBackLeftWheel();
         const backRightWheel = this.model.getBackRightWheel();
 
-        // Constraints num in range [a, b]
-        const clamp = (num, a, b) => Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
-
-        frontLeftWheel.rotation.z  = clamp(frontLeftWheel.rotation.z  - turnRotation, -0.5, 0.5);
-        frontRightWheel.rotation.z = clamp(frontRightWheel.rotation.z - turnRotation, -0.5, 0.5);
+        frontLeftWheel.rotation.z  = Utils.clamp(frontLeftWheel.rotation.z  - turnRotation, -0.5, 0.5);
+        frontRightWheel.rotation.z = Utils.clamp(frontRightWheel.rotation.z - turnRotation, -0.5, 0.5);
 
         // If X rotation, Z rotation is affected
         //frontLeftWheel.rotation.x  = deltaTime;

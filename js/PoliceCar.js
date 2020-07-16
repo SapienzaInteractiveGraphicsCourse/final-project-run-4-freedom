@@ -1,6 +1,6 @@
 import { Car } from "./Car.js";
 import * as THREE   from "https://unpkg.com/three@0.118.3/build/three.module.js";
-import * as UTILS   from "./Utils.js";
+import { Utils }    from "./Utils.js";
 
 class PoliceCar extends Car {
   constructor(model3D, name, wheels, scene, gui) {
@@ -32,7 +32,6 @@ class PoliceCar extends Car {
     scene.add( this.roofLightRed.target );
     scene.add( this.roofLightBlue.target );
 
-    //let helper = new THREE.PointLightHelper(this.roofLightRed);
     /*let helper = new THREE.SpotLightHelper(this.roofLightRed);
     scene.add(helper);
 
@@ -43,13 +42,12 @@ class PoliceCar extends Car {
     gui.add(this.roofLightRed, 'intensity', 0, 100, 0.01);
     gui.add(this.roofLightRed, 'distance', 0, 40).onChange(updateLight);
 
-    UTILS.makeXYZGUI(gui, this.roofLightRed.position, 'positionR');
+    Utils.makeXYZGUI(gui, this.roofLightRed.position, 'positionR');
 
-    //helper = new THREE.PointLightHelper(this.roofLightBlue);
     helper = new THREE.SpotLightHelper(this.roofLightBlue);
     scene.add(helper);
 
-    UTILS.makeXYZGUI(gui, this.roofLightBlue.position, 'positionB');//*/
+    Utils.makeXYZGUI(gui, this.roofLightBlue.position, 'positionB');//*/
 
     this.addIntensity        = true;
     this.deltaIntensity      = 0;
@@ -61,6 +59,7 @@ class PoliceCar extends Car {
     this.moveForwardThreshold  = 20;
     this.moveLeftThreshold     = 40;
     //this.moveBackwardThreshold = 40;
+    this.j = 0;
   }
 
   setRoofLightsIntensity (value) {
@@ -78,7 +77,7 @@ class PoliceCar extends Car {
     super.getBackLeftWheel().rotation.x  = deltaTime;
     super.getBackRightWheel().rotation.x = deltaTime;
 
-    super.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1), super.getMoveSpeed() * deltaTime * 0.029); //super.getMoveSpeed() * deltaTime);
+    super.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1),  super.getMoveSpeed() * deltaTime * 0.029); //super.getMoveSpeed() * deltaTime);
     this.roofLightRed.translateOnAxis(new THREE.Vector3(0, 0, -1),  super.getMoveSpeed() * deltaTime * 0.029);
     this.roofLightBlue.translateOnAxis(new THREE.Vector3(0, 0, -1), super.getMoveSpeed() * deltaTime * 0.029);
 
@@ -105,47 +104,99 @@ class PoliceCar extends Car {
       //console.log("this.roofLightRed.intensity: " + this.roofLightRed.intensity);
       //console.log("this.roofLightBlue.intensity: " + this.roofLightBlue.intensity);
 
-      // Rotate spotlights
+      // Rotate spotlights through a target moving around them
       console.log("this.i: " + this.i);
       console.log("this.roofLightRed.target.position.x: " + this.roofLightRed.target.position.x);
       console.log("this.roofLightRed.target.position.z: " + this.roofLightRed.target.position.z);
 
+
+
       if(this.i < this.moveRightThreshold) {
         // Adjust lights position when rotate
-        /*if(this.moveRightThreshold == this.moveLeftThreshold && this.i < 6) {
-          this.roofLightRed.position.z  += 0.1;
-          this.roofLightBlue.position.z += 0.1;
-        }*/
+        //if(this.moveRightThreshold == this.moveLeftThreshold && this.i < 6) {
+        //  this.roofLightRed.position.z  += 0.1;
+        //  this.roofLightBlue.position.z += 0.1;
+        //}
 
+        // If police car doesn't move on X axis
         this.roofLightRed.target.position.x  += 2;
         this.roofLightBlue.target.position.x += 2;
+
+        // If police car moves on X axis
+        //const newTargetPos = super.getPosition().x + 2 * this.j;
+        //const newTargetPos = Math.abs(super.getPosition().x - this.roofLightRed.target.position.x) + 2 * this.j;
+        //this.roofLightRed.target.position.x  = newTargetPos;
+        //this.roofLightBlue.target.position.x = newTargetPos;
       }
       else if(this.i < this.moveRightThreshold + this.moveForwardThreshold) {
-        this.roofLightRed.target.position.z  += 2;
-        this.roofLightBlue.target.position.z += 2;
+        // If police car doesn't move on Z axis
+        //this.roofLightRed.target.position.z  += 2;
+        //this.roofLightBlue.target.position.z += 2;
+
+        // If police car moves on Z axis
+        if (this.i == this.moveRightThreshold)
+          this.j = 1;
+
+        //const newTargetPos = super.getPosition().z + 2 * this.j;
+        //const newTargetPos = Math.abs(super.getPosition().z - this.roofLightRed.target.position.z) + 2 * this.j;
+
+        //this.roofLightRed.target.position.z  = newTargetPos;
+        //this.roofLightBlue.target.position.z = newTargetPos;
+
+        this.roofLightRed.target.position.z  += 1.45 * this.j;
+        this.roofLightBlue.target.position.z += 1.45 * this.j;
       }
       else if(this.i < this.moveRightThreshold + this.moveForwardThreshold + this.moveLeftThreshold) {
         // Adjust lights position when rotate
-        /*if(this.i < this.moveRightThreshold + this.moveForwardThreshold + 6) {
-          this.roofLightRed.position.z  -= 0.1;
-          this.roofLightBlue.position.z -= 0.1;
-        }*/
+        //if(this.i < this.moveRightThreshold + this.moveForwardThreshold + 6) {
+        //  this.roofLightRed.position.z  -= 0.1;
+        //  this.roofLightBlue.position.z -= 0.1;
+        //}
 
+        // If police car doesn't move on X axis
         this.roofLightRed.target.position.x  -= 2;
         this.roofLightBlue.target.position.x -= 2;
+
+        // If police car moves on X axis
+        //if (this.i == this.moveRightThreshold + this.moveForwardThreshold)
+        //  this.j = 1;
+
+        //const newTargetPos = super.getPosition().x - 2 * this.j;
+        //const newTargetPos = Math.abs(super.getPosition().x - this.roofLightRed.target.position.x) - 2 * this.j;
+        //this.roofLightRed.target.position.x  = newTargetPos;
+        //this.roofLightBlue.target.position.x = newTargetPos;
       }
       else if(this.i < this.moveRightThreshold + this.moveForwardThreshold + this.moveLeftThreshold + this.moveForwardThreshold) {
-        this.roofLightRed.target.position.z  -= 2;
-        this.roofLightBlue.target.position.z -= 2;
+        // If police car doesn't move on Z axis
+        //this.roofLightRed.target.position.z  -= 2;
+        //this.roofLightBlue.target.position.z -= 2;
+
+        // If police car moves on Z axis
+        if (this.i == this.moveRightThreshold + this.moveForwardThreshold + this.moveLeftThreshold)
+          this.j = 1;
+
+        //const newTargetPos = super.getPosition().z - 2 * this.j;
+        //const newTargetPos = -Math.abs(super.getPosition().z - this.roofLightRed.target.position.z) - 2 * this.j;
+
+        //this.roofLightRed.target.position.z  = newTargetPos;
+        //this.roofLightBlue.target.position.z = newTargetPos;
+
+        this.roofLightRed.target.position.z  -= 2 * this.j;
+        this.roofLightBlue.target.position.z -= 2 * this.j;
       }
       else {
         this.moveRightThreshold = this.moveLeftThreshold;
         //this.moveForwardThreshold = this.moveBackwardThreshold;
         this.i = -1;
+        this.j = 0;
       }
 
       this.i += 1;
+      this.j += 1;
     }
+
+
+
 
     blink();
   }

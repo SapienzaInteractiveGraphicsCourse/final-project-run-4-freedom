@@ -2,14 +2,14 @@ import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.modul
 import { GLTFLoader }    from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from 'https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js';
 import { GUI } from 'https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js';
-import Stats from 'https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js';
+import Stats   from "https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js";
 
-import * as UTILS from "./Utils.js";
+import { Utils }        from "./Utils.js";
 import { InputManager } from "./InputManager.js";
-import { Game } from "./Game.js";
-import { Player } from "./Player.js";
-import { Car } from "./Car.js";
-import { PoliceCar } from "./PoliceCar.js";
+import { Game }         from "./Game.js";
+import { Player }       from "./Player.js";
+import { Car }          from "./Car.js";
+import { PoliceCar }    from "./PoliceCar.js";
 
 "use strict"
 
@@ -61,6 +61,7 @@ window.onload = function main() {
       }
     };
 
+    // Create GUI for audio controls
     const audioGUI = gui.addFolder('Audio');
     audioGUI.add(options, 'Volume', 0, 30).onChange(updateVolume);
     audioGUI.add(options, 'Mute', true, false).onChange(updateMute);
@@ -68,36 +69,72 @@ window.onload = function main() {
     settingsGUI.add(options, 'Settings');
 
     function updateVolume(value) {
-      for (audio of audioObjects)
+      for (const audio of Object.values(audioObjects))
         audio.setVolume(value);
     }
 
     function updateMute(value) {
-      for (audio of audioObjects)
+      for (const audio of Object.values(audioObjects))
         value ? audio.pause() : audio.play();
     }
 
-    // Create loading manager for models
+    // Create a loading manager for 3D models
     const manager = new THREE.LoadingManager();
     manager.onLoad = init;
 
+    // Create a progress bar to show during loading
     const progressBar = document.getElementById('progressbar');
     manager.onProgress = (url, itemsLoaded, itemsTotal) => {
       progressBar.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
     };
 
+    // Init 3D models
     const models = {
+      // Environment
       /*road:               { url: 'src/environment/road/scene.gltf',
                             position: [0, 0, 0],
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, 0, 0],
                           },*/
-      /*building:           { url: 'src/environment/building/scene.gltf',
-                            position: [-8, 0, 0],
-                            scale:    [2, 2, 2],
+
+      buildingApartment:  { url: 'src/environment/buildings/building_apartment/scene.gltf',
+                            position: [-32, 0, -60],
+                            scale:    [0.05, 0.05, 0.05],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      building1:          { url: 'src/environment/buildings/building_1/scene.gltf',
+                            position: [-29, 11, -10],
+                            scale:    [0.05, 0.05, 0.05],
+                            rotation: [0, 0, 0],
+                          },
+      building2:          { url: 'src/environment/buildings/building_2/scene.gltf',
+                            position: [10, 0, 110],
+                            scale:    [0.3, 0.3, 0.3],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      building3:          { url: 'src/environment/buildings/building_3/scene.gltf',
+                            position: [45, 0, 30],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      abandonedBuilding:  { url: 'src/environment/buildings/abandoned_building/scene.gltf',
+                            position: [50, 0, -30],
+                            scale:    [15, 15, 15],
+                            rotation: [0, 0, 0],
+                          },
+      apartment:          { url: 'src/environment/buildings/apartment/scene.gltf',
+                            position: [50, 0, -150],
+                            scale:    [0.05, 0.05, 0.05],
+                            rotation: [0, 0, 0],
+                          },
+
+      /*westernHouse:       { url: 'src/environment/buildings/western_house/scene.gltf',
+                            position: [100, 0, -150],
+                            scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },*/
 
+      // Cars
       policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
                             position: [-1.5, 0, 25],
                             scale:    [2.2, 2.2, 2.2],
@@ -111,6 +148,26 @@ window.onload = function main() {
       //lamborghiniCar:     { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf' },
       //teslaCar:           { url: 'src/vehicles/cars/tesla_model_s/scene.gltf' }
 
+      camper:             { url: 'src/vehicles/cars/camper_hippie/scene.gltf',
+                            position: [8, 0, 20],
+                            scale:    [3.5, 3.5, 3.5],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      fiat500:            { url: 'src/vehicles/cars/fiat_500/scene.gltf',
+                            position: [-10, 2.5, -40],
+                            scale:    [5, 5, 5],
+                            rotation: [0, 0, 0],
+                          },
+      rangeRover:         { url: 'src/vehicles/cars/range_rover_evoque/scene.gltf',
+                            position: [0, 2.5, -50],
+                            scale:    [6, 6, 6],
+                            rotation: [0, 0, 0],
+                          },
+
+
+      // Characters
+
+      // Bikes
       /*bike:               { url: 'src/vehicles/bikes/bike/scene.gltf',
                             position: [0, 0, 0],
                             scale:    [1, 1, 1],
@@ -118,12 +175,14 @@ window.onload = function main() {
                           },*/
     };
 
-    // Load the models
+    // Load the 3D models
     const gltfLoader = new GLTFLoader(manager);
     for (const model of Object.values(models)) {
       gltfLoader.load(model.url, function (gltf) {
         model.gltf = gltf;
-      }, undefined, function ( error ) {
+      },
+      undefined,
+      function ( error ) {
         console.error( error );
         alert("Error during the loading, try to refresh the page");
       });
@@ -158,42 +217,30 @@ window.onload = function main() {
     const inputManager = new InputManager();
     const game         = new Game(inputManager, "easy");
     const player       = new Player(game);
-    
-    
-    //Skybox
 
-    var myGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
-    var cubeMaterials = 
-    [
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_ft.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_bk.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_up.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_dn.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_rt.jpg"), side: THREE.DoubleSide}),
-        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("../src/skybox/arid2_lf.jpg"), side: THREE.DoubleSide}),
-    ];
-
-    var myCube = new THREE.Mesh(myGeometry, cubeMaterials);
-    
-    //change this to see "more" background
-    myCube.position.set(0,0,0);
-    myCube.rotation.set(0, Math.PI, 0);
-
-    scene.add(myCube); 
-
+    // Start the game
     function start() {
       for (const model of Object.values(models)) {
         const modelScene = model.gltf.scene;
         scene.add(modelScene);
-        console.log(UTILS.dumpObject(modelScene).join('\n'));
+        console.log(Utils.dumpObject(modelScene).join('\n'));
 
         switch (model) {
           // Environment
           case models.road:
             loadStaticModel(modelScene, models.road);
             break;
-          case models.building:
-            loadStaticModel(modelScene, models.building);
+          case models.buildingApartment:
+            loadStaticModel(modelScene, models.buildingApartment);
+            break;
+          case models.building1:
+            loadStaticModel(modelScene, models.building1);
+            break;
+          case models.abandonedBuilding:
+            loadStaticModel(modelScene, models.abandonedBuilding);
+            break;
+          case models.westernHouse:
+            loadStaticModel(modelScene, models.westernHouse);
             break;
 
           // Cars
@@ -216,22 +263,32 @@ window.onload = function main() {
             bike = models.bike.gltf.scene;  // temp
             break;
           default:
-            console.log("Error loading a model");
+            loadStaticModel(modelScene, model);
+
+            //console.log("Error loading a 3D model");
+            //alert("Error loading a 3D model, try to refresh the page");
         }
       }
     }
 
-    { // Ambient light (enable only if nightlight)
-      const light = new THREE.AmbientLight( 0x404040, 0.3 ); // color, intensity
-      scene.add( light );
+    { // Ambient light
+      const light = new THREE.AmbientLight(0x404040, 0.3); // color, intensity
+      scene.add(light);
     }
 
-    { // Sunlight
-      const light = new THREE.DirectionalLight(0xFFFFFF, 0.8);
-      light.position.set(0, 3, 0.3);
-      scene.add(light);
-      light.castShadow = true;
-    }
+    // Sunlight
+    const sunlight = new THREE.DirectionalLight(0xFFFFFF, 0.3);
+    sunlight.position.set(100, 10, 0.3); // Sunrise
+    scene.add(sunlight);
+    sunlight.castShadow = true;
+
+    /*const helper = new THREE.DirectionalLightHelper(sunlight);
+    scene.add(helper);
+
+    gui.add(sunlight, 'intensity', 0, 100, 0.01);
+
+    Utils.makeXYZGUI(gui, sunlight.position, 'Sun position');//*/
+
 
     /*{ // Fog
       const near = 1;
@@ -244,24 +301,42 @@ window.onload = function main() {
 
 
     // Infinite terrain with a texture
-    const tex = new THREE.TextureLoader().load("../src/textures/road_texture.jpg")
+    const tex = new THREE.TextureLoader().load("../src/textures/road_texture.jpg");
     tex.anisotropy = 2;
-    tex.repeat.set(300, 300)
-    tex.wrapT = THREE.RepeatWrapping
-    tex.wrapS = THREE.RepeatWrapping
-    const geo = new THREE.PlaneBufferGeometry(10000, 10000)
-    const mat = new THREE.MeshLambertMaterial({
-      map: tex
-    })
-    const mesh = new THREE.Mesh(geo, mat)
-    mesh.position.set(0, 0, 0)
-    mesh.rotation.set(Math.PI / -2, 0, Math.PI/2)
-    scene.add(mesh)
+    tex.repeat.set(300, 300);
+    tex.wrapT = THREE.RepeatWrapping;
+    tex.wrapS = THREE.RepeatWrapping;
+    const geo = new THREE.PlaneBufferGeometry(10000, 10000);
+    const mat = new THREE.MeshLambertMaterial({ map: tex });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(0, 0, 0);
+    mesh.rotation.set(Math.PI / -2, 0, Math.PI/2);
+    scene.add(mesh);
+
+
+    // Skybox
+    /*var myGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
+    var cubeMaterials = [
+        new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../src/skybox/arid2_ft.jpg"), side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../src/skybox/arid2_bk.jpg"), side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../src/skybox/arid2_up.jpg"), side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../src/skybox/arid2_dn.jpg"), side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../src/skybox/arid2_rt.jpg"), side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../src/skybox/arid2_lf.jpg"), side: THREE.DoubleSide })
+    ];
+
+    var myCube = new THREE.Mesh(myGeometry, cubeMaterials);
+
+    //change this to see "more" background
+    myCube.position.set(0,0,0);
+    myCube.rotation.set(0, Math.PI, 0);
+
+    scene.add(myCube);*/
 
 
 
 
-
+    // Create obstacles
     /*var cubeWidth  = 1;
     var cubeHeight = 1;
     var cubeDepth  = 1;
@@ -302,12 +377,12 @@ window.onload = function main() {
     document.body.appendChild( stats.dom );
 
     let before = 0, deltaTime = 0;
-    animate();
+    requestAnimationFrame(animate);
 
     function animate(time) {
       stats.begin();
 
-      if (UTILS.resizeRendererToDisplaySize(renderer)) {
+      if (Utils.resizeRendererToDisplaySize(renderer)) {
         const canvas = renderer.domElement;
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
@@ -324,8 +399,33 @@ window.onload = function main() {
       //console.log("before: " + before + "\n");
       //console.log("deltaTime: " + deltaTime + "\n");
 
+      if (time % 24 < 5) {
+        // Prepare sunrise
+        sunlight.position.set(100, 10, 0.3);
+        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.007, 0, 1.7);
+      }
+      else if (time % 24 < 15) {
+        // Growing phase
+        sunlight.position.x -= 0.3;
+        sunlight.position.y += 0.3;
+        sunlight.intensity = Utils.clamp(sunlight.intensity + 0.007, 0, 1.7);
+      }
+      else {
+        // Waning phase
+        sunlight.position.x -= 0.3;
+        sunlight.position.y -= 0.3;
+        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.007, 0, 1.7);
+      }
 
-      if (car) {
+
+      //console.log("time%24: " + time%24 + "\n");
+      //console.log("sunlight.position.x: " + sunlight.position.x + "\n");
+      //console.log("sunlight.position.y: " + sunlight.position.y + "\n");
+      //console.log("sunlight.position.z: " + sunlight.position.z + "\n");
+      //console.log("sunlight.intensity: " + sunlight.intensity + "\n");
+
+
+      /*if (car) {
         // TEMP, MUST BE SET WHEN car CHANGES
         if (!player.getModel())
           player.setModel(new Car(car, "bmw", [frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel]));
@@ -343,20 +443,20 @@ window.onload = function main() {
         const boxCenter = box.getCenter(new THREE.Vector3());
 
         // set the camera to frame the box
-        UTILS.frameArea(boxSize, boxSize, boxCenter, camera);
+        Utils.frameArea(boxSize, boxSize, boxCenter, camera);
 
         // update the Trackball controls to handle the new size
         controls.maxDistance = boxSize * 10;
         controls.target.copy(boxCenter);
         controls.update();*/
 
-        //console.log("camera.position.z: " + camera.position.z);
+        /*console.log("camera.position.z: " + camera.position.z);
       }
 
       if (policeCar) {
         policeCar.update(deltaTime);
-        //console.log("policeCar.get3DModel().position.z: " + policeCar.get3DModel().position.z);
-      }
+        console.log("policeCar.get3DModel().position.z: " + policeCar.get3DModel().position.z);
+      }*/
 
       /*if (bike) {
           var myPos = bike.position;
@@ -495,7 +595,7 @@ window.onload = function main() {
       const boxCenter = box.getCenter(new THREE.Vector3());
 
       // set the camera to frame the box
-      UTILS.frameArea(boxSize, boxSize, boxCenter, camera);
+      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
 
       // update the Trackball controls to handle the new size
       controls.maxDistance = boxSize * 10;
@@ -530,7 +630,7 @@ window.onload = function main() {
       const boxCenter = box.getCenter(new THREE.Vector3());
 
       // set the camera to frame the box
-      UTILS.frameArea(boxSize, boxSize, boxCenter, camera);
+      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
 
       // update the Trackball controls to handle the new size
       controls.maxDistance = boxSize * 10;
@@ -561,7 +661,7 @@ window.onload = function main() {
       const boxCenter = box.getCenter(new THREE.Vector3());
 
       // set the camera to frame the box
-      UTILS.frameArea(boxSize, boxSize, boxCenter, camera);
+      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
 
       // update the Trackball controls to handle the new size
       controls.maxDistance = boxSize * 10;
