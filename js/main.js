@@ -13,14 +13,32 @@ import { PoliceCar }    from "./PoliceCar.js";
 
 "use strict"
 
-/*
-var cubes = [
-    makeInstance(geometryCube, 0x0000FF,  2, 1, 0)
-];
-*/
-
 window.onload = function main() {
+  let physicsWorld;
+  let TRANSFORM_AUX;
+
+  // Ammojs Initialization
+  Ammo().then( function() {
+    setupPhysicsWorld();
+    setupGraphics();
+  } );
+
+  function setupPhysicsWorld(){
+    let collisionConfiguration  = new Ammo.btDefaultCollisionConfiguration(),
+        dispatcher              = new Ammo.btCollisionDispatcher(collisionConfiguration),
+        overlappingPairCache    = new Ammo.btDbvtBroadphase(),
+        solver                  = new Ammo.btSequentialImpulseConstraintSolver();
+
+    physicsWorld = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+    physicsWorld.setGravity( new Ammo.btVector3(0, -9.82, 0) );
+
+    TRANSFORM_AUX = new Ammo.btTransform();
+  }
+
+  function setupGraphics() {
     const canvas = document.getElementById('canvas');
+    const gl = canvas.getContext("webgl2");
+    if (!gl)  alert("WebGL 2.0 isn't available");
 
     const renderer = new THREE.WebGLRenderer({canvas});
     renderer.setClearColor(0xBEF4FF);
@@ -41,9 +59,8 @@ window.onload = function main() {
     controls.target.set(0, 5, 0);
     controls.update();
 
-    // Create an AudioListener and add it to the camera
-    const listener = new THREE.AudioListener();
-    camera.add(listener);
+    // Declare a global AudioListener
+    let listener;
 
     // Create an AudioLoader
     const audioLoader = new THREE.AudioLoader();
@@ -154,12 +171,12 @@ window.onload = function main() {
                             rotation: [0, -Math.PI/2, 0],
                           },
       fiat500:            { url: 'src/vehicles/cars/fiat_500/scene.gltf',
-                            position: [-10, 2.5, -40],
+                            position: [-10, 2.3, -40],
                             scale:    [5, 5, 5],
                             rotation: [0, 0, 0],
                           },
       rangeRover:         { url: 'src/vehicles/cars/range_rover_evoque/scene.gltf',
-                            position: [0, 2.5, -50],
+                            position: [0, 1.9, -50],
                             scale:    [6, 6, 6],
                             rotation: [0, 0, 0],
                           },
@@ -201,7 +218,10 @@ window.onload = function main() {
       play.onclick = function() {
         // Create audio context after a user gesture
         const audioCtx = new AudioContext();
-        audioCtx.resume();
+
+        // Create an AudioListener and add it to the camera
+        listener = new THREE.AudioListener();
+        camera.add(listener);
 
         // Hide Play button and start the game
         play.style.display = "none";
@@ -215,7 +235,7 @@ window.onload = function main() {
     let bike;
 
     const inputManager = new InputManager();
-    const game         = new Game(inputManager, "easy");
+    const game         = new Game(inputManager, "easy", physicsWorld);
     const player       = new Player(game);
 
     // Start the game
@@ -223,7 +243,7 @@ window.onload = function main() {
       for (const model of Object.values(models)) {
         const modelScene = model.gltf.scene;
         scene.add(modelScene);
-        console.log(Utils.dumpObject(modelScene).join('\n'));
+        //console.log(Utils.dumpObject(modelScene).join('\n'));
 
         switch (model) {
           // Environment
@@ -300,18 +320,41 @@ window.onload = function main() {
 
 
 
-    // Infinite terrain with a texture
-    const tex = new THREE.TextureLoader().load("../src/textures/road_texture.jpg");
-    tex.anisotropy = 2;
-    tex.repeat.set(300, 300);
-    tex.wrapT = THREE.RepeatWrapping;
-    tex.wrapS = THREE.RepeatWrapping;
-    const geo = new THREE.PlaneBufferGeometry(10000, 10000);
-    const mat = new THREE.MeshLambertMaterial({ map: tex });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(0, 0, 0);
-    mesh.rotation.set(Math.PI / -2, 0, Math.PI/2);
-    scene.add(mesh);
+    { // Infinite terrain with a texture
+      const tex = new THREE.TextureLoader().load("../src/textures/road_texture.jpg");
+      tex.anisotropy = 2;
+      tex.repeat.set(300, 300);
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.wrapS = THREE.RepeatWrapping;
+      const geo = new THREE.PlaneBufferGeometry(10000, 10000);
+      const mat = new THREE.MeshLambertMaterial({ map: tex });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(0, 0, 0);
+      mesh.rotation.set(Math.PI / -2, 0, Math.PI/2);
+      scene.add(mesh);
+
+      // Ammojs Section
+      let mass = 0;
+
+      let transform = new Ammo.btTransform();
+      transform.setIdentity();
+      transform.setOrigin( new Ammo.btVector3(mesh.position.x, mesh.position.y, mesh.position.z) );
+      //transform.setRotation( new Ammo.btQuaternion(mesh.quaternion.x, mesh.quaternion.y, mesh.quaternion.z, mesh.quaternion.w) );
+      transform.setRotation( new Ammo.btQuaternion(0, 0, 0, 1) );
+
+      let motionState = new Ammo.btDefaultMotionState(transform);
+
+      let colShape = new Ammo.btBoxShape( new Ammo.btVector3(10000, 0, 10000) );
+      colShape.setMargin(0.05);
+
+      let localInertia = new Ammo.btVector3(0, 0, 0);
+      colShape.calculateLocalInertia(mass, localInertia);
+
+      let rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, colShape, localInertia);
+      let body = new Ammo.btRigidBody(rbInfo);
+
+      physicsWorld.addRigidBody(body);
+    }
 
 
     // Skybox
@@ -425,15 +468,15 @@ window.onload = function main() {
       //console.log("sunlight.intensity: " + sunlight.intensity + "\n");
 
 
-      /*if (car) {
+      if (car) {
         // TEMP, MUST BE SET WHEN car CHANGES
         if (!player.getModel())
-          player.setModel(new Car(car, "bmw", [frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel]));
+          player.setModel(new Car(car, 800, game, "bmw", [frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel]));
 
         player.update(deltaTime);
 
         //console.log("car.position.z: " + car.position.z);
-        camera.position.z -= player.getModel().getMoveSpeed() * deltaTime * 0.029;
+        //camera.position.z -= player.getModel().getMoveSpeed() * deltaTime * 0.029;
 
 
         // compute the box that contains all the stuff from model and below
@@ -450,13 +493,12 @@ window.onload = function main() {
         controls.target.copy(boxCenter);
         controls.update();*/
 
-        /*console.log("camera.position.z: " + camera.position.z);
+        //console.log("camera.position.z: " + camera.position.z);
       }
 
       if (policeCar) {
         policeCar.update(deltaTime);
-        console.log("policeCar.get3DModel().position.z: " + policeCar.get3DModel().position.z);
-      }*/
+      }
 
       /*if (bike) {
           var myPos = bike.position;
@@ -468,27 +510,41 @@ window.onload = function main() {
       }*/
 
       inputManager.update();
+      updatePhysics(deltaTime);
 
       stats.end();
-      requestAnimationFrame( animate );
-      renderer.render( scene, camera );
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
     }
 
-    // Apply a sound to a mesh
-    function applySound(mesh, filename, sound) {
-      if(!mesh || !filename || !sound)  return;
 
-      // Load a sound and set it as the PositionalAudio object's buffer
-      audioLoader.load(filename, function( buffer ) {
-      	sound.setBuffer( buffer );
-        sound.setLoop( true );
-      	sound.setRefDistance( 20 );
-      	sound.play();
-      });
+    // Update physics and sync graphics
+    function updatePhysics(deltaTime) {
+      // Step world
+      physicsWorld.stepSimulation(deltaTime, 10);
+      /*const rigidBodies = game.getRigidBodies();
 
-      // Finally add the sound to the mesh
-      mesh.add( sound );
+      // Update rigid bodies
+      for (let i = 0; i < rigidBodies.length; i++) {
+          let model = rigidBodies[i];
+          let objAmmo = model.physicsBody;
+          let ms = objAmmo.getMotionState();
+          if (ms) {
+              ms.getWorldTransform(TRANSFORM_AUX);
+              let p = TRANSFORM_AUX.getOrigin();
+              let q = TRANSFORM_AUX.getRotation();
+              model.get3DModel().position.set( p.x(), p.y(), p.z() );
+              model.get3DModel().quaternion.set( q.x(), q.y(), q.z(), q.w() );
+          }
+      }*/
+
     }
+
+
+
+
+
+
 
 
 
@@ -506,6 +562,24 @@ window.onload = function main() {
 
 
 
+
+
+    // Apply a sound to a mesh
+    function applySound(mesh, filename, sound) {
+      if(!mesh || !filename || !sound)  return;
+
+      // Load a sound and set it as the PositionalAudio object's buffer
+      audioLoader.load(filename, function( buffer ) {
+      	sound.setBuffer( buffer );
+        sound.setLoop( true );
+      	sound.setRefDistance( 20 );
+      	sound.play();
+      });
+
+      // Finally add the sound to the mesh
+      mesh.add( sound );
+    }
+
     function loadStaticModel(modelScene, model) {
       modelScene.position.set(...model.position);
       modelScene.scale.set(...model.scale)
@@ -520,8 +594,6 @@ window.onload = function main() {
     }
 
     function loadPoliceCar(modelScene) {
-      //policeCar = modelScene.getObjectByName('Car_Rig');
-
       modelScene.position.set(...models.policeCar.position);
       modelScene.scale.set(...models.policeCar.scale)
       modelScene.rotation.set(...models.policeCar.rotation);
@@ -554,7 +626,7 @@ window.onload = function main() {
       });
 
       //policeCar = new PoliceCar(policeCar, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
-      policeCar = new PoliceCar(modelScene, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
+      policeCar = new PoliceCar(modelScene, 800, game, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
     }
 
     function loadBmwCar(modelScene) {
@@ -668,5 +740,7 @@ window.onload = function main() {
       controls.target.copy(boxCenter);
       controls.update();
     }
+
+  }
 
 }

@@ -59,6 +59,14 @@ class InputManager {
     }
   }
 
+  leftAction() {
+      return this.keys.left.down || this.keys.A.down;
+  }
+
+  rightAction() {
+      return this.keys.right.down || this.keys.D.down;
+  }
+
 }
 
 export {InputManager}
