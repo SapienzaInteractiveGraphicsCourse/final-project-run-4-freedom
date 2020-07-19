@@ -45,12 +45,12 @@ window.onload = function main() {
     renderer.shadowMap.enabled = true;
 
     // Init scene and camera
-    const scene = new THREE.Scene();
-    const fov = 75;
-    const aspect = 2;  // the canvas default
-    const near = 0.1;
-    const far = 1000;
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    const scene = new THREE.Scene(),
+          fov    = 75,
+          aspect = window.innerWidth / window.innerHeight, //2;  // the canvas default
+          near   = 0.1,
+          far    = 1000,
+          camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 10, 8);
     camera.lookAt(0,4,8);
 
@@ -157,13 +157,22 @@ window.onload = function main() {
                             scale:    [2.2, 2.2, 2.2],
                             rotation: [0, Math.PI, 0],
                           },
-      bmwCar:             { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
+
+      /*bmwCar:             { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                             position: [0, 2.1, 0],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI, 0],
+                          },*/
+      lamborghiniCar:     { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
+                            position: [0, 1.8, 0],
+                            scale:    [0.013, 0.013, 0.013],
+                            rotation: [0, Math.PI, 0],
                           },
-      //lamborghiniCar:     { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf' },
-      //teslaCar:           { url: 'src/vehicles/cars/tesla_model_s/scene.gltf' }
+      /*teslaCar:           { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
+                            position: [0, 0.35, 0],
+                            scale:    [0.023, 0.023, 0.023],
+                            rotation: [0, Math.PI, 0],
+                          },*/
 
       camper:             { url: 'src/vehicles/cars/camper_hippie/scene.gltf',
                             position: [8, 0, 20],
@@ -199,8 +208,8 @@ window.onload = function main() {
         model.gltf = gltf;
       },
       undefined,
-      function ( error ) {
-        console.error( error );
+      function (error) {
+        console.error(error);
         alert("Error during the loading, try to refresh the page");
       });
     }
@@ -240,29 +249,13 @@ window.onload = function main() {
 
     // Start the game
     function start() {
+      // Add models to the scene
       for (const model of Object.values(models)) {
         const modelScene = model.gltf.scene;
         scene.add(modelScene);
         //console.log(Utils.dumpObject(modelScene).join('\n'));
 
         switch (model) {
-          // Environment
-          case models.road:
-            loadStaticModel(modelScene, models.road);
-            break;
-          case models.buildingApartment:
-            loadStaticModel(modelScene, models.buildingApartment);
-            break;
-          case models.building1:
-            loadStaticModel(modelScene, models.building1);
-            break;
-          case models.abandonedBuilding:
-            loadStaticModel(modelScene, models.abandonedBuilding);
-            break;
-          case models.westernHouse:
-            loadStaticModel(modelScene, models.westernHouse);
-            break;
-
           // Cars
           case models.policeCar:
             loadPoliceCar(modelScene);
@@ -279,14 +272,11 @@ window.onload = function main() {
 
           // Bikes
           case models.bike:
-            loadStaticModel(modelScene, models.bike);
-            bike = models.bike.gltf.scene;  // temp
+            AddStaticModel(model);
+            bike = modelScene;  // temp
             break;
           default:
-            loadStaticModel(modelScene, model);
-
-            //console.log("Error loading a 3D model");
-            //alert("Error loading a 3D model, try to refresh the page");
+            AddStaticModel(model);
         }
       }
     }
@@ -420,6 +410,7 @@ window.onload = function main() {
     document.body.appendChild( stats.dom );
 
     let before = 0, deltaTime = 0;
+    const sunlightPositionIncrement = 0.15;
     requestAnimationFrame(animate);
 
     function animate(time) {
@@ -442,33 +433,36 @@ window.onload = function main() {
       //console.log("before: " + before + "\n");
       //console.log("deltaTime: " + deltaTime + "\n");
 
-      if (time % 24 < 5) {
-        // Prepare sunrise
+      // Change sunlight position and intensity according to the elapsed time
+      // (about 4 seconds of the game corresponds to 1 hour, 96/4 = 24)
+      if (time % 96 < 20) {
+        // Prepare sunrise (daytime is between midnight and 5 )
         sunlight.position.set(100, 10, 0.3);
         sunlight.intensity = Utils.clamp(sunlight.intensity - 0.007, 0, 1.7);
       }
-      else if (time % 24 < 15) {
-        // Growing phase
-        sunlight.position.x -= 0.3;
-        sunlight.position.y += 0.3;
+      else if (time % 96 < 60) {
+        // Growing phase (daytime is between 5 and 15 )
+        sunlight.position.x -= sunlightPositionIncrement;
+        sunlight.position.y += sunlightPositionIncrement;
         sunlight.intensity = Utils.clamp(sunlight.intensity + 0.007, 0, 1.7);
       }
       else {
-        // Waning phase
-        sunlight.position.x -= 0.3;
-        sunlight.position.y -= 0.3;
-        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.007, 0, 1.7);
+        // Waning phase (daytime is between 15 and midnight )
+        sunlight.position.x -= sunlightPositionIncrement;
+        sunlight.position.y -= sunlightPositionIncrement;
+        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.005, 0, 1.7);
       }
 
 
-      //console.log("time%24: " + time%24 + "\n");
+      //console.log("time%96: " + time%96 + "\n");
+      //console.log("(time%96)/4: " + (time%96)/4 + "\n");
       //console.log("sunlight.position.x: " + sunlight.position.x + "\n");
       //console.log("sunlight.position.y: " + sunlight.position.y + "\n");
       //console.log("sunlight.position.z: " + sunlight.position.z + "\n");
       //console.log("sunlight.intensity: " + sunlight.intensity + "\n");
 
 
-      if (car) {
+      /*if (car) {
         // TEMP, MUST BE SET WHEN car CHANGES
         if (!player.getModel())
           player.setModel(new Car(car, 800, game, "bmw", [frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel]));
@@ -494,11 +488,11 @@ window.onload = function main() {
         controls.update();*/
 
         //console.log("camera.position.z: " + camera.position.z);
-      }
+      //}
 
-      if (policeCar) {
+      /*if (policeCar) {
         policeCar.update(deltaTime);
-      }
+      }*/
 
       /*if (bike) {
           var myPos = bike.position;
@@ -580,7 +574,13 @@ window.onload = function main() {
       mesh.add( sound );
     }
 
-    function loadStaticModel(modelScene, model) {
+    // Add a static model to the scene
+    function AddStaticModel(model) {
+      if(!model)  return;
+
+      const modelScene = model.gltf.scene;
+      //console.log(Utils.dumpObject(modelScene).join('\n'));
+
       modelScene.position.set(...model.position);
       modelScene.scale.set(...model.scale)
       modelScene.rotation.set(...model.rotation);
@@ -591,7 +591,56 @@ window.onload = function main() {
           o.receiveShadow = true;
         }
       });
+
+      //scene.add(modelScene);
     }
+
+    // Add a car model to the scene
+    /*function AddCarModel(model, wheelsNames, isUserCar, carName, audioFile) {
+      if(!model || !wheelsNames || !carName || !audioFile)  return;
+
+      const modelScene = model.gltf.scene;
+      //console.log(Utils.dumpObject(modelScene).join('\n'));
+
+      modelScene.position.set(...model.position);
+      modelScene.scale.set(...model.scale)
+      modelScene.rotation.set(...model.rotation);
+
+      let wheels = [];
+
+      modelScene.traverse(o => {
+        if (o.isMesh) {
+          o.castShadow = true;
+          o.receiveShadow = true;
+        }
+
+        // Reference the four wheels
+        if (o.name === wheelsNames[0])        wheels[0] = o;
+        else if (o.name === wheelsNames[1])   wheels[1] = o;
+        else if (o.name === wheelsNames[2])   wheels[2] = o;
+        else if (o.name === wheelsNames[3])   wheels[3] = o;
+      });
+
+      scene.add(modelScene);
+
+      if(isUserCar) {
+        // Create the Car object
+        car = new Car(modelScene, 800, game, carName, wheels);
+
+        // Create the PositionalAudio object (passing in the listener)
+        audioObjects.car = new THREE.PositionalAudio(listener);
+        applySound(o, audioFile, audioObjects.car);
+
+      }
+      else {
+        // Create the PoliceCar object
+        policeCar = new PoliceCar(modelScene, 800, game, carName, wheels, scene, gui);
+
+        // Create the PositionalAudio object (passing in the listener)
+        audioObjects.policeCar = new THREE.PositionalAudio(listener);
+        applySound(o, audioFile, audioObjects.policeCar);
+      }
+    }*/
 
     function loadPoliceCar(modelScene) {
       modelScene.position.set(...models.policeCar.position);
@@ -678,6 +727,14 @@ window.onload = function main() {
     function loadTeslaCar(modelScene) {
       car = modelScene.getObjectByName('Tesla_Model_Sfbx');
 
+      modelScene.position.set(...models.teslaCar.position);
+      modelScene.scale.set(...models.teslaCar.scale)
+      modelScene.rotation.set(...models.teslaCar.rotation);
+
+      // Create the PositionalAudio object (passing in the listener)
+      audioObjects.car = new THREE.PositionalAudio(listener);
+      applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
+
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
@@ -696,7 +753,7 @@ window.onload = function main() {
       frontRightWheel.rotation.z = 0;
 
       // compute the box that contains all the stuff from model and below
-      const box = new THREE.Box3().setFromObject(scene);
+      const box = new THREE.Box3().setFromObject(modelScene);
 
       const boxSize   = box.getSize(new THREE.Vector3()).length();
       const boxCenter = box.getCenter(new THREE.Vector3());
@@ -713,6 +770,14 @@ window.onload = function main() {
     function loadLamborghiniCar(modelScene) {
       car = modelScene.getObjectByName('Lamborghini_Aventador_Jfbx');
 
+      modelScene.position.set(...models.lamborghiniCar.position);
+      modelScene.scale.set(...models.lamborghiniCar.scale)
+      modelScene.rotation.set(...models.lamborghiniCar.rotation);
+
+      // Create the PositionalAudio object (passing in the listener)
+      audioObjects.car = new THREE.PositionalAudio(listener);
+      applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
+
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
@@ -727,7 +792,7 @@ window.onload = function main() {
       });
 
       // compute the box that contains all the stuff from model and below
-      const box = new THREE.Box3().setFromObject(scene);
+      const box = new THREE.Box3().setFromObject(modelScene);
 
       const boxSize   = box.getSize(new THREE.Vector3()).length();
       const boxCenter = box.getCenter(new THREE.Vector3());
