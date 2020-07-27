@@ -5,7 +5,7 @@ class Model {
     this.model3D = model3D;
     this.game    = game;
 
-
+    // Debug
     console.log("model3D.quaternion.x: " + model3D.quaternion.x);
     console.log("model3D.quaternion.y: " + model3D.quaternion.y);
     console.log("model3D.quaternion.z: " + model3D.quaternion.z);
@@ -18,7 +18,7 @@ class Model {
     console.log("boxSize:");
     console.log(boxSize);
 
-    //Ammojs Section
+    // Ammojs Section
     let transform = new Ammo.btTransform();
     transform.setIdentity();
     transform.setOrigin( new Ammo.btVector3( model3D.position.x, model3D.position.y, model3D.position.z ) );

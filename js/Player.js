@@ -1,6 +1,7 @@
-import * as THREE   from "https://unpkg.com/three@0.118.3/build/three.module.js";
-import { Car }      from "./Car.js";
-import { Utils }    from "./Utils.js";
+import * as THREE     from "https://unpkg.com/three@0.118.3/build/three.module.js";
+import { Car }        from "./Car.js";
+import { Character }  from "./Character.js";
+import { Utils }      from "./Utils.js";
 
 class Player {
     constructor(game) {
@@ -8,6 +9,10 @@ class Player {
       this.inputManager = game.getInputManager();
       this.model        = null;
       this.name         = null;
+
+      // Character animation
+      this.deltaMovement = 0;
+      this.movementThreshold = 0.7;
     }
 
     // Get current model for the player (model is not 3D model)
@@ -20,7 +25,7 @@ class Player {
       this.model = model;
     }
 
-    // Called in main render function
+    // Called in main animate function
     update(deltaTime) {
       if(!deltaTime || !this.model)   return;
 
@@ -29,21 +34,22 @@ class Player {
 
       const turnRotation = this.model.getTurnSpeed() * turnDirection * deltaTime;
 
-      // Check if we have to rotate car wheels
       if (this.model instanceof Car) {
-        const frontLeftWheel  = this.model.getFrontLeftWheel();
-        const frontRightWheel = this.model.getFrontRightWheel();
-        const backLeftWheel  = this.model.getBackLeftWheel();
-        const backRightWheel = this.model.getBackRightWheel();
+        const rotateWheels = () => {
+          const frontLeftWheel  = this.model.getFrontLeftWheel();
+          const frontRightWheel = this.model.getFrontRightWheel();
+          const backLeftWheel  = this.model.getBackLeftWheel();
+          const backRightWheel = this.model.getBackRightWheel();
 
-        frontLeftWheel.rotation.z  = Utils.clamp(frontLeftWheel.rotation.z  + turnRotation, -0.5, 0.5);
-        frontRightWheel.rotation.z = Utils.clamp(frontRightWheel.rotation.z + turnRotation, -0.5, 0.5);
+          frontLeftWheel.rotation.z  = Utils.clamp(frontLeftWheel.rotation.z  + turnRotation, -0.5, 0.5);
+          frontRightWheel.rotation.z = Utils.clamp(frontRightWheel.rotation.z + turnRotation, -0.5, 0.5);
 
-        // If X rotation, Z rotation is affected
-        //frontLeftWheel.rotation.x  = deltaTime;
-        //frontRightWheel.rotation.x = deltaTime;
-        backLeftWheel.rotation.x  = deltaTime;
-        backRightWheel.rotation.x = deltaTime;
+          // If X rotation, Z rotation is affected
+          //frontLeftWheel.rotation.x  = deltaTime;
+          //frontRightWheel.rotation.x = deltaTime;
+          backLeftWheel.rotation.x  = deltaTime;
+          backRightWheel.rotation.x = deltaTime;
+        }
 
         const updateVehiclePhysics = () => {
           const speed = this.model.vehicle.getCurrentSpeedKmHour();
@@ -127,7 +133,73 @@ class Player {
 					this.model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());*/
         }
 
+        rotateWheels();
         updateVehiclePhysics();
+      }
+
+      else if (this.model instanceof Character) {
+        // Animate body components
+        const run = () => {
+          // Debug
+          /*console.log("this.model.getHead().rotation.z: "  + this.model.getHead().rotation.z);
+          console.log("this.model.getUpperLeftArm().rotation.z: "  + this.model.getUpperLeftArm().rotation.z);
+          console.log("this.model.getUpperRightArm().rotation.z: " + this.model.getUpperRightArm().rotation.z);
+          console.log("this.model.getLowerLeftArm().rotation.z: "  + this.model.getLowerLeftArm().rotation.z);
+          console.log("this.model.getLowerRightArm().rotation.z: " + this.model.getLowerRightArm().rotation.z);
+
+          console.log("this.model.getUpperLeftLeg().rotation.z: "  + this.model.getUpperLeftLeg().rotation.z);
+          console.log("this.model.getUpperRightLeg().rotation.z: " + this.model.getUpperRightLeg().rotation.z);
+          console.log("this.model.getLowerLeftLeg().rotation.z: "  + this.model.getLowerLeftLeg().rotation.z);
+          console.log("this.model.getLowerRightLeg().rotation.z: " + this.model.getLowerRightLeg().rotation.z);
+          console.log("this.model.getLeftFoot().rotation.z: "  + this.model.getLeftFoot().rotation.z);
+          console.log("this.model.getRightFoot().rotation.z: " + this.model.getRightFoot().rotation.z);*/
+
+          if(this.deltaMovement >= this.movementThreshold) {
+            this.deltaMovement = 0;
+            this.movementThreshold = 1.4;
+            this.forwardMovement = !this.forwardMovement;
+          }
+
+          const augment = 0.1;
+          this.deltaMovement += augment;
+
+          if(this.forwardMovement) {
+            this.model.getHead().rotation.x += augment;
+            this.model.getUpperLeftArm().rotation.z  += augment;
+            this.model.getUpperRightArm().rotation.z -= augment;
+
+            this.model.getLowerLeftArm().rotation.z  += augment;
+            this.model.getLowerRightArm().rotation.z -= augment;
+
+            this.model.getUpperLeftLeg().rotation.z  += augment;
+            this.model.getUpperRightLeg().rotation.z -= augment;
+
+            this.model.getLowerLeftLeg().rotation.z  += augment;
+            this.model.getLowerRightLeg().rotation.z -= augment;
+
+            this.model.getLeftFoot().rotation.z  += augment;
+            this.model.getRightFoot().rotation.z -= augment;
+          }
+          else {
+            this.model.getHead().rotation.x -= augment;
+            this.model.getUpperLeftArm().rotation.z  -= augment;
+            this.model.getUpperRightArm().rotation.z += augment;
+
+            this.model.getLowerLeftArm().rotation.z  -= augment;
+            this.model.getLowerRightArm().rotation.z += augment;
+
+            this.model.getUpperLeftLeg().rotation.z  -= augment;
+            this.model.getUpperRightLeg().rotation.z += augment;
+
+            this.model.getLowerLeftLeg().rotation.z  -= augment;
+            this.model.getLowerRightLeg().rotation.z += augment;
+
+            this.model.getLeftFoot().rotation.z  -= augment;
+            this.model.getRightFoot().rotation.z += augment;
+          }
+        }
+
+        run();
       }
 
       let difficultyFactor;
@@ -157,8 +229,6 @@ class Player {
     getPosition() {
       return this.model ? this.model.getPosition() : null;
     }
-
-
 
   }
 

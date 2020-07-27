@@ -10,6 +10,7 @@ import { Game }         from "./Game.js";
 import { Player }       from "./Player.js";
 import { Car }          from "./Car.js";
 import { PoliceCar }    from "./PoliceCar.js";
+import { Character }    from "./Character.js";
 
 "use strict"
 
@@ -108,48 +109,98 @@ window.onload = function main() {
     // Init 3D models
     const models = {
       // Environment
-      /*road:               { url: 'src/environment/road/scene.gltf',
-                            position: [0, 0, 0],
-                            scale:    [0.2, 0.2, 0.2],
+      // City
+      abandonedBuilding:  { url: 'src/environment/city/buildings/abandoned_building/scene.gltf',
+                            position: [60, 0, -30],
+                            scale:    [15, 15, 15],
                             rotation: [0, 0, 0],
-                          },*/
-
-      buildingApartment:  { url: 'src/environment/buildings/building_apartment/scene.gltf',
-                            position: [-32, 0, -60],
+                          },
+      apartment:          { url: 'src/environment/city/buildings/apartment/scene.gltf',
+                            position: [60, 15, -150],
+                            scale:    [0.05, 0.05, 0.05],
+                            rotation: [0, 0, 0],
+                          },
+      buildingApartment:  { url: 'src/environment/city/buildings/building_apartment/scene.gltf',
+                            position: [-40, 0, -60],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, Math.PI/2, 0],
                           },
-      building1:          { url: 'src/environment/buildings/building_1/scene.gltf',
-                            position: [-29, 11, -10],
+      building1:          { url: 'src/environment/city/buildings/building_1/scene.gltf',
+                            position: [-40, 11, -10],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },
-      building2:          { url: 'src/environment/buildings/building_2/scene.gltf',
-                            position: [10, 0, 110],
+      building2:          { url: 'src/environment/city/buildings/building_2/scene.gltf',
+                            position: [20, 0, 110],
                             scale:    [0.3, 0.3, 0.3],
                             rotation: [0, Math.PI/2, 0],
                           },
       building3:          { url: 'src/environment/buildings/building_3/scene.gltf',
-                            position: [45, 0, 30],
+                            position: [50, 0, 30],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI/2, 0],
                           },
-      abandonedBuilding:  { url: 'src/environment/buildings/abandoned_building/scene.gltf',
-                            position: [50, 0, -30],
-                            scale:    [15, 15, 15],
-                            rotation: [0, 0, 0],
+      easternEuHouse:     { url: 'src/environment/city/buildings/eastern_european_panel_house/scene.gltf',
+                            position: [40, 0, 90],
+                            scale:    [0.1, 0.1, 0.1],
+                            rotation: [0, -Math.PI/2, 0],
                           },
-      apartment:          { url: 'src/environment/buildings/apartment/scene.gltf',
-                            position: [50, 0, -150],
-                            scale:    [0.05, 0.05, 0.05],
+      house:              { url: 'src/environment/city/buildings/house/scene.gltf',
+                            position: [-60, -1, 100],
+                            scale:    [0.01, 0.01, 0.01],
                             rotation: [0, 0, 0],
                           },
 
-      /*westernHouse:       { url: 'src/environment/buildings/western_house/scene.gltf',
+      // Street elements
+      /*road:               { url: 'src/environment/street/road/scene.gltf',
+                            position: [0, 0, 0],
+                            scale:    [0.2, 0.2, 0.2],
+                            rotation: [0, 0, 0],
+                          },*/
+      sidewalk:           { url: 'src/environment/city/street/sidewalk/scene.gltf',
+                            position: [26.5, 0, 0],
+                            scale:    [1, 1, 1],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      bench:              { url: 'src/environment/city/street/bench/scene.gltf',
+                            position: [-25, 1, -7],
+                            scale:    [1.5, 1.5, 1.5],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      lamp:               { url: 'src/environment/city/street/lamp/scene.gltf',
+                            position: [28, 0.5, -5],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, 0, 0],
+                          },
+      trafficCone:        { url: 'src/environment/city/street/traffic_road_cone/scene.gltf',
+                            position: [25, 0, -3],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, 0, 0],
+                          },
+      trashCan1:          { url: 'src/environment/city/street/trash_can_1/scene.gltf',
+                            position: [28, 0.5, -8],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, 0, 0],
+                          },
+      trashCan2:          { url: 'src/environment/city/street/trash_can_2/scene.gltf',
+                            position: [-25, 0, -3],
+                            scale:    [0.4, 0.4, 0.4],
+                            rotation: [0, 0, 0],
+                          },
+      trashCan3:          { url: 'src/environment/city/street/trash_can_3/scene.gltf',
+                            position: [-25, 1, -10],
+                            scale:    [1, 1, 1],
+                            rotation: [0, 0, 0],
+                          },
+
+      // Country - desert
+      /*westernHouse:       { url: 'src/environment/buildings/country - desert/western_house/scene.gltf',
                             position: [100, 0, -150],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },*/
+
+
 
       // Cars
       policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
@@ -192,6 +243,11 @@ window.onload = function main() {
 
 
       // Characters
+      nathan:             { url: 'src/characters/nathan/scene.gltf',
+                            position: [-4, 0, 0],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, Math.PI, 0],
+                          },
 
       // Bikes
       /*bike:               { url: 'src/vehicles/bikes/bike/scene.gltf',
@@ -200,6 +256,13 @@ window.onload = function main() {
                             rotation: [0, -Math.PI/2, 0],
                           },*/
     };
+
+    let car, frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel, door;
+    let policeCar, policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel;
+
+    let character;
+
+    let bike;
 
     // Load the 3D models
     const gltfLoader = new GLTFLoader(manager);
@@ -238,11 +301,6 @@ window.onload = function main() {
       }
     }
 
-    let car, frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel, door;
-    let policeCar, policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel;
-
-    let bike;
-
     const inputManager = new InputManager();
     const game         = new Game(inputManager, "easy", physicsWorld);
     const player       = new Player(game);
@@ -253,7 +311,7 @@ window.onload = function main() {
       for (const model of Object.values(models)) {
         const modelScene = model.gltf.scene;
         scene.add(modelScene);
-        //console.log(Utils.dumpObject(modelScene).join('\n'));
+        console.log(Utils.dumpObject(modelScene).join('\n'));
 
         switch (model) {
           // Cars
@@ -270,13 +328,18 @@ window.onload = function main() {
             loadTeslaCar(modelScene);
             break;
 
+          // Characters
+          case models.nathan:
+            addNathanCharacter(modelScene);
+            break;
+
           // Bikes
           case models.bike:
-            AddStaticModel(model);
+            addStaticModel(model);
             bike = modelScene;  // temp
             break;
           default:
-            AddStaticModel(model);
+            addStaticModel(model);
         }
       }
     }
@@ -287,8 +350,9 @@ window.onload = function main() {
     }
 
     // Sunlight
-    const sunlight = new THREE.DirectionalLight(0xFFFFFF, 0.3);
-    sunlight.position.set(100, 10, 0.3); // Sunrise
+    const sunlight = new THREE.DirectionalLight(0xFFFFFF, 1); //0.3);
+    //sunlight.position.set(100, 10, 0.3); // Sunrise
+    sunlight.position.set(0, 30, 0.3); // Sunrise
     scene.add(sunlight);
     sunlight.castShadow = true;
 
@@ -311,16 +375,21 @@ window.onload = function main() {
 
 
     { // Infinite terrain with a texture
-      const tex = new THREE.TextureLoader().load("../src/textures/road_texture.jpg");
-      tex.anisotropy = 2;
-      tex.repeat.set(300, 300);
+      const tex = new THREE.TextureLoader().load("../src/textures/street_texture.jpg");
+      // road_texture.jpg
+      //tex.anisotropy = 2;
+      //tex.repeat.set(300, 300);
+
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      tex.repeat.set(400, 400);
       tex.wrapT = THREE.RepeatWrapping;
       tex.wrapS = THREE.RepeatWrapping;
       const geo = new THREE.PlaneBufferGeometry(10000, 10000);
       const mat = new THREE.MeshLambertMaterial({ map: tex });
       const mesh = new THREE.Mesh(geo, mat);
       mesh.position.set(0, 0, 0);
-      mesh.rotation.set(Math.PI / -2, 0, Math.PI/2);
+      mesh.rotation.set(Math.PI / -2, 0, 0);
+      //mesh.rotation.set(Math.PI / -2, 0, Math.PI/2); // road_texture.jpg
       scene.add(mesh);
 
       // Ammojs Section
@@ -435,7 +504,7 @@ window.onload = function main() {
 
       // Change sunlight position and intensity according to the elapsed time
       // (about 4 seconds of the game corresponds to 1 hour, 96/4 = 24)
-      if (time % 96 < 20) {
+      /*if (time % 96 < 20) {
         // Prepare sunrise (daytime is between midnight and 5 )
         sunlight.position.set(100, 10, 0.3);
         sunlight.intensity = Utils.clamp(sunlight.intensity - 0.007, 0, 1.7);
@@ -451,7 +520,7 @@ window.onload = function main() {
         sunlight.position.x -= sunlightPositionIncrement;
         sunlight.position.y -= sunlightPositionIncrement;
         sunlight.intensity = Utils.clamp(sunlight.intensity - 0.005, 0, 1.7);
-      }
+      }*/
 
 
       //console.log("time%96: " + time%96 + "\n");
@@ -501,6 +570,10 @@ window.onload = function main() {
           camera.lookAt(myPos);
           camera.position.set(myPos.x, myPos.y + 10, myPos.z + 12);
           bike.position.z -= 1;
+      }*/
+
+      /*if (character) {
+        player.update(deltaTime);
       }*/
 
       inputManager.update();
@@ -575,7 +648,7 @@ window.onload = function main() {
     }
 
     // Add a static model to the scene
-    function AddStaticModel(model) {
+    function addStaticModel(model) {
       if(!model)  return;
 
       const modelScene = model.gltf.scene;
@@ -674,7 +747,6 @@ window.onload = function main() {
         else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig')   policeBackRightWheel = o;
       });
 
-      //policeCar = new PoliceCar(policeCar, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
       policeCar = new PoliceCar(modelScene, 800, game, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
     }
 
@@ -804,6 +876,80 @@ window.onload = function main() {
       controls.maxDistance = boxSize * 10;
       controls.target.copy(boxCenter);
       controls.update();
+    }
+
+    function addNathanCharacter(modelScene) {
+      modelScene.position.set(...models.nathan.position);
+      modelScene.scale.set(...models.nathan.scale)
+      modelScene.rotation.set(...models.nathan.rotation);
+
+      let head,
+          leftArm  = [],
+          leftHand = [],
+          rightArm  = [],
+          rightHand = [],
+
+          leftLeg  = [],
+          leftFoot = [],
+          rightLeg  = [],
+          rightFoot = [];
+
+      modelScene.traverse(o => {
+        if (o.isMesh) {
+          o.castShadow = true;
+          o.receiveShadow = true;
+        }
+
+        // Reference the components of the character
+        if (o.name === 'rp_nathan_animated_003_walking_head_07')               head = o;
+
+        if (o.name === 'rp_nathan_animated_003_walking_shoulder_l_023')        leftArm[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_upperarm_l_024')   leftArm[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerarm_l_025')   leftArm[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_hand_l_026')       leftHand[0]  = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_thumb_01_l_027')   leftHand[1]  = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_index_01_l_031')   leftHand[2]  = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_middle_01_l_00')   leftHand[3]  = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_ring_01_l_038')    leftHand[4]  = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_pinky_01_l_042')   leftHand[5]  = o;
+
+        else if (o.name === 'rp_nathan_animated_003_walking_shoulder_r_048')   rightArm[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_upperarm_r_049')   rightArm[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerarm_r_050')   rightArm[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_hand_r_051')       rightHand[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_thumb_01_r_052')   rightHand[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_index_01_r_056')   rightHand[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_middle_01_r_060')  rightHand[3] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_ring_01_r_064')    rightHand[4] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_pinky_01_r_068')   rightHand[5] = o;
+
+        else if (o.name === 'rp_nathan_animated_003_walking_upperleg_l_074')   leftLeg[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerleg_l_075')   leftLeg[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_foot_l_076')       leftFoot[0] = o;
+
+        else if (o.name === 'rp_nathan_animated_003_walking_upperleg_r_081')   rightLeg[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerleg_r_082')   rightLeg[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_foot_r_083')       rightFoot[0] = o;
+      });
+
+      const components = {
+        head:      head,
+        leftArm:   leftArm,
+        leftHand:  leftHand,
+        rightArm:  rightArm,
+        rightHand: rightHand,
+        leftLeg:   leftLeg,
+        leftFoot:  leftFoot,
+        rightLeg:  rightLeg,
+        rightFoot: rightFoot
+      }
+
+      character = new Character(modelScene, 80, game, "Nathan", components);
+      player.setModel(character);
+
+      // Create the PositionalAudio object (passing in the listener)
+      audioObjects.character = new THREE.PositionalAudio(listener);
+      applySound(modelScene, 'src/sounds/Running footsteps.mka', audioObjects.character);
     }
 
   }
