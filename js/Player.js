@@ -89,6 +89,13 @@ class Player {
 						}
 					}
 
+          const frontLeftWheel  = this.model.getFrontLeftWheel();
+          const frontRightWheel = this.model.getFrontRightWheel();
+          const backLeftWheel  = this.model.getBackLeftWheel();
+          const backRightWheel = this.model.getBackRightWheel();
+
+          console.log("getPosition(): ");
+          console.log(this.getPosition());
           console.log("frontLeftWheel.position.x: " + frontLeftWheel.position.x);
           console.log("frontLeftWheel.position.y: " + frontLeftWheel.position.y);
           console.log("frontLeftWheel.position.z: " + frontLeftWheel.position.z);

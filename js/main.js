@@ -96,18 +96,8 @@ window.onload = function main() {
         value ? audio.pause() : audio.play();
     }
 
-    // Create a loading manager for 3D models
-    const manager = new THREE.LoadingManager();
-    manager.onLoad = init;
-
-    // Create a progress bar to show during loading
-    const progressBar = document.getElementById('progressbar');
-    manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-      progressBar.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
-    };
-
-    // Init 3D models
-    const models = {
+    // Static 3D models
+    const staticModels = {
       // Environment
       // City
       abandonedBuilding:  { url: 'src/environment/city/buildings/abandoned_building/scene.gltf',
@@ -167,11 +157,6 @@ window.onload = function main() {
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, 0, 0],
                           },*/
-      sidewalk:           { url: 'src/environment/city/street/sidewalk/scene.gltf',
-                            position: [26.5, 0, 0],
-                            scale:    [1, 1, 1],
-                            rotation: [0, -Math.PI/2, 0],
-                          },
       bench:              { url: 'src/environment/city/street/bench/scene.gltf',
                             position: [-25, 1, -7],
                             scale:    [2, 2, 2],
@@ -191,6 +176,11 @@ window.onload = function main() {
                             position: [28, 0.5, -5],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, 0, 0],
+                          },
+      sidewalk:           { url: 'src/environment/city/street/sidewalk/scene.gltf',
+                            position: [26.5, 0, 0],
+                            scale:    [1, 1, 1],
+                            rotation: [0, -Math.PI/2, 0],
                           },
       trafficCone:        { url: 'src/environment/city/street/traffic_road_cone/scene.gltf',
                             position: [25, 0, -3],
@@ -245,9 +235,9 @@ window.onload = function main() {
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, -Math.PI/2, 0],
                           },*/
+    };
 
-
-
+    const dynamicModels = {
       // Cars
       policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
                             position: [-1.5, 0, 25],
@@ -289,11 +279,11 @@ window.onload = function main() {
 
 
       // Characters
-      nathan:             { url: 'src/characters/nathan/scene.gltf',
+      /*nathan:             { url: 'src/characters/nathan/scene.gltf',
                             position: [-4, 0, 0],
                             scale:    [0.025, 0.025, 0.025],
                             rotation: [0, Math.PI, 0],
-                          },
+                          },*/
 
       // Bikes
       /*bike:               { url: 'src/vehicles/bikes/bike/scene.gltf',
@@ -305,17 +295,32 @@ window.onload = function main() {
 
     let car, policeCar, character, bike;
 
+    // Create a loading manager for 3D models
+    const manager = new THREE.LoadingManager();
+    manager.onLoad = init;
+
+    // Create a progress bar to show during loading
+    const progressBar = document.getElementById('progressbar');
+    manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      progressBar.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
+    };
+
     // Load the 3D models
     const gltfLoader = new GLTFLoader(manager);
-    for (const model of Object.values(models)) {
-      gltfLoader.load(model.url, function (gltf) {
-        model.gltf = gltf;
-      },
-      undefined,
-      function (error) {
-        console.error(error);
-        alert("Error during the loading, try to refresh the page");
-      });
+    loadModels(staticModels);
+    loadModels(dynamicModels);
+
+    function loadModels(models) {
+      for (const model of Object.values(models)) {
+        gltfLoader.load(model.url, function (gltf) {
+          model.gltf = gltf;
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+          alert("Error during the loading of the game!\nTry to refresh the page");
+        });
+      }
     }
 
     // Called when all models are loaded
@@ -324,9 +329,16 @@ window.onload = function main() {
       const loading = document.getElementById('loading');
       loading.style.display = 'none';
 
+      // Show canvas (initially hidden to show loading)
+      canvas.style.display = 'inherit';
+
       // Add listener on window resize
       window.addEventListener('resize', resizeCanvas, false);
+      // Adapt canvas size to current window
       resizeCanvas();
+
+      // Add static models to the scene
+      addStaticModels();
 
       // Show Play button
       const play = document.getElementById('playBtn');
@@ -346,45 +358,55 @@ window.onload = function main() {
       }
     }
 
+    // Add static models to the scene before starting the game
+    function addStaticModels() {
+      for (const model of Object.values(staticModels)) {
+        const modelScene = model.gltf.scene;
+        scene.add(modelScene);
+        addStaticModel(model);
+      }
+    }
+
     const inputManager = new InputManager();
     const game         = new Game(inputManager, "easy", physicsWorld);
     const player       = new Player(game);
 
     // Start the game
     function start() {
-      // Add models to the scene
-      for (const model of Object.values(models)) {
+      // Add dynamic models to the scene
+      for (const model of Object.values(dynamicModels)) {
         const modelScene = model.gltf.scene;
         scene.add(modelScene);
         console.log(Utils.dumpObject(modelScene).join('\n'));
 
         switch (model) {
           // Cars
-          case models.policeCar:
-            loadPoliceCar(modelScene);
+          case dynamicModels.policeCar:
+            addPoliceCar(modelScene);
             break;
-          case models.bmwCar:
-            loadBmwCar(modelScene);
+          case dynamicModels.bmwCar:
+            addBmwCar(modelScene);
             break;
-          case models.lamborghiniCar:
-            loadLamborghiniCar(modelScene);
+          case dynamicModels.lamborghiniCar:
+            addLamborghiniCar(modelScene);
             break;
-          case models.teslaCar:
-            loadTeslaCar(modelScene);
+          case dynamicModels.teslaCar:
+            addTeslaCar(modelScene);
             break;
 
           // Characters
-          case models.nathan:
+          case dynamicModels.nathan:
             addNathanCharacter(modelScene);
             break;
 
           // Bikes
-          case models.bike:
+          case dynamicModels.bike:
             addStaticModel(model);
             bike = modelScene;  // temp
             break;
           default:
             addStaticModel(model);
+            //alert("Error during starting the game!\nTry to refresh the page");
         }
       }
     }
@@ -397,7 +419,7 @@ window.onload = function main() {
     // Sunlight
     const sunlight = new THREE.DirectionalLight(0xFFFFFF, 1); //0.3);
     //sunlight.position.set(100, 10, 0.3); // Sunrise
-    sunlight.position.set(0, 30, 0.3); // Sunrise
+    sunlight.position.set(0, 30, 0.3); // TEMP
     scene.add(sunlight);
     sunlight.castShadow = true;
 
@@ -448,13 +470,13 @@ window.onload = function main() {
 
       let motionState = new Ammo.btDefaultMotionState(transform);
 
-      let colShape = new Ammo.btBoxShape( new Ammo.btVector3(10000, 0, 10000) );
-      colShape.setMargin(0.05);
+      let collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(10000, 0, 10000) );
+      collisionShape.setMargin(0.05);
 
       let localInertia = new Ammo.btVector3(0, 0, 0);
-      colShape.calculateLocalInertia(mass, localInertia);
+      collisionShape.calculateLocalInertia(mass, localInertia);
 
-      let rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, colShape, localInertia);
+      let rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, collisionShape, localInertia);
       let body = new Ammo.btRigidBody(rbInfo);
 
       physicsWorld.addRigidBody(body);
@@ -575,7 +597,7 @@ window.onload = function main() {
       //console.log("sunlight.intensity: " + sunlight.intensity + "\n");
 
 
-      /*if (car) {
+      if (car) {
         player.update(deltaTime);
 
         //console.log("car.position.z: " + car.position.z);
@@ -597,7 +619,7 @@ window.onload = function main() {
         controls.update();*/
 
         //console.log("camera.position.z: " + camera.position.z);
-      //}
+      }
 
       /*if (policeCar) {
         policeCar.update(deltaTime);
@@ -771,10 +793,10 @@ window.onload = function main() {
       }
     }*/
 
-    function loadPoliceCar(modelScene) {
-      modelScene.position.set(...models.policeCar.position);
-      modelScene.scale.set(...models.policeCar.scale)
-      modelScene.rotation.set(...models.policeCar.rotation);
+    function addPoliceCar(modelScene) {
+      modelScene.position.set(...dynamicModels.policeCar.position);
+      modelScene.scale.set(...dynamicModels.policeCar.scale)
+      modelScene.rotation.set(...dynamicModels.policeCar.rotation);
 
       /*console.log("policeCar.position.x: " + policeCar.position.x);
       console.log("policeCar.position.y: " + policeCar.position.y);
@@ -808,12 +830,12 @@ window.onload = function main() {
       policeCar = new PoliceCar(modelScene, 800, game, "policeCar1", wheels, scene, gui);
     }
 
-    function loadBmwCar(modelScene) {
+    function addBmwCar(modelScene) {
       //car = modelScene.getObjectByName('BMW_i8fbx');
 
-      modelScene.position.set(...models.bmwCar.position);
-      modelScene.scale.set(...models.bmwCar.scale)
-      modelScene.rotation.set(...models.bmwCar.rotation);
+      modelScene.position.set(...dynamicModels.bmwCar.position);
+      modelScene.scale.set(...dynamicModels.bmwCar.scale)
+      modelScene.rotation.set(...dynamicModels.bmwCar.rotation);
 
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.car = new THREE.PositionalAudio(listener);
@@ -847,12 +869,12 @@ window.onload = function main() {
       player.setModel(car);
     }
 
-    function loadTeslaCar(modelScene) {
+    function addTeslaCar(modelScene) {
       //car = modelScene.getObjectByName('Tesla_Model_Sfbx');
 
-      modelScene.position.set(...models.teslaCar.position);
-      modelScene.scale.set(...models.teslaCar.scale)
-      modelScene.rotation.set(...models.teslaCar.rotation);
+      modelScene.position.set(...dynamicModels.teslaCar.position);
+      modelScene.scale.set(...dynamicModels.teslaCar.scale)
+      modelScene.rotation.set(...dynamicModels.teslaCar.rotation);
 
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.car = new THREE.PositionalAudio(listener);
@@ -883,12 +905,12 @@ window.onload = function main() {
       player.setModel(car);
     }
 
-    function loadLamborghiniCar(modelScene) {
+    function addLamborghiniCar(modelScene) {
       //car = modelScene.getObjectByName('Lamborghini_Aventador_Jfbx');
 
-      modelScene.position.set(...models.lamborghiniCar.position);
-      modelScene.scale.set(...models.lamborghiniCar.scale)
-      modelScene.rotation.set(...models.lamborghiniCar.rotation);
+      modelScene.position.set(...dynamicModels.lamborghiniCar.position);
+      modelScene.scale.set(...dynamicModels.lamborghiniCar.scale)
+      modelScene.rotation.set(...dynamicModels.lamborghiniCar.rotation);
 
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.car = new THREE.PositionalAudio(listener);
@@ -917,9 +939,9 @@ window.onload = function main() {
 
 
     function addNathanCharacter(modelScene) {
-      modelScene.position.set(...models.nathan.position);
-      modelScene.scale.set(...models.nathan.scale)
-      modelScene.rotation.set(...models.nathan.rotation);
+      modelScene.position.set(...dynamicModels.nathan.position);
+      modelScene.scale.set(...dynamicModels.nathan.scale)
+      modelScene.rotation.set(...dynamicModels.nathan.rotation);
 
       let head,
           leftArm  = [],
