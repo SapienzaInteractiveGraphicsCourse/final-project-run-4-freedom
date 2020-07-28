@@ -111,32 +111,32 @@ window.onload = function main() {
       // Environment
       // City
       abandonedBuilding:  { url: 'src/environment/city/buildings/abandoned_building/scene.gltf',
-                            position: [60, 0, -30],
+                            position: [80, 0, -45],
                             scale:    [15, 15, 15],
                             rotation: [0, 0, 0],
                           },
       apartment:          { url: 'src/environment/city/buildings/apartment/scene.gltf',
-                            position: [60, 15, -150],
+                            position: [70, 15, -150],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },
       buildingApartment:  { url: 'src/environment/city/buildings/building_apartment/scene.gltf',
-                            position: [-40, 0, -60],
+                            position: [-50, 0, -60],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, Math.PI/2, 0],
                           },
       building1:          { url: 'src/environment/city/buildings/building_1/scene.gltf',
-                            position: [-40, 11, -10],
+                            position: [-45, 11, -10],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },
       building2:          { url: 'src/environment/city/buildings/building_2/scene.gltf',
-                            position: [20, 0, 110],
+                            position: [0, 0, 110],
                             scale:    [0.3, 0.3, 0.3],
                             rotation: [0, Math.PI/2, 0],
                           },
-      building3:          { url: 'src/environment/buildings/building_3/scene.gltf',
-                            position: [50, 0, 30],
+      building3:          { url: 'src/environment/city/buildings/building_3/scene.gltf',
+                            position: [65, 0, 30],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI/2, 0],
                           },
@@ -145,9 +145,19 @@ window.onload = function main() {
                             scale:    [0.1, 0.1, 0.1],
                             rotation: [0, -Math.PI/2, 0],
                           },
-      house:              { url: 'src/environment/city/buildings/house/scene.gltf',
-                            position: [-60, -1, 100],
+      house1:             { url: 'src/environment/city/buildings/house/scene.gltf',
+                            position: [-60, -1, 160],
                             scale:    [0.01, 0.01, 0.01],
+                            rotation: [0, 0, 0],
+                          },
+      house2:             { url: 'src/environment/city/buildings/house_2/scene.gltf',
+                            position: [-30, -1, 145],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, 0, 0],
+                          },
+      house3:             { url: 'src/environment/city/buildings/house_3/scene.gltf',
+                            position: [-60, -1, 210],
+                            scale:    [0.035, 0.035, 0.035],
                             rotation: [0, 0, 0],
                           },
 
@@ -164,7 +174,17 @@ window.onload = function main() {
                           },
       bench:              { url: 'src/environment/city/street/bench/scene.gltf',
                             position: [-25, 1, -7],
-                            scale:    [1.5, 1.5, 1.5],
+                            scale:    [2, 2, 2],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      dumpster:           { url: 'src/environment/city/street/dumpster/scene.gltf',
+                            position: [25, 1.5, 10],
+                            scale:    [1.8, 1.8, 1.8],
+                            rotation: [0, 0, 0],
+                          },
+      graffitiWall:       { url: 'src/environment/city/street/graffiti_wall/scene.gltf',
+                            position: [48, 8, -30],
+                            scale:    [2, 2, 2],
                             rotation: [0, Math.PI/2, 0],
                           },
       lamp:               { url: 'src/environment/city/street/lamp/scene.gltf',
@@ -178,7 +198,7 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
       trashCan1:          { url: 'src/environment/city/street/trash_can_1/scene.gltf',
-                            position: [28, 0.5, -8],
+                            position: [28, 0.5, 0],
                             scale:    [0.025, 0.025, 0.025],
                             rotation: [0, 0, 0],
                           },
@@ -192,12 +212,38 @@ window.onload = function main() {
                             scale:    [1, 1, 1],
                             rotation: [0, 0, 0],
                           },
+      hydrant:            { url: 'src/environment/city/street/yellow_rusted_hydrant/scene.gltf',
+                            position: [-25, 1, 10],
+                            scale:    [0.8, 0.8, 0.8],
+                            rotation: [0, 0, 0],
+                          },
+
 
       // Country - desert
+      /*factory:            { url: 'src/environment/country - desert/buildings/factory/scene.gltf',
+                            position: [-70, 0, -110],
+                            scale:    [5, 5, 5],
+                            rotation: [0, 0, 0],
+                          },
+      grainSilo:          { url: 'src/environment/country - desert/buildings/grain_silo/scene.gltf',
+                            position: [0, 0, -30],
+                            scale:    [3, 3, 3],
+                            rotation: [0, 0, 0],
+                          },
+      stores:            { url: 'src/environment/country - desert/buildings/wasteland_stores/scene.gltf',
+                            position: [-50, 0, -170],
+                            scale:    [0.1, 0.1, 0.1],
+                            rotation: [0, Math.PI/2, 0],
+                          },
       /*westernHouse:       { url: 'src/environment/buildings/country - desert/western_house/scene.gltf',
                             position: [100, 0, -150],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
+                          },
+      windTurbine:        { url: 'src/environment/country - desert/buildings/vintage_wind_turbine/scene.gltf',
+                            position: [0, 0, -50],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
                           },*/
 
 
@@ -257,12 +303,7 @@ window.onload = function main() {
                           },*/
     };
 
-    let car, frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel, door;
-    let policeCar, policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel;
-
-    let character;
-
-    let bike;
+    let car, policeCar, character, bike;
 
     // Load the 3D models
     const gltfLoader = new GLTFLoader(manager);
@@ -282,6 +323,10 @@ window.onload = function main() {
       // Hide the loading bar
       const loading = document.getElementById('loading');
       loading.style.display = 'none';
+
+      // Add listener on window resize
+      window.addEventListener('resize', resizeCanvas, false);
+      resizeCanvas();
 
       // Show Play button
       const play = document.getElementById('playBtn');
@@ -472,7 +517,6 @@ window.onload = function main() {
 
     }*/
 
-
     // Show app stats
     var stats = new Stats();
     stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -532,10 +576,6 @@ window.onload = function main() {
 
 
       /*if (car) {
-        // TEMP, MUST BE SET WHEN car CHANGES
-        if (!player.getModel())
-          player.setModel(new Car(car, 800, game, "bmw", [frontLeftWheel, frontRightWheel, backLeftWheel, backRightWheel]));
-
         player.update(deltaTime);
 
         //console.log("car.position.z: " + car.position.z);
@@ -579,6 +619,8 @@ window.onload = function main() {
       inputManager.update();
       updatePhysics(deltaTime);
 
+      //console.log("renderer.info.render.calls: " + renderer.info.render.calls);
+
       stats.end();
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
@@ -614,8 +656,7 @@ window.onload = function main() {
 
 
 
-
-
+    // To be verified
     function updateCameraPosition() {
       const myPos = player.getPosition();
       const relativeCameraOffset = new THREE.Vector3(0, 10, 10);
@@ -628,8 +669,23 @@ window.onload = function main() {
 
 
 
+    // Create a box that contains the model (player model) and update
+    // the camera to frame it
+    function updateCamera(modelScene) {
+      // compute the box that contains all the stuff from model and below
+      const box = new THREE.Box3().setFromObject(modelScene);
 
+      const boxSize   = box.getSize(new THREE.Vector3()).length();
+      const boxCenter = box.getCenter(new THREE.Vector3());
 
+      // set the camera to frame the box
+      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
+
+      // update the Trackball controls to handle the new size
+      controls.maxDistance = boxSize * 10;
+      controls.target.copy(boxCenter);
+      controls.update();
+    }
 
     // Apply a sound to a mesh
     function applySound(mesh, filename, sound) {
@@ -728,6 +784,8 @@ window.onload = function main() {
       console.log("modelScene.position.y: " + modelScene.position.y);
       console.log("modelScene.position.z: " + modelScene.position.z);*/
 
+      let wheels = [];
+
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
@@ -741,17 +799,17 @@ window.onload = function main() {
         }
 
         // Reference the four wheels
-        if (o.isBone && o.name === 'DEF-WheelFtL_Car_Rig')        policeFrontLeftWheel  = o;
-        else if (o.isBone && o.name === 'DEF-WheelFtR_Car_Rig')   policeFrontRightWheel = o;
-        else if (o.isBone && o.name === 'DEF-WheelBkL_Car_Rig')   policeBackLeftWheel  = o;
-        else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig')   policeBackRightWheel = o;
+        if (o.isBone && o.name === 'DEF-WheelFtL_Car_Rig')        wheels[0] = o;
+        else if (o.isBone && o.name === 'DEF-WheelFtR_Car_Rig')   wheels[1] = o;
+        else if (o.isBone && o.name === 'DEF-WheelBkL_Car_Rig')   wheels[2] = o;
+        else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig')   wheels[3] = o;
       });
 
-      policeCar = new PoliceCar(modelScene, 800, game, "policeCar1", [policeFrontLeftWheel, policeFrontRightWheel, policeBackLeftWheel, policeBackRightWheel], scene, gui);
+      policeCar = new PoliceCar(modelScene, 800, game, "policeCar1", wheels, scene, gui);
     }
 
     function loadBmwCar(modelScene) {
-      car = modelScene.getObjectByName('BMW_i8fbx');
+      //car = modelScene.getObjectByName('BMW_i8fbx');
 
       modelScene.position.set(...models.bmwCar.position);
       modelScene.scale.set(...models.bmwCar.scale)
@@ -761,6 +819,8 @@ window.onload = function main() {
       audioObjects.car = new THREE.PositionalAudio(listener);
       applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
+      let wheels = [];
+
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
@@ -768,36 +828,27 @@ window.onload = function main() {
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel020')        frontLeftWheel  = o;
-        else if (o.name === 'wheel028')   frontRightWheel = o;
-        else if (o.name === 'wheel012')   backLeftWheel  = o;
-        else if (o.name === 'wheel004')   backRightWheel = o;
+        if (o.name === 'wheel020')        wheels[0] = o;
+        else if (o.name === 'wheel028')   wheels[1] = o;
+        else if (o.name === 'wheel012')   wheels[2] = o;
+        else if (o.name === 'wheel004')   wheels[3] = o;
 
         // z axis for front wheels when the car goes left and right
         // x axis for forward movement
       });
 
       // Adjust front wheels orientation before to animate them
-      frontLeftWheel.rotation.z  = 0;
-      frontRightWheel.rotation.z = 0;
+      wheels[0].rotation.z = 0;
+      wheels[1].rotation.z = 0;
 
-      // compute the box that contains all the stuff from model and below
-      const box = new THREE.Box3().setFromObject(modelScene);
+      //updateCamera(modelScene);
 
-      const boxSize   = box.getSize(new THREE.Vector3()).length();
-      const boxCenter = box.getCenter(new THREE.Vector3());
-
-      // set the camera to frame the box
-      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
-
-      // update the Trackball controls to handle the new size
-      controls.maxDistance = boxSize * 10;
-      controls.target.copy(boxCenter);
-      controls.update();
+      car = new Car(modelScene, 800, game, "Bmw", wheels);
+      player.setModel(car);
     }
 
     function loadTeslaCar(modelScene) {
-      car = modelScene.getObjectByName('Tesla_Model_Sfbx');
+      //car = modelScene.getObjectByName('Tesla_Model_Sfbx');
 
       modelScene.position.set(...models.teslaCar.position);
       modelScene.scale.set(...models.teslaCar.scale)
@@ -807,6 +858,8 @@ window.onload = function main() {
       audioObjects.car = new THREE.PositionalAudio(listener);
       applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
+      let wheels = [];
+
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
@@ -814,33 +867,24 @@ window.onload = function main() {
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel')           frontLeftWheel  = o;
-        else if (o.name === 'wheel001')   frontRightWheel = o;
-        else if (o.name === 'wheel003')   backLeftWheel  = o;
-        else if (o.name === 'wheel002')   backRightWheel = o;
+        if (o.name === 'wheel')           wheels[0]  = o;
+        else if (o.name === 'wheel001')   wheels[1] = o;
+        else if (o.name === 'wheel003')   wheels[2]  = o;
+        else if (o.name === 'wheel002')   wheels[3] = o;
       });
 
       // Adjust front wheels orientation before to animate them
-      frontLeftWheel.rotation.z  = 0;
-      frontRightWheel.rotation.z = 0;
+      wheels[0].rotation.z = 0;
+      wheels[1].rotation.z = 0;
 
-      // compute the box that contains all the stuff from model and below
-      const box = new THREE.Box3().setFromObject(modelScene);
+      //updateCamera(modelScene);
 
-      const boxSize   = box.getSize(new THREE.Vector3()).length();
-      const boxCenter = box.getCenter(new THREE.Vector3());
-
-      // set the camera to frame the box
-      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
-
-      // update the Trackball controls to handle the new size
-      controls.maxDistance = boxSize * 10;
-      controls.target.copy(boxCenter);
-      controls.update();
+      car = new Car(modelScene, 800, game, "Tesla", wheels);
+      player.setModel(car);
     }
 
     function loadLamborghiniCar(modelScene) {
-      car = modelScene.getObjectByName('Lamborghini_Aventador_Jfbx');
+      //car = modelScene.getObjectByName('Lamborghini_Aventador_Jfbx');
 
       modelScene.position.set(...models.lamborghiniCar.position);
       modelScene.scale.set(...models.lamborghiniCar.scale)
@@ -850,6 +894,8 @@ window.onload = function main() {
       audioObjects.car = new THREE.PositionalAudio(listener);
       applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
+      let wheels = [];
+
       modelScene.traverse(o => {
         if (o.isMesh) {
           o.castShadow = true;
@@ -857,26 +903,18 @@ window.onload = function main() {
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel001')        frontLeftWheel  = o;
-        else if (o.name === 'wheel002')   frontRightWheel = o;
-        else if (o.name === 'wheel003')   backLeftWheel  = o;
-        else if (o.name === 'wheel005')   backRightWheel = o;
+        if (o.name === 'wheel001')        wheels[0] = o;
+        else if (o.name === 'wheel002')   wheels[1] = o;
+        else if (o.name === 'wheel003')   wheels[2] = o;
+        else if (o.name === 'wheel005')   wheels[3] = o;
       });
 
-      // compute the box that contains all the stuff from model and below
-      const box = new THREE.Box3().setFromObject(modelScene);
+      //updateCamera(modelScene);
 
-      const boxSize   = box.getSize(new THREE.Vector3()).length();
-      const boxCenter = box.getCenter(new THREE.Vector3());
-
-      // set the camera to frame the box
-      Utils.frameArea(boxSize, boxSize, boxCenter, camera);
-
-      // update the Trackball controls to handle the new size
-      controls.maxDistance = boxSize * 10;
-      controls.target.copy(boxCenter);
-      controls.update();
+      car = new Car(modelScene, 800, game, "Lamborghini", wheels);
+      player.setModel(car);
     }
+
 
     function addNathanCharacter(modelScene) {
       modelScene.position.set(...models.nathan.position);
@@ -950,6 +988,15 @@ window.onload = function main() {
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.character = new THREE.PositionalAudio(listener);
       applySound(modelScene, 'src/sounds/Running footsteps.mka', audioObjects.character);
+
+      //updateCamera(modelScene);
+    }
+
+    // Must run each time the DOM window resize event fires.
+    // Resets the canvas dimensions to match the window
+    function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
 
   }

@@ -64,7 +64,7 @@ class Utils {
     camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
   }
 
-  // Make a coordinates GUI
+  // Makes a coordinates GUI
   static makeXYZGUI(gui, vector3, name, onChangeFn) {
     const folder = gui.addFolder(name);
     folder.add(vector3, 'x', -100, 100).onChange(onChangeFn);
