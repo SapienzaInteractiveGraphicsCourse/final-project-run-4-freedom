@@ -58,14 +58,14 @@ class Player {
 					let breakingForce = 0;
 					let engineForce = 0;
 
-					//if (actions.acceleration) {
+					if (this.inputManager.forwardAction()) {
 						if (speed < -1)   breakingForce = this.model.maxBreakingForce;
 						else              engineForce   = this.model.maxEngineForce;
-					//}
-					/*if (actions.braking) {
-						if (speed > 1)  breakingForce = maxBreakingForce;
-						else            engineForce = -maxEngineForce / 2;
-					}*/
+					}
+					if (this.inputManager.backAction()) {
+						if (speed > 1)  breakingForce = this.model.maxBreakingForce;
+						else            engineForce   = -this.model.maxEngineForce / 2;
+					}
 
 
 					if (this.inputManager.leftAction()) {
@@ -109,15 +109,17 @@ class Player {
           console.log("backRightWheel.position.y: " + backRightWheel.position.y);
           console.log("backRightWheel.position.z: " + backRightWheel.position.z);
 
-
-					/*this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_LEFT_WHEEL_ID);
+          // Apply engine force to rear wheels
+					this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_LEFT_WHEEL_ID);
 					this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_RIGHT_WHEEL_ID);
 
+          // Apply brake force to all wheels
           this.model.vehicle.setBrake(breakingForce / 2, this.model.FRONT_LEFT_WHEEL_ID);
 					this.model.vehicle.setBrake(breakingForce / 2, this.model.FRONT_RIGHT_WHEEL_ID);
 					this.model.vehicle.setBrake(breakingForce, this.model.BACK_LEFT_WHEEL_ID);
 					this.model.vehicle.setBrake(breakingForce, this.model.BACK_RIGHT_WHEEL_ID);
 
+          // Apply steering to front wheels
 					this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_LEFT_WHEEL_ID);
 					this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_RIGHT_WHEEL_ID);
 
@@ -131,13 +133,13 @@ class Player {
 						q = tm.getRotation();
 						wheels[i].position.set(p.x(), p.y(), p.z());
 						wheels[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
-					}
+					}//*/
 
 					tm = this.model.vehicle.getChassisWorldTransform();
 					p = tm.getOrigin();
 					q = tm.getRotation();
 					this.model.get3DModel().position.set(p.x(), p.y(), p.z());
-					this.model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());*/
+					this.model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());
         }
 
         rotateWheels();

@@ -1,8 +1,8 @@
 import { Model } from "./Model.js";
 
 class Car extends Model {
-  constructor(model3D, mass, game, name, wheels) {
-    super(model3D, mass, game);
+  constructor(model3D, carInfo, game, name, wheels) {
+    super(model3D, carInfo, game);
     this.name      = name;
     this.wheels    = wheels;
     this.moveSpeed = 1000;
@@ -10,52 +10,51 @@ class Car extends Model {
 
     console.log("this.name: " + this.name);
 
-    this.steeringIncrement = .04;
-    this.steeringClamp     = .5;
-    this.maxEngineForce   = 0.02;  //2000;
-    this.maxBreakingForce = 0.01;  //100;
-
     // Raycast Vehicle
-		this.engineForce     = 0;
-		this.vehicleSteering = 0;
-		this.breakingForce   = 0;
 		const tuning    = new Ammo.btVehicleTuning();
 		const rayCaster = new Ammo.btDefaultVehicleRaycaster(game.getPhysicsWorld());
 		this.vehicle    = new Ammo.btRaycastVehicle(tuning, super.getPhysicsBody(), rayCaster);
 		this.vehicle.setCoordinateSystem(0, 1, 2);
 		game.getPhysicsWorld().addAction(this.vehicle);
 
+    this.steeringIncrement = 0.04;
+    this.steeringClamp     = 0.5;
+    this.maxEngineForce   = 2000;
+    this.maxBreakingForce = 100;
+
     this.FRONT_LEFT_WHEEL_ID  = 0;
     this.FRONT_RIGHT_WHEEL_ID = 1;
     this.BACK_LEFT_WHEEL_ID   = 2;
-    this.BACK_LEFT_WHEEL_ID   = 3;
+    this.BACK_RIGHT_WHEEL_ID  = 3;
 
-    //const wheelDirectionCS0 = new Ammo.btVector3(0, -1, 0);
-		//const wheelAxleCS       = new Ammo.btVector3(-1, 0, 0);
+    // DEFAULT
+    /*const wheelDirectionCS0 = new Ammo.btVector3(0, -1, 0);
+		const wheelAxleCS       = new Ammo.btVector3(-1, 0, 0);*/
 
-    const wheelDirectionCS0 = new Ammo.btVector3(0, 1, 0);
+    // POLICE CAR
+    const wheelDirectionCS0 = new Ammo.btVector3(0, -1, 0);
     const wheelAxleCS       = new Ammo.btVector3(-1, 0, 0);
 
     const friction = 1000;
     const suspensionStiffness   = 20.0;
     const suspensionDamping     = 2.3;
     const suspensionCompression = 4.4;
-    const suspensionRestLength = 0.6;
+    const suspensionRestLength  = 0.6;
     const rollInfluence = 0.2;
 
     const wheelAxisPositionBack = -1;
-		const wheelRadiusBack       = .4;
-		const wheelWidthBack        = .3;
+		const wheelRadiusBack       = 0.4;
+		const wheelWidthBack        = 0.3;
 		const wheelHalfTrackBack    = 1;
-		const wheelAxisHeightBack   = .3;
+		const wheelAxisHeightBack   = 0.3;
 
 		const wheelAxisFrontPosition = 1.7;
 		const wheelHalfTrackFront    = 1;
-		const wheelAxisHeightFront   = .3;
-		const wheelRadiusFront       = .35;
-		const wheelWidthFront        = .2;
+		const wheelAxisHeightFront   = 0.3;
+		const wheelRadiusFront       = 0.35;
+		const wheelWidthFront        = 0.2;
 
-		const addWheel = (isFront, pos, radius, width, index) => {
+		const addWheel = (isFront, pos, radius, width) => {
 			const wheelInfo = this.vehicle.addWheel(
 					pos,
 					wheelDirectionCS0,
@@ -72,15 +71,33 @@ class Car extends Model {
 			wheelInfo.set_m_rollInfluence(rollInfluence);
     }
 
-    addWheel(true, new Ammo.btVector3(wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition),
-             wheelRadiusFront, wheelWidthFront, this.FRONT_LEFT_WHEEL_ID);
-		addWheel(true, new Ammo.btVector3(-wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront,
-             wheelWidthFront, this.FRONT_RIGHT_WHEEL_ID);
-		addWheel(false, new Ammo.btVector3(-wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack,
-             wheelWidthBack, this.BACK_LEFT_WHEEL_ID);
-		addWheel(false, new Ammo.btVector3(wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack,
-             wheelWidthBack, this.BACK_RIGHT_WHEEL_ID);
+    /*addWheel(true, new Ammo.btVector3(wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition),
+             wheelRadiusFront, wheelWidthFront);
+		addWheel(true, new Ammo.btVector3(-wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition),
+             wheelRadiusFront, wheelWidthFront);
+		addWheel(false, new Ammo.btVector3(-wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack),
+             wheelRadiusBack, wheelWidthBack);
+		addWheel(false, new Ammo.btVector3(wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack),
+             wheelRadiusBack, wheelWidthBack);//*/
 
+
+    addWheel(true, new Ammo.btVector3( this.wheels[this.FRONT_LEFT_WHEEL_ID].position.x,
+                                       this.wheels[this.FRONT_LEFT_WHEEL_ID].position.y,
+                                       this.wheels[this.FRONT_LEFT_WHEEL_ID].position.z ),
+             wheelRadiusFront, wheelWidthFront);
+
+    addWheel(true, new Ammo.btVector3( this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.x,
+                                       this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.y,
+                                       this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.z ),
+             wheelRadiusFront, wheelWidthFront);
+    addWheel(false, new Ammo.btVector3( this.wheels[this.BACK_LEFT_WHEEL_ID].position.x,
+                                        this.wheels[this.BACK_LEFT_WHEEL_ID].position.y,
+                                        this.wheels[this.BACK_LEFT_WHEEL_ID].position.z ),
+             wheelRadiusBack, wheelWidthBack);
+    addWheel(false, new Ammo.btVector3( this.wheels[this.BACK_RIGHT_WHEEL_ID].position.x,
+                                        this.wheels[this.BACK_RIGHT_WHEEL_ID].position.y,
+                                        this.wheels[this.BACK_RIGHT_WHEEL_ID].position.z ),
+             wheelRadiusBack, wheelWidthBack);//*/
   }
 
   getName() {

@@ -1,11 +1,13 @@
 import * as THREE   from "https://unpkg.com/three@0.118.3/build/three.module.js";
 
 class Model {
-  constructor(model3D, mass, game) {
+  constructor(model3D, modelInfo, game) {
     this.model3D = model3D;
     this.game    = game;
 
     // Debug
+    console.log("model3D.position: ");
+    console.log(model3D.position);
     console.log("model3D.quaternion.x: " + model3D.quaternion.x);
     console.log("model3D.quaternion.y: " + model3D.quaternion.y);
     console.log("model3D.quaternion.z: " + model3D.quaternion.z);
@@ -24,20 +26,23 @@ class Model {
     transform.setOrigin( new Ammo.btVector3( model3D.position.x, model3D.position.y, model3D.position.z ) );
     transform.setRotation( new Ammo.btQuaternion( model3D.quaternion.x, model3D.quaternion.y, model3D.quaternion.z, model3D.quaternion.w ) );
 
-    let motionState = new Ammo.btDefaultMotionState( transform );
+    let motionState = new Ammo.btDefaultMotionState(transform);
 
-    let collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(boxSize.x * 0.3, boxSize.y * 0.04, boxSize.z * 0.3) );
-    //let colShape = new Ammo.btBoxShape( new Ammo.btVector3(1, 1, 1) );
+    let collisionShape = new Ammo.btBoxShape(
+      new Ammo.btVector3(boxSize.x * 0.5, boxSize.y * modelInfo.boxSizeYFactor, boxSize.z * 0.5)
+    );
 
     let localInertia = new Ammo.btVector3(0, 0, 0);
-    collisionShape.calculateLocalInertia(mass, localInertia);
+    collisionShape.calculateLocalInertia(modelInfo.mass, localInertia);
 
-    let rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, collisionShape, localInertia);
-    let body = new Ammo.btRigidBody(rbInfo);
+    let rbInfo = new Ammo.btRigidBodyConstructionInfo(modelInfo.mass, motionState, collisionShape, localInertia);
+    this.physicsBody = new Ammo.btRigidBody(rbInfo);
+    const DISABLE_DEACTIVATION = 4;
+    this.physicsBody.setActivationState(DISABLE_DEACTIVATION);
 
-    game.getPhysicsWorld().addRigidBody(body);
-    this.physicsBody = body;
-    game.addRigidBody(this);
+    // Add rigid body and set collision masks
+    game.getPhysicsWorld().addRigidBody(this.physicsBody, 1, 1);
+    //game.addRigidBody(this);
   }
 
   get3DModel() {

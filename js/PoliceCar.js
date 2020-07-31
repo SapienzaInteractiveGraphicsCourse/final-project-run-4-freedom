@@ -3,8 +3,8 @@ import * as THREE   from "https://unpkg.com/three@0.118.3/build/three.module.js"
 import { Utils }    from "./Utils.js";
 
 class PoliceCar extends Car {
-  constructor(model3D, mass, game, name, wheels, scene, gui) {
-    super(model3D, mass, game, name, wheels);
+  constructor(model3D, carInfo, game, name, wheels, scene, gui) {
+    super(model3D, carInfo, game, name, wheels);
 
     // Pointlights for police car
     const createLight = (color, intensity, x, y, z) => {
@@ -14,7 +14,7 @@ class PoliceCar extends Car {
       spotLight.penumbra = 0.3;
       spotLight.castShadow = true;
 
-      spotLight.shadow.mapSize.width = 1024;
+      spotLight.shadow.mapSize.width  = 1024;
       spotLight.shadow.mapSize.height = 1024;
 
       spotLight.shadow.camera.near = 500;
@@ -60,6 +60,7 @@ class PoliceCar extends Car {
 
     Utils.makeXYZGUI(gui, this.roofLightBlue.position, 'positionB');//*/
 
+    // For roof lights blinking
     this.addIntensity        = true;
     this.deltaIntensity      = 0;
     this.roofLightsThreshold = 1;
@@ -76,7 +77,7 @@ class PoliceCar extends Car {
     this.roofLightBlue.intensity = value;
   }
 
-  // Called in main render function
+  // Called in main animate function
   update(deltaTime) {
     if(!deltaTime)   return;
 
@@ -85,8 +86,80 @@ class PoliceCar extends Car {
     super.getBackLeftWheel().rotation.x  = deltaTime;
     super.getBackRightWheel().rotation.x = deltaTime;
 
-    super.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1),  super.getMoveSpeed() * deltaTime * 0.029);
+    //super.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1),  super.getMoveSpeed() * deltaTime * 0.029);
 
+    const updateVehiclePhysics = () => {
+      const speed = this.vehicle.getCurrentSpeedKmHour();
+      console.log("PoliceCar speed: " + Math.abs(speed).toFixed(1) + ' km/h');
+
+      let breakingForce = 0;
+      let engineForce = 0;
+
+      //if (actions.acceleration) {
+        if (speed < -1)   breakingForce = this.maxBreakingForce;
+        else              engineForce   = this.maxEngineForce;
+      //}
+      /*if (actions.braking) {
+        if (speed > 1)  breakingForce = maxBreakingForce;
+        else            engineForce = -maxEngineForce / 2;
+      }*/
+
+      const frontLeftWheel  = super.getFrontLeftWheel();
+      const frontRightWheel = super.getFrontRightWheel();
+      const backLeftWheel  = super.getBackLeftWheel();
+      const backRightWheel = super.getBackRightWheel();
+
+      console.log("PoliceCar getPosition(): ");
+      console.log(this.getPosition());
+      console.log("PoliceCar frontLeftWheel.position.x: " + frontLeftWheel.position.x);
+      console.log("PoliceCar frontLeftWheel.position.y: " + frontLeftWheel.position.y);
+      console.log("PoliceCar frontLeftWheel.position.z: " + frontLeftWheel.position.z);
+      console.log("PoliceCar frontRightWheel.position.x: " + frontRightWheel.position.x);
+      console.log("PoliceCar frontRightWheel.position.y: " + frontRightWheel.position.y);
+      console.log("PoliceCar frontRightWheel.position.z: " + frontRightWheel.position.z);
+      console.log("PoliceCar backLeftWheel.position.x: " + backLeftWheel.position.x);
+      console.log("PoliceCar backLeftWheel.position.y: " + backLeftWheel.position.y);
+      console.log("PoliceCar backLeftWheel.position.z: " + backLeftWheel.position.z);
+      console.log("PoliceCar backRightWheel.position.x: " + backRightWheel.position.x);
+      console.log("PoliceCar backRightWheel.position.y: " + backRightWheel.position.y);
+      console.log("PoliceCar backRightWheel.position.z: " + backRightWheel.position.z);
+
+
+      // Apply engine force to rear wheels
+      this.vehicle.applyEngineForce(engineForce, this.BACK_LEFT_WHEEL_ID);
+      this.vehicle.applyEngineForce(engineForce, this.BACK_RIGHT_WHEEL_ID);
+
+      // Apply brake force to all wheels
+      this.vehicle.setBrake(breakingForce / 2, this.FRONT_LEFT_WHEEL_ID);
+      this.vehicle.setBrake(breakingForce / 2, this.FRONT_RIGHT_WHEEL_ID);
+      this.vehicle.setBrake(breakingForce, this.BACK_LEFT_WHEEL_ID);
+      this.vehicle.setBrake(breakingForce, this.BACK_RIGHT_WHEEL_ID);
+
+      // Apply steering to front wheels
+      this.vehicle.setSteeringValue(this.vehicleSteering, this.FRONT_LEFT_WHEEL_ID);
+      this.vehicle.setSteeringValue(this.vehicleSteering, this.FRONT_RIGHT_WHEEL_ID);
+
+      let tm, p, q, i;
+      const n = this.vehicle.getNumWheels();
+      for (i = 0; i < n; i++) {
+        this.vehicle.updateWheelTransform(i, true);
+        tm = this.vehicle.getWheelTransformWS(i);
+        p = tm.getOrigin();
+        q = tm.getRotation();
+        this.wheels[i].position.set(p.x(), p.y(), p.z());
+        this.wheels[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
+      }
+
+      tm = this.vehicle.getChassisWorldTransform();
+      p = tm.getOrigin();
+      q = tm.getRotation();
+      super.get3DModel().position.set(p.x(), p.y(), p.z());
+      super.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());
+    }
+
+    updateVehiclePhysics();
+
+    // Debug
     //console.log("model3D.position.z: " + this.model3D.position.z);
     //console.log("this.roofLightRed.position.z: " + this.roofLightRed.position.z);
     //console.log("this.roofLightBlue.position.z: " + this.roofLightBlue.position.z);

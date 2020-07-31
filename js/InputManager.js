@@ -67,6 +67,14 @@ class InputManager {
       return this.keys.right.down || this.keys.D.down;
   }
 
+  forwardAction() {
+    return this.keys.up.down || this.keys.W.down;
+  }
+
+  backAction() {
+    return this.keys.down.down || this.keys.S.down;
+  }
+
 }
 
 export {InputManager}

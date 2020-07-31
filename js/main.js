@@ -100,20 +100,46 @@ window.onload = function main() {
     const staticModels = {
       // Environment
       // City
-      abandonedBuilding:  { url: 'src/environment/city/buildings/abandoned_building/scene.gltf',
+      /*abandonedBuilding:  { url: 'src/environment/city/buildings/abandoned_building/scene.gltf',
                             position: [80, 0, -45],
                             scale:    [15, 15, 15],
                             rotation: [0, 0, 0],
                           },
-      apartment:          { url: 'src/environment/city/buildings/apartment/scene.gltf',
+      apartment1:         { url: 'src/environment/city/buildings/apartment_1/scene.gltf',
                             position: [70, 15, -150],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },
-      buildingApartment:  { url: 'src/environment/city/buildings/building_apartment/scene.gltf',
+      apartment2:         { url: 'src/environment/city/buildings/apartment_2/scene.gltf',
                             position: [-50, 0, -60],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, Math.PI/2, 0],
+                          },
+      apartment3:         { url: 'src/environment/city/buildings/apartment_3/scene.gltf',
+                            position: [-70, 1, -140],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      apartment4:         { url: 'src/environment/city/buildings/apartment_4/scene.gltf',
+                            position: [-170, 0.5, -200],
+                            scale:    [0.02, 0.02, 0.02],
+                            rotation: [0, 0, 0],
+                          },
+      apartment5:         { url: 'src/environment/city/buildings/apartment_5/scene.gltf',
+                            position: [-250, 1, -40],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      apartment6:         { url: 'src/environment/city/buildings/apartment_6/scene.gltf',
+                            position: [-200, 1, 150],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+
+      bordeauxBuilding:   { url: 'src/environment/city/buildings/bordeaux_building/scene.gltf',
+                            position: [-50, 0, -190],
+                            scale:    [13, 13, 13],
+                            rotation: [0, 0, 0],
                           },
       building1:          { url: 'src/environment/city/buildings/building_1/scene.gltf',
                             position: [-45, 11, -10],
@@ -126,16 +152,37 @@ window.onload = function main() {
                             rotation: [0, Math.PI/2, 0],
                           },
       building3:          { url: 'src/environment/city/buildings/building_3/scene.gltf',
-                            position: [65, 0, 30],
+                            position: [50, 0, 30],
                             scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      building4:          { url: 'src/environment/city/buildings/building_4/scene.gltf',
+                            position: [50, 10, 250],
+                            scale:    [12, 12, 12],
                             rotation: [0, Math.PI/2, 0],
                           },
+      building5:          { url: 'src/environment/city/buildings/building_5/scene.gltf',
+                            position: [150, 0, -60],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      building6:          { url: 'src/environment/city/buildings/building_6/scene.gltf',
+                            position: [150, 0, 100],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      building7:          { url: 'src/environment/city/buildings/building_kontra/scene.gltf',
+                            position: [-40, 0.5, -260],
+                            scale:    [5, 5, 5],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+
       easternEuHouse:     { url: 'src/environment/city/buildings/eastern_european_panel_house/scene.gltf',
                             position: [40, 0, 90],
                             scale:    [0.1, 0.1, 0.1],
                             rotation: [0, -Math.PI/2, 0],
                           },
-      house1:             { url: 'src/environment/city/buildings/house/scene.gltf',
+      house1:             { url: 'src/environment/city/buildings/house_1/scene.gltf',
                             position: [-60, -1, 160],
                             scale:    [0.01, 0.01, 0.01],
                             rotation: [0, 0, 0],
@@ -151,21 +198,64 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
 
+      boulangerie:        { url: 'src/environment/city/buildings/boulangerie_de_lopera/scene.gltf',
+                            position: [35, -1, 150],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      laCantine:          { url: 'src/environment/city/buildings/la_cantine/scene.gltf',
+                            position: [35, -1, 180],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      starbucks:          { url: 'src/environment/city/buildings/starbucks_coffee/scene.gltf',
+                            position: [35, -1, 210],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+
+      stadium1:           { url: 'src/environment/city/buildings/stadium1/scene.gltf',
+                            position: [200, -4, -450],
+                            scale:    [0.035, 0.035, 0.035],
+                            rotation: [0, Math.PI/3, 0],
+                          },
+      stadium2:           { url: 'src/environment/city/buildings/stadium2/scene.gltf',
+                            position: [90, 1, 450],
+                            scale:    [0.7, 0.7, 0.7],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+
+      tower:              { url: 'src/environment/city/buildings/park_tower_chicago/scene.gltf',
+                            position: [-90, 1, 300],
+                            scale:    [0.01, 0.01, 0.01],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+
       // Street elements
       /*road:               { url: 'src/environment/street/road/scene.gltf',
                             position: [0, 0, 0],
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, 0, 0],
                           },*/
-      bench:              { url: 'src/environment/city/street/bench/scene.gltf',
-                            position: [-25, 1, -7],
+      /*bench:              { url: 'src/environment/city/street/bench/scene.gltf',
+                            position: [-29, 1, -7],
                             scale:    [2, 2, 2],
                             rotation: [0, Math.PI/2, 0],
                           },
+      cityFence:          { url: 'src/environment/city/street/city_fence/scene.gltf',
+                            position: [-27, 0, -7],
+                            scale:    [11, 11, 11],
+                            rotation: [0, Math.PI/2, 0],
+                          },
       dumpster:           { url: 'src/environment/city/street/dumpster/scene.gltf',
-                            position: [25, 1.5, 10],
-                            scale:    [1.8, 1.8, 1.8],
+                            position: [45, 1.8, 20],
+                            scale:    [2.3, 2.3, 2.3],
                             rotation: [0, 0, 0],
+                          },
+      electricBox:        { url: 'src/environment/city/street/electric_box/scene.gltf',
+                            position: [40, 1.5, 10],
+                            scale:    [0.07, 0.07, 0.07],
+                            rotation: [0, -Math.PI/2, 0],
                           },
       graffitiWall:       { url: 'src/environment/city/street/graffiti_wall/scene.gltf',
                             position: [48, 8, -30],
@@ -177,14 +267,54 @@ window.onload = function main() {
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, 0, 0],
                           },
+      menuSign:           { url: 'src/environment/city/street/menu_sign/scene.gltf',
+                            position: [31, 2, 5],
+                            scale:    [0.01, 0.01, 0.01],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      simpleMetalFence:   { url: 'src/environment/city/street/simple_metal_fence/scene.gltf',
+                            position: [-25, 1.3, 5],
+                            scale:    [0.25, 0.25, 0.25],
+                            rotation: [0, 0, 0],
+                          },
+      metalFence:         { url: 'src/environment/city/street/metal_fence/scene.gltf',
+                            position: [45, 1, 60],
+                            scale:    [0.003, 0.003, 0.003],
+                            rotation: [0, 0, 0],
+                          },
+      roadSign:           { url: 'src/environment/city/street/road_sign/scene.gltf',
+                            position: [25, 0, 5],
+                            scale:    [0.01, 0.01, 0.01],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      speedSign30:        { url: 'src/environment/city/street/speed_sign_30/scene.gltf',
+                            position: [25, 0, -12],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, 0, 0],
+                          },
+      speedSign40:        { url: 'src/environment/city/street/speed_sign_40/scene.gltf',
+                            position: [25, 3.3, -8],
+                            scale:    [3.5, 3.5, 3.5],
+                            rotation: [0, 0, 0],
+                          },
+      stopSign:           { url: 'src/environment/city/street/stop_sign/scene.gltf',
+                            position: [25, 0, -20],
+                            scale:    [3.3, 3.3, 3.3],
+                            rotation: [0, Math.PI, 0],
+                          },
       sidewalk:           { url: 'src/environment/city/street/sidewalk/scene.gltf',
                             position: [26.5, 0, 0],
                             scale:    [1, 1, 1],
                             rotation: [0, -Math.PI/2, 0],
                           },
-      trafficCone:        { url: 'src/environment/city/street/traffic_road_cone/scene.gltf',
+      trafficCone:        { url: 'src/environment/city/street/traffic_cone/scene.gltf',
                             position: [25, 0, -3],
                             scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, 0, 0],
+                          },
+      trafficLight:       { url: 'src/environment/city/street/traffic_light/scene.gltf',
+                            position: [25, 0, -25],
+                            scale:    [0.1, 0.1, 0.1],
                             rotation: [0, 0, 0],
                           },
       trashCan1:          { url: 'src/environment/city/street/trash_can_1/scene.gltf',
@@ -193,17 +323,27 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
       trashCan2:          { url: 'src/environment/city/street/trash_can_2/scene.gltf',
-                            position: [-25, 0, -3],
+                            position: [-29, 0, -3],
                             scale:    [0.4, 0.4, 0.4],
                             rotation: [0, 0, 0],
                           },
       trashCan3:          { url: 'src/environment/city/street/trash_can_3/scene.gltf',
-                            position: [-25, 1, -10],
+                            position: [-29, 1, -10],
                             scale:    [1, 1, 1],
                             rotation: [0, 0, 0],
                           },
+      tree:               { url: 'src/environment/city/street/tree/scene.gltf',
+                            position: [30, 0, -30],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, 0, 0],
+                          },
+      pineTree:           { url: 'src/environment/city/street/pine_tree/scene.gltf',
+                            position: [30, 0, 40],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, 0, 0],
+                          },
       hydrant:            { url: 'src/environment/city/street/yellow_rusted_hydrant/scene.gltf',
-                            position: [-25, 1, 10],
+                            position: [-26, 1, 10],
                             scale:    [0.8, 0.8, 0.8],
                             rotation: [0, 0, 0],
                           },
@@ -225,7 +365,7 @@ window.onload = function main() {
                             scale:    [0.1, 0.1, 0.1],
                             rotation: [0, Math.PI/2, 0],
                           },
-      /*westernHouse:       { url: 'src/environment/buildings/country - desert/western_house/scene.gltf',
+      westernHouse:       { url: 'src/environment/buildings/country - desert/western_house/scene.gltf',
                             position: [100, 0, -150],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
@@ -234,6 +374,48 @@ window.onload = function main() {
                             position: [0, 0, -50],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, -Math.PI/2, 0],
+                          },
+
+      // Road elements
+      bush:               { url: 'src/environment/country - desert/road/bush/scene.gltf',
+                            position: [0, 0, -10],
+                            scale:    [4, 4, 4],
+                            rotation: [0, 0, 0],
+                          },
+      bushPlant:          { url: 'src/environment/country - desert/road/bush_plant/scene.gltf',
+                            position: [0, 0, -30],
+                            scale:    [0.006, 0.006, 0.006],
+                            rotation: [0, 0, 0],
+                          },
+      bushGroup:          { url: 'src/environment/country - desert/road/bush_group/scene.gltf',
+                            position: [0, 0, -40],
+                            scale:    [0.035, 0.035, 0.035],
+                            rotation: [0, 0, 0],
+                          },
+      desertPlant:          { url: 'src/environment/country - desert/road/desert_plant/scene.gltf',
+                            position: [0, 0, -20],
+                            scale:    [0.4, 0.4, 0.4],
+                            rotation: [0, 0, 0],
+                          },
+      desertRock:         { url: 'src/environment/country - desert/road/desert_rock/scene.gltf',
+                            position: [0, 1.8, -15],
+                            scale:    [2.5, 2.5, 2.5],
+                            rotation: [0, 0, 0],
+                          },
+      poleElectric:       { url: 'src/environment/country - desert/road/pole_electric/scene.gltf',
+                            position: [0, 10, -25],
+                            scale:    [10, 10, 10],
+                            rotation: [0, 0, 0],
+                          },
+      rustyCar1:          { url: 'src/environment/country - desert/road/old_rusty_car/scene.gltf',
+                            position: [20, 0.2, -45],
+                            scale:    [0.017, 0.017, 0.017],
+                            rotation: [0, 0, 0],
+                          },
+      rustyCar2:          { url: 'src/environment/country - desert/road/old_rusty_car_2/scene.gltf',
+                            position: [10, 0, -45],
+                            scale:    [0.046, 0.046, 0.046],
+                            rotation: [0, 0, 0],
                           },*/
     };
 
@@ -262,17 +444,17 @@ window.onload = function main() {
                           },*/
 
       camper:             { url: 'src/vehicles/cars/camper_hippie/scene.gltf',
-                            position: [8, 0, 20],
+                            position: [16, 0, 20],
                             scale:    [3.5, 3.5, 3.5],
                             rotation: [0, -Math.PI/2, 0],
                           },
       fiat500:            { url: 'src/vehicles/cars/fiat_500/scene.gltf',
-                            position: [-10, 2.3, -40],
+                            position: [-18, 2.3, -40],
                             scale:    [5, 5, 5],
                             rotation: [0, 0, 0],
                           },
       rangeRover:         { url: 'src/vehicles/cars/range_rover_evoque/scene.gltf',
-                            position: [0, 1.9, -50],
+                            position: [-6, 1.9, -50],
                             scale:    [6, 6, 6],
                             rotation: [0, 0, 0],
                           },
@@ -302,6 +484,7 @@ window.onload = function main() {
     // Create a progress bar to show during loading
     const progressBar = document.getElementById('progressbar');
     manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      console.log("itemsLoaded: "+ itemsLoaded + " itemsTotal: " + itemsTotal);
       progressBar.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
     };
 
@@ -423,7 +606,9 @@ window.onload = function main() {
     scene.add(sunlight);
     sunlight.castShadow = true;
 
-    /*const helper = new THREE.DirectionalLightHelper(sunlight);
+    const sunlightPositionIncrement = 0.15;
+
+    const helper = new THREE.DirectionalLightHelper(sunlight);
     scene.add(helper);
 
     gui.add(sunlight, 'intensity', 0, 100, 0.01);
@@ -471,7 +656,6 @@ window.onload = function main() {
       let motionState = new Ammo.btDefaultMotionState(transform);
 
       let collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(10000, 0, 10000) );
-      collisionShape.setMargin(0.05);
 
       let localInertia = new Ammo.btVector3(0, 0, 0);
       collisionShape.calculateLocalInertia(mass, localInertia);
@@ -479,7 +663,8 @@ window.onload = function main() {
       let rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, collisionShape, localInertia);
       let body = new Ammo.btRigidBody(rbInfo);
 
-      physicsWorld.addRigidBody(body);
+      // Add rigid body and set collision masks
+      physicsWorld.addRigidBody(body, 1, 1);
     }
 
 
@@ -545,7 +730,6 @@ window.onload = function main() {
     document.body.appendChild( stats.dom );
 
     let before = 0, deltaTime = 0;
-    const sunlightPositionIncrement = 0.15;
     requestAnimationFrame(animate);
 
     function animate(time) {
@@ -560,13 +744,14 @@ window.onload = function main() {
       // Convert current time to seconds
       time *= 0.001;
 
-      // Make sure delta time isn't too big.
+      // Make sure delta time isn't too big
       deltaTime = Math.min(time - before, 1/20);
       before = time;
 
-      //console.log("time: " + time + "\n");
-      //console.log("before: " + before + "\n");
-      //console.log("deltaTime: " + deltaTime + "\n");
+      // Debug
+      /*console.log("time: " + time + "\n");
+      console.log("before: " + before + "\n");
+      console.log("deltaTime: " + deltaTime + "\n");*/
 
       // Change sunlight position and intensity according to the elapsed time
       // (about 4 seconds of the game corresponds to 1 hour, 96/4 = 24)
@@ -597,7 +782,7 @@ window.onload = function main() {
       //console.log("sunlight.intensity: " + sunlight.intensity + "\n");
 
 
-      if (car) {
+      /*if (car) {
         player.update(deltaTime);
 
         //console.log("car.position.z: " + car.position.z);
@@ -619,11 +804,11 @@ window.onload = function main() {
         controls.update();*/
 
         //console.log("camera.position.z: " + camera.position.z);
-      }
+      /*}
 
-      /*if (policeCar) {
+      if (policeCar) {
         policeCar.update(deltaTime);
-      }*/
+      }
 
       /*if (bike) {
           var myPos = bike.position;
@@ -827,7 +1012,12 @@ window.onload = function main() {
         else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig')   wheels[3] = o;
       });
 
-      policeCar = new PoliceCar(modelScene, 800, game, "policeCar1", wheels, scene, gui);
+      const carInfo = {
+        mass: 1600,
+        boxSizeYFactor: 0.03
+      };
+
+      policeCar = new PoliceCar(modelScene, carInfo, game, "policeCar1", wheels, scene, gui);
     }
 
     function addBmwCar(modelScene) {
@@ -865,7 +1055,12 @@ window.onload = function main() {
 
       //updateCamera(modelScene);
 
-      car = new Car(modelScene, 800, game, "Bmw", wheels);
+      const carInfo = {
+        mass: 1920,
+        boxSizeYFactor: 0.3
+      };
+
+      car = new Car(modelScene, carInfo, game, "Bmw", wheels);
       player.setModel(car);
     }
 
@@ -901,7 +1096,12 @@ window.onload = function main() {
 
       //updateCamera(modelScene);
 
-      car = new Car(modelScene, 800, game, "Tesla", wheels);
+      const carInfo = {
+        mass: 2316,
+        boxSizeYFactor: 0.3
+      };
+
+      car = new Car(modelScene, carInfo, game, "Tesla", wheels);
       player.setModel(car);
     }
 
@@ -933,7 +1133,12 @@ window.onload = function main() {
 
       //updateCamera(modelScene);
 
-      car = new Car(modelScene, 800, game, "Lamborghini", wheels);
+      const carInfo = {
+        mass: 1625,
+        boxSizeYFactor: 0.55
+      };
+
+      car = new Car(modelScene, carInfo, game, "Lamborghini", wheels);
       player.setModel(car);
     }
 
@@ -1004,7 +1209,12 @@ window.onload = function main() {
         rightFoot: rightFoot
       }
 
-      character = new Character(modelScene, 80, game, "Nathan", components);
+      const modelInfo = {
+        mass: 80,
+        boxSizeYFactor: 0.5
+      };
+
+      character = new Character(modelScene, modelInfo, game, "Nathan", components);
       player.setModel(character);
 
       // Create the PositionalAudio object (passing in the listener)
