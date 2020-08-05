@@ -81,14 +81,11 @@ class PoliceCar extends Car {
   update(deltaTime) {
     if(!deltaTime)   return;
 
-    super.getFrontLeftWheel().rotation.x  = deltaTime;
-    super.getFrontRightWheel().rotation.x = deltaTime;
-    super.getBackLeftWheel().rotation.x  = deltaTime;
-    super.getBackRightWheel().rotation.x = deltaTime;
+    //super.rotateWheels(deltaTime);
 
     //super.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1),  super.getMoveSpeed() * deltaTime * 0.029);
 
-    const updateVehiclePhysics = () => {
+    /*const updateVehiclePhysics = () => {
       const speed = this.vehicle.getCurrentSpeedKmHour();
       console.log("PoliceCar speed: " + Math.abs(speed).toFixed(1) + ' km/h');
 
@@ -104,7 +101,7 @@ class PoliceCar extends Car {
         else            engineForce = -maxEngineForce / 2;
       }*/
 
-      const frontLeftWheel  = super.getFrontLeftWheel();
+      /*const frontLeftWheel  = super.getFrontLeftWheel();
       const frontRightWheel = super.getFrontRightWheel();
       const backLeftWheel  = super.getBackLeftWheel();
       const backRightWheel = super.getBackRightWheel();
@@ -157,7 +154,7 @@ class PoliceCar extends Car {
       super.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());
     }
 
-    updateVehiclePhysics();
+    updateVehiclePhysics();*/
 
     // Debug
     //console.log("model3D.position.z: " + this.model3D.position.z);

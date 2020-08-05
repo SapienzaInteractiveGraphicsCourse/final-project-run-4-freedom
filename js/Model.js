@@ -42,7 +42,7 @@ class Model {
 
     // Add rigid body and set collision masks
     game.getPhysicsWorld().addRigidBody(this.physicsBody, 1, 1);
-    //game.addRigidBody(this);
+    game.addRigidBody(this);
   }
 
   get3DModel() {

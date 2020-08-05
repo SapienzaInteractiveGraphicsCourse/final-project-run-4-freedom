@@ -425,6 +425,28 @@ h1.main, p.demos {
   display: none;
 }
 
+#canvas {
+  z-index : 0;
+}
+
+#score {
+  color: #000;
+  position: absolute;
+  top: 2%;
+  left: 49%;
+  z-index : 1;
+}
+
+#speedometer {
+  color: #ffffff;
+  background-color: #990000;
+  position: absolute;
+  bottom: 1%;
+  left: 1%;
+  z-index: 1;
+}
+
+
 /* Import from Bootstrap */
 .btn {
   display: inline-block;

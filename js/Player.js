@@ -29,67 +29,58 @@ class Player {
     update(deltaTime) {
       if(!deltaTime || !this.model)   return;
 
-      const turnDirection = (this.inputManager.leftAction() ?  1 : 0) +
+      const turnDirection = (this.inputManager.leftAction()  ?  1 : 0) +
                             (this.inputManager.rightAction() ? -1 : 0);
 
       const turnRotation = this.model.getTurnSpeed() * turnDirection * deltaTime;
 
+      const forwardDirection = (this.inputManager.backAction()    ?  1 : 0) +
+                               (this.inputManager.forwardAction() ? -1 : 0);
+
       if (this.model instanceof Car) {
-        const rotateWheels = () => {
-          const frontLeftWheel  = this.model.getFrontLeftWheel();
-          const frontRightWheel = this.model.getFrontRightWheel();
-          const backLeftWheel  = this.model.getBackLeftWheel();
-          const backRightWheel = this.model.getBackRightWheel();
-
-          frontLeftWheel.rotation.z  = Utils.clamp(frontLeftWheel.rotation.z  + turnRotation, -0.5, 0.5);
-          frontRightWheel.rotation.z = Utils.clamp(frontRightWheel.rotation.z + turnRotation, -0.5, 0.5);
-
-          // If X rotation, Z rotation is affected
-          //frontLeftWheel.rotation.x  = deltaTime;
-          //frontRightWheel.rotation.x = deltaTime;
-          backLeftWheel.rotation.x  = deltaTime;
-          backRightWheel.rotation.x = deltaTime;
-        }
-
         const updateVehiclePhysics = () => {
-          const speed = this.model.vehicle.getCurrentSpeedKmHour();
-          console.log("Player speed: " + Math.abs(speed).toFixed(1) + ' km/h');
+          /*const speed = this.model.vehicle.getCurrentSpeedKmHour();
+          console.log("Player speed: " + Math.abs(speed).toFixed(2) + ' km/h');
 
 					let breakingForce = 0;
 					let engineForce = 0;
 
-					if (this.inputManager.forwardAction()) {
+					//if (this.inputManager.forwardAction()) {
 						if (speed < -1)   breakingForce = this.model.maxBreakingForce;
 						else              engineForce   = this.model.maxEngineForce;
-					}
+					/*}
 					if (this.inputManager.backAction()) {
 						if (speed > 1)  breakingForce = this.model.maxBreakingForce;
 						else            engineForce   = -this.model.maxEngineForce / 2;
-					}
+					}*/
 
 
 					if (this.inputManager.leftAction()) {
-						if (this.model.vehicleSteering < this.model.steeringClamp)
-							this.model.vehicleSteering += this.model.steeringIncrement;
+						if (this.model.steeringAngle < this.model.steeringClamp)
+							this.model.steeringAngle += this.model.steeringIncrement;
 					}
 					else {
 						if (this.inputManager.rightAction()) {
-							if (this.model.vehicleSteering > -this.model.steeringClamp)
-								this.model.vehicleSteering -= this.model.steeringIncrement;
+							if (this.model.steeringAngle > -this.model.steeringClamp)
+								this.model.steeringAngle -= this.model.steeringIncrement;
 						}
 						else {
-							if (this.model.vehicleSteering < -this.model.steeringIncrement)
-								this.model.vehicleSteering += this.model.steeringIncrement;
+							if (this.model.steeringAngle < -this.model.steeringIncrement)
+								this.model.steeringAngle += this.model.steeringIncrement;
 							else {
-								if (this.model.vehicleSteering > this.model.steeringIncrement)
-									this.model.vehicleSteering -= this.model.steeringIncrement;
+								if (this.model.steeringAngle > this.model.steeringIncrement)
+									this.model.steeringAngle -= this.model.steeringIncrement;
 								else
-									this.model.vehicleSteering = 0;
+									this.model.steeringAngle = 0;
 							}
 						}
 					}
 
-          const frontLeftWheel  = this.model.getFrontLeftWheel();
+          console.log("getPosition(): ");
+          console.log(this.getPosition());
+          this.model.move(-turnDirection, 0, forwardDirection, deltaTime);
+
+          /*const frontLeftWheel  = this.model.getFrontLeftWheel();
           const frontRightWheel = this.model.getFrontRightWheel();
           const backLeftWheel  = this.model.getBackLeftWheel();
           const backRightWheel = this.model.getBackRightWheel();
@@ -109,6 +100,9 @@ class Player {
           console.log("backRightWheel.position.y: " + backRightWheel.position.y);
           console.log("backRightWheel.position.z: " + backRightWheel.position.z);
 
+          console.log("engineForce: " + engineForce);
+          console.log("breakingForce: " + breakingForce);
+
           // Apply engine force to rear wheels
 					this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_LEFT_WHEEL_ID);
 					this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_RIGHT_WHEEL_ID);
@@ -121,7 +115,12 @@ class Player {
 
           // Apply steering to front wheels
 					this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_LEFT_WHEEL_ID);
-					this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_RIGHT_WHEEL_ID);
+
+          // Lamborghini right wheel orientation is inverted
+          if (this.model.getName() === "Lamborghini")
+            this.model.vehicle.setSteeringValue(-this.model.vehicleSteering, this.model.FRONT_RIGHT_WHEEL_ID);
+          else
+					  this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_RIGHT_WHEEL_ID);
 
           let tm, p, q, i;
 					const n = this.model.vehicle.getNumWheels();
@@ -135,14 +134,19 @@ class Player {
 						wheels[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
 					}//*/
 
+          // Adjust Lamborghini right wheels after transformation
+          /*if (this.model.getName() === "Lamborghini") {
+            frontRightWheel.rotation.y = Math.PI;
+            backRightWheel.rotation.y  = Math.PI;
+          }
+
 					tm = this.model.vehicle.getChassisWorldTransform();
 					p = tm.getOrigin();
 					q = tm.getRotation();
 					this.model.get3DModel().position.set(p.x(), p.y(), p.z());
-					this.model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());
+					this.model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());*/
         }
 
-        rotateWheels();
         updateVehiclePhysics();
       }
 
@@ -231,7 +235,7 @@ class Player {
       //this.model.get3DModel().rotation.y += turnRotation;
       //this.model.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1), this.model.getMoveSpeed() * deltaTime * difficultyFactor);
 
-      this.game.setScore(this.model.getMoveSpeed() * deltaTime * difficultyFactor);
+      //this.game.setScore(this.model.getMoveSpeed() * deltaTime * difficultyFactor);
     }
 
     // Get current player position using the model one
@@ -239,6 +243,20 @@ class Player {
       return this.model ? this.model.getPosition() : null;
     }
 
+    // Get current player direction using the model one
+    getDirection() {
+      return this.model ? this.model.getDirection() : null;
+    }
+
+    // Get current player orientation using the model one
+    getOrientation() {
+      return this.model ? this.model.getOrientation() : null;
+    }
+
+    // Get current player speed using the model one
+    getSpeed() {
+      return this.model ? this.model.getCurrentSpeedKmHour() : null;
+    }
   }
 
 export {Player}
