@@ -78,6 +78,16 @@ class Utils {
     return Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
   }
 
+  // Convert a degree angle to radiants (x : 180 = y : Math.PI)
+  static toRadiants(ang) {
+    return ang / 180 * Math.PI ;
+  }
+
+  // Convert radiants to a degree angle (x : 180 = y : Math.PI)
+  static toDegrees(rad) {
+    return rad / Math.PI * 180;
+  }
+
 }
 
 export {Utils}

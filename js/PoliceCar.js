@@ -1,14 +1,15 @@
-import { Car } from "./Car.js";
 import * as THREE   from "https://unpkg.com/three@0.118.3/build/three.module.js";
+import { Car } from "./Car.js";
 import { Utils }    from "./Utils.js";
 
 class PoliceCar extends Car {
-  constructor(model3D, carInfo, game, name, wheels, scene, gui) {
-    super(model3D, carInfo, game, name, wheels);
+  constructor(model3D, carInfo, game, name, components, scene, gui) {
+    super(model3D, carInfo, game, name, components);
 
     // Pointlights for police car
     const createLight = (color, intensity, x, y, z) => {
-      const spotLight = new THREE.SpotLight(color, intensity);
+      const distance = 40;
+      const spotLight = new THREE.SpotLight(color, intensity, distance);
       spotLight.position.set(x, y, z);
 
       spotLight.penumbra = 0.3;

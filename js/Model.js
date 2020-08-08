@@ -29,7 +29,7 @@ class Model {
     let motionState = new Ammo.btDefaultMotionState(transform);
 
     let collisionShape = new Ammo.btBoxShape(
-      new Ammo.btVector3(boxSize.x * 0.5, boxSize.y * modelInfo.boxSizeYFactor, boxSize.z * 0.5)
+      new Ammo.btVector3(boxSize.x * modelInfo.boxSizeXFactor, boxSize.y * modelInfo.boxSizeYFactor, boxSize.z * 0.5)
     );
 
     let localInertia = new Ammo.btVector3(0, 0, 0);

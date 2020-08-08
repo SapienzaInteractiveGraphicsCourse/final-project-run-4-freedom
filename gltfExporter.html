@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - exporter - gltf</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description"
+			content="Final project of the Interactive Graphics 19-20 course @ Sapienza University of Rome">
+		<meta name="keywords" content="">
+		<meta name="author" content="Ivan Fardin, Francesco Ottaviani and Samuele Olivieri Pennesi">
+	</head>
+	<body>
+		<div id="info">
+			<button id="export_scene">Export Scene</button>
+      <button id="export_object">Export Object</button>
+			<br/><br/>
+			<label><input id="option_trs" name="trs" type="checkbox"/>TRS</label>
+			<label><input id="option_visible" name="visible" type="checkbox" checked="checked"/>Only Visible</label>
+			<label><input id="option_drawrange" name="visible" type="checkbox" checked="checked"/>Truncate drawRange</label><br/>
+			<label><input id="option_binary" name="visible" type="checkbox">Binary (<code>.glb</code>)</label>
+			<label><input id="option_forcepot" name="visible" type="checkbox">Force POT textures</label>
+			<label><input id="option_maxsize" name="maxSize" type="number" value="4096" min="2" max="8192" step="1"> Max texture size</label>
+		</div>
+
+		<script type="module">
+
+      import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.module.js";
+      import { OBJLoader }     from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/OBJLoader.js";
+      import { GLTFLoader }    from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
+      import { GLTFExporter }  from "https://unpkg.com/three@0.118.3/examples/jsm/exporters/GLTFExporter.js";
+      import { OrbitControls } from "https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js";
+
+      import { Utils }        from "./js/Utils.js";
+
+			function exportGLTF( input ) {
+
+				const gltfExporter = new GLTFExporter();
+
+				const options = {
+					trs: document.getElementById( 'option_trs' ).checked,
+					onlyVisible: document.getElementById( 'option_visible' ).checked,
+					truncateDrawRange: document.getElementById( 'option_drawrange' ).checked,
+					binary: document.getElementById( 'option_binary' ).checked,
+					forcePowerOfTwoTextures: document.getElementById( 'option_forcepot' ).checked,
+					maxTextureSize: Number( document.getElementById( 'option_maxsize' ).value ) || Infinity // To prevent NaN value
+				};
+
+				gltfExporter.parse( input, function ( result ) {
+					if ( result instanceof ArrayBuffer ) {
+						saveArrayBuffer( result, 'scene.glb' );
+					}
+          else {
+						const output = JSON.stringify( result, null, 2 );
+						console.log( output );
+						saveString( output, 'scene.gltf' );
+					}
+				}, options );
+
+			}
+
+			document.getElementById( 'export_scene' ).addEventListener( 'click', function () {
+				exportGLTF( scene );
+			} );
+
+      document.getElementById( 'export_object' ).addEventListener( 'click', function () {
+				exportGLTF( object );
+			} );
+
+			const link = document.createElement( 'a' );
+			link.style.display = 'none';
+			document.body.appendChild( link ); // Firefox workaround, see #6594
+
+			function save( blob, filename ) {
+				link.href = URL.createObjectURL( blob );
+				link.download = filename;
+				link.click();
+				// URL.revokeObjectURL( url ); breaks Firefox...
+			}
+
+			function saveString( text, filename ) {
+				save( new Blob( [ text ], { type: 'text/plain' } ), filename );
+			}
+
+			function saveArrayBuffer( buffer, filename ) {
+				save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
+			}
+
+
+			let camera, object, scene, renderer;
+
+			init();
+			animate();
+
+			function init() {
+
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				scene = new THREE.Scene();
+				scene.name = 'Scene';
+
+				// ---------------------------------------------------------------------
+				// Perspective Camera
+				// ---------------------------------------------------------------------
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera.position.set( 600, 400, 0 );
+
+				camera.name = "PerspectiveCamera";
+				scene.add( camera );
+
+				// ---------------------------------------------------------------------
+				// Ambient light
+				// ---------------------------------------------------------------------
+				let light = new THREE.AmbientLight( 0xffffff, 0.2 );
+				light.name = 'AmbientLight';
+				scene.add( light );
+
+				// ---------------------------------------------------------------------
+				// DirectLight
+				// ---------------------------------------------------------------------
+				light = new THREE.DirectionalLight( 0xffffff, 1 );
+				light.target.position.set( 0, 0, - 1 );
+				light.add( light.target );
+				light.lookAt( - 1, - 1, 0 );
+				light.name = 'DirectionalLight';
+				scene.add( light );
+
+				// ---------------------------------------------------------------------
+				// Grid
+				// ---------------------------------------------------------------------
+				const gridHelper = new THREE.GridHelper( 2000, 20 );
+				gridHelper.position.y = - 50;
+				gridHelper.name = "Grid";
+				scene.add( gridHelper );
+
+				// ---------------------------------------------------------------------
+				// Axes
+				// ---------------------------------------------------------------------
+				const axes = new THREE.AxesHelper( 500 );
+				axes.name = "AxesHelper";
+				scene.add( axes );
+
+        const model = {
+          url: 'src/environment/city/street/sidewalk_corner/scene.gltf',
+          position: [0, 0, 0],
+          scale:    [1, 1, 1],
+          rotation: [0, -Math.PI/2, 0]
+        }
+
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load( model.url, function ( gltf ) {
+              object = gltf.scene;
+              object.position.set(...model.position);
+              object.scale.set(...model.scale)
+              object.rotation.set(...model.rotation);
+
+              console.log(Utils.dumpObject(object).join('\n'));
+
+              let rmObj = null;
+
+              object.traverse( o => {
+                  if (o.name === "CORNER")
+                    rmObj = o;
+              } );
+
+              if (rmObj)
+                rmObj.parent.remove(rmObj);
+
+              console.log(Utils.dumpObject(object).join('\n'));
+
+    					scene.add( object );
+            },
+            undefined,
+            function ( error ) {
+              console.error(error);
+              alert("Error during the loading of the model!\nTry to refresh the page");
+            } );
+
+				/*const loader = new OBJLoader();
+				loader.load( model.url, function ( obj ) {
+					object = obj;
+					object.scale.multiplyScalar( 1.5 );
+					object.position.set( 400, 0, 0 );
+					scene.add( object );
+				} );*/
+
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				container.appendChild( renderer.domElement );
+
+        // Controls for zooming and moving around the scene
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 5, 0);
+        controls.update();
+
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+			//
+
+			function animate() {
+				requestAnimationFrame( animate );
+				render();
+			}
+
+			function render() {
+				/*const timer = Date.now() * 0.0001;
+
+				camera.position.x = Math.cos( timer ) * 800;
+				camera.position.z = Math.sin( timer ) * 800;
+
+				camera.lookAt( scene.position );*/
+				renderer.render( scene, camera );
+			}
+
+		</script>
+
+	</body>
+</html>

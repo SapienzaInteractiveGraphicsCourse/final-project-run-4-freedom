@@ -243,9 +243,9 @@ class Player {
       return this.model ? this.model.getPosition() : null;
     }
 
-    // Get current player direction using the model one
-    getDirection() {
-      return this.model ? this.model.getDirection() : null;
+    // Get current player velocity vector using the model one
+    getVelocity() {
+      return this.model ? this.model.getVelocity() : null;
     }
 
     // Get current player orientation using the model one
