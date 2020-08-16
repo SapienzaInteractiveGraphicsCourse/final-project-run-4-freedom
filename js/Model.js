@@ -5,6 +5,8 @@ class Model {
     this.model3D = model3D;
     this.game    = game;
 
+    this.mass = modelInfo.mass;
+
     // Debug
     console.log("model3D.position: ");
     console.log(model3D.position);
@@ -51,6 +53,10 @@ class Model {
 
   getPhysicsBody() {
     return this.physicsBody;
+  }
+
+  getMass() {
+    return this.mass;
   }
 
   getPosition() {

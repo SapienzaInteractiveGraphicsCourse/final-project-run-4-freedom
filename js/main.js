@@ -15,8 +15,9 @@ import { Character }    from "./Character.js";
 "use strict"
 
 window.onload = function main() {
-  let physicsWorld;
-  let TRANSFORM_AUX;
+  let physicsWorld,
+      TRANSFORM_AUX,
+      cbContactPairResult;
 
   // Ammojs Initialization
   Ammo().then( function() {
@@ -34,7 +35,29 @@ window.onload = function main() {
     physicsWorld.setGravity( new Ammo.btVector3(0, -9.82, 0) );
 
     TRANSFORM_AUX = new Ammo.btTransform();
+    setupContactPairResultCallback();
+
+
+    function setupContactPairResultCallback() {
+    	cbContactPairResult = new Ammo.ConcreteContactResultCallback();
+    	cbContactPairResult.hasContact = false;
+
+    	cbContactPairResult.addSingleResult = function(cp, colObj0Wrap, partId0, index0, colObj1Wrap, partId1, index1) {
+    		const contactPoint = Ammo.wrapPointer(cp, Ammo.btManifoldPoint);
+    		const distance = contactPoint.getDistance();
+
+        if(distance > 0) return;
+
+    		this.hasContact = true;
+    	}
+
+    }
   }
+
+  // Environments
+  const CITY    = 0,
+        HIGHWAY = 1,
+        COUNTRY = 2;
 
   function setupGraphics() {
     const canvas = document.getElementById('canvas');
@@ -49,8 +72,8 @@ window.onload = function main() {
     const scene = new THREE.Scene(),
           fov    = 75,
           aspect = window.innerWidth / window.innerHeight, //2;  // the canvas default
-          near   = 0.1,
-          far    = 1000,
+          near   = 0.01,
+          far    = 10000,
           camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 10, 8);
     camera.lookAt(0,4,8);
@@ -356,24 +379,24 @@ window.onload = function main() {
                             position: [-26, 1, 10],
                             scale:    [0.8, 0.8, 0.8],
                             rotation: [0, 0, 0],
-                          },*/
+                          },//*/
 
 
       // Country - desert
-      factory:            { url: 'src/environment/country - desert/buildings/factory/scene.gltf',
-                            position: [-70, 0, -110],
-                            scale:    [5, 5, 5],
+      /*factory:            { url: 'src/environment/country - desert/buildings/factory/scene.gltf',
+                            position: [-80, 0, -110],
+                            scale:    [6, 6, 6],
                             rotation: [0, 0, 0],
                           },
       grainSilo:          { url: 'src/environment/country - desert/buildings/grain_silo/scene.gltf',
-                            position: [0, 0, -30],
+                            position: [30, 0, -30],
                             scale:    [3, 3, 3],
                             rotation: [0, 0, 0],
                           },
       oldWoodenHouse:     { url: 'src/environment/country - desert/buildings/old_wooden_house/scene.gltf',
-                            position: [-40, 0, 0],
+                            position: [-50, 0, 0],
                             scale:    [0.2, 0.2, 0.2],
-                            rotation: [0, 0, 0],
+                            rotation: [0, Math.PI, 0],
                           },
       stores:            { url: 'src/environment/country - desert/buildings/wasteland_stores/scene.gltf',
                             position: [-50, 0, -170],
@@ -381,17 +404,17 @@ window.onload = function main() {
                             rotation: [0, Math.PI/2, 0],
                           },
       westernHouse:       { url: 'src/environment/country - desert/buildings/western_house/scene.gltf',
-                            position: [100, 0, -150],
+                            position: [150, 0, -150],
                             scale:    [0.05, 0.05, 0.05],
                             rotation: [0, 0, 0],
                           },
       westernHouse2:       { url: 'src/environment/country - desert/buildings/western_house_2/scene.gltf',
-                            position: [30, 0.3, 30],
-                            scale:    [0.2, 0.2, 0.2],
+                            position: [50, 0.3, 30],
+                            scale:    [0.25, 0.25, 0.25],
                             rotation: [0, 0, 0],
                           },
       windTurbine:        { url: 'src/environment/country - desert/buildings/vintage_wind_turbine/scene.gltf',
-                            position: [0, 0, -50],
+                            position: [30, 0, -50],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, -Math.PI/2, 0],
                           },
@@ -468,8 +491,9 @@ window.onload = function main() {
                             scale:    [3.5, 3.5, 3.5],
                             rotation: [0, -Math.PI/2, 0]
                           },
+      // 500 is a static model (due to its 3D model)
       fiat500:            { url: 'src/vehicles/cars/fiat_500/scene.gltf',
-                            position: [-18, 2.3, -40],
+                            position: [-28, 2.3, -40],
                             scale:    [5, 5, 5],
                             rotation: [0, 0, 0]
                           },
@@ -525,7 +549,7 @@ window.onload = function main() {
       }
     }
 
-    const score = document.getElementById("score");
+    const scoreElem   = document.getElementById("score");
     const speedometer = document.getElementById("speedometer");
 
     // Called when all models are loaded
@@ -615,7 +639,7 @@ window.onload = function main() {
     // Start the game
     function start() {
       // Show score & speedometer
-      score.style.display       = 'inherit';
+      scoreElem.style.display   = 'inherit';
       speedometer.style.display = 'inherit';
 
       // Add dynamic models to the scene
@@ -629,6 +653,7 @@ window.onload = function main() {
           case dynamicModels.policeCar:
             addPoliceCar(modelScene);
             break;
+
           case dynamicModels.bmwCar:
             addBmwCar(modelScene);
             break;
@@ -637,6 +662,10 @@ window.onload = function main() {
             break;
           case dynamicModels.teslaCar:
             addTeslaCar(modelScene);
+            break;
+
+          case dynamicModels.rangeRover:
+            addCarModel(model, ["wheel", "wheel001", "wheel002", "wheel003"], "Range Rover");
             break;
 
           // Characters
@@ -686,52 +715,117 @@ window.onload = function main() {
       scene.background = new THREE.Color(color);
     }*/
 
+    let environment = CITY;
 
+    // Infinite terrain with a texture
+    if (environment == CITY) {
+      // City environment
+      let texInfo = {
+        repeat: { x: 300, y: 300 },
+        size:   { x: 10000, y: 10000 },
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+      };
 
-    { // Infinite terrain with a texture
-      const pos = { x: 0, y: 0, z: 0 };
+      setEnvironment("../src/textures/street_blank.png", texInfo);
 
-      const tex = new THREE.TextureLoader().load("../src/textures/street_texture.jpg");
-      // road_texture.jpg
-      //tex.anisotropy = 2;
-      //tex.repeat.set(300, 300);
+      texInfo = {
+        //repeat: { x: 400, y: 400 },
+        repeat: { x: 2, y: 400 },
+        //size:   { x: 10000, y: 10000 },
+        size:   { x: 50, y: 10000 },
+        position: { x: 0, y: 0.1, z: 0 },
+        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+      };
 
-      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-      tex.repeat.set(400, 400);
-      tex.wrapT = THREE.RepeatWrapping;
-      tex.wrapS = THREE.RepeatWrapping;
-      const geo = new THREE.PlaneBufferGeometry(10000, 10000);
-      const mat = new THREE.MeshLambertMaterial({ map: tex });
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(pos.x, pos.y, pos.z);
-      mesh.rotation.set(-Math.PI/2, 0, 0);
-      //mesh.rotation.set(Math.PI / -2, 0, Math.PI/2); // road_texture.jpg
-      scene.add(mesh);
+      setEnvironment("../src/textures/street_texture.jpg", texInfo, false);
+    }
+    else if (environment == HIGHWAY) {
+      // Highway environment
+      let texInfo = {
+        repeat: { x: 300, y: 300 },
+        size:   { x: 10000, y: 10000 },
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+      };
 
-      // Ammojs Section
-      const mass = 0;
+      setEnvironment("../src/textures/terrain_texture.jpg", texInfo);
 
-      const transform = new Ammo.btTransform();
-      transform.setIdentity();
-      transform.setOrigin( new Ammo.btVector3(pos.x, pos.y, pos.z) );
-      transform.setRotation( new Ammo.btQuaternion(0, 0, 0, 1) );
+      texInfo = {
+        //repeat: { x: 300, y: 300 },
+        repeat: { x: 300, y: 3 },
+        //size:   { x: 10000, y: 10000 },
+        size:   { x: 10000, y: 100},
+        position: { x: 0, y: 0.1, z: 0 },
+        rotation: { x: -Math.PI/2, y: 0, z: Math.PI/2 }
+      };
 
-      const motionState = new Ammo.btDefaultMotionState(transform);
+      setEnvironment("../src/textures/highway_texture.jpg", texInfo, false);
+    }
+    else {
+      // Country - desert environment
+      let texInfo = {
+        repeat: { x: 170, y: 170 },
+        size:   { x: 10000, y: 10000 },
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+      };
 
-      const collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(10000, 0.01, 10000) );
+      setEnvironment("../src/textures/desert_texture.jpg", texInfo);
 
-      const localInertia = new Ammo.btVector3(0, 0, 0);
-      collisionShape.calculateLocalInertia(mass, localInertia);
+      texInfo = {
+        repeat: { x: 1, y: 300 },
+        size:   { x: 45, y: 10000 },
+        position: { x: 0, y: 0.1, z: 0 },
+        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+      };
 
-      const rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, collisionShape, localInertia);
-      const body = new Ammo.btRigidBody(rbInfo);
-      body.setFriction(2);
-
-      // Add rigid body and set collision masks
-      physicsWorld.addRigidBody(body, 1, 1);
+      setEnvironment("../src/textures/road66.jpg", texInfo, false);
     }
 
-    { // Road crosswalks
+    function setEnvironment(texFilename, texInfo, physics=true) {
+      if (!texFilename || !texInfo)   return;
+
+      const tex = new THREE.TextureLoader().load(texFilename);
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      tex.repeat.set(texInfo.repeat.x, texInfo.repeat.y);
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.wrapS = THREE.RepeatWrapping;
+
+      const geo = new THREE.PlaneBufferGeometry(texInfo.size.x, texInfo.size.y);
+      const mat = new THREE.MeshLambertMaterial({ map: tex });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(texInfo.position.x, texInfo.position.y, texInfo.position.z);
+      mesh.rotation.set(texInfo.rotation.x, texInfo.rotation.y, texInfo.rotation.z);
+      scene.add(mesh);
+
+      if (physics) {
+        // Ammojs Section
+        const mass = 0;
+
+        const transform = new Ammo.btTransform();
+        transform.setIdentity();
+        transform.setOrigin( new Ammo.btVector3(texInfo.position.x, texInfo.position.y, texInfo.position.z) );
+        transform.setRotation( new Ammo.btQuaternion(0, 0, 0, 1) );
+
+        const motionState = new Ammo.btDefaultMotionState(transform);
+
+        const collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(texInfo.size.x, 0.01, texInfo.size.y) );
+
+        const localInertia = new Ammo.btVector3(texInfo.position.x, texInfo.position.y, texInfo.position.z);
+        collisionShape.calculateLocalInertia(mass, localInertia);
+
+        const rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, collisionShape, localInertia);
+        const body = new Ammo.btRigidBody(rbInfo);
+        body.setFriction(2);
+
+        // Add rigid body and set collision masks
+        physicsWorld.addRigidBody(body, 1, 1);
+      }
+    }
+
+    // Road crosswalks
+    if (environment == CITY) {
       const tex = new THREE.TextureLoader().load("../src/textures/street_crosswalks.png");
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       tex.repeat.set(3, 1);
@@ -739,14 +833,10 @@ window.onload = function main() {
       tex.wrapS = THREE.RepeatWrapping;
       const geo = new THREE.PlaneBufferGeometry(48, 11);
       const mat = new THREE.MeshLambertMaterial({ map: tex });
-      /*const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(0, 0.1, -23);
-      mesh.rotation.set(Math.PI / -2, 0, 0);
-      scene.add(mesh);*/
 
       for(let i=0; i<2; i++) {
         const mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(0, 0.1, -23 - (276 * i)); // 276 = 23 * 12
+        mesh.position.set(0, 0.2, -23 - (276 * i)); // 276 = 23 * 12
         mesh.rotation.set(-Math.PI/2, 0, 0);
         scene.add(mesh);
       }
@@ -847,6 +937,7 @@ window.onload = function main() {
     document.body.appendChild( stats.dom );
 
     let before = 0, deltaTime = 0;
+    let score = 0;
     requestAnimationFrame(animate);
 
     function animate(time) {
@@ -905,28 +996,23 @@ window.onload = function main() {
         const speed = player.getSpeed().toFixed(2);
         speedometer.innerHTML = (speed < 0 ? '(R) ' : '') + Math.abs(speed) + ' Km/h';
 
-        game.setScore( game.getScore() + Math.abs(speed) / 3.6 * deltaTime );
-        score.innerHTML = "Score: " + game.getScore();
+        // Update Score
+        //let score = game.getScore();
+        score += Utils.toMsecond( Math.abs(speed) ) * deltaTime;
+        game.setScore(score);
 
+        if (score < 1000)
+          scoreElem.innerHTML = "Score: " + score + " m";
+        else
+          scoreElem.innerHTML = "Score: " + (score / 1000) + " Km";
+
+        // Update camera
+        camera.position.z = player.getPosition().z + 21;
 
         //console.log("car.position.z: " + car.position.z);
         //camera.position.z -= player.getModel().getMoveSpeed() * deltaTime * 0.029;
 
-
-        // compute the box that contains all the stuff from model and below
-        //const box = new THREE.Box3().setFromObject(player.getModel().get3DModel());
-        /*const box = new THREE.Box3().setFromObject(player.getModel().getFrontLeftWheel());
-
-        const boxSize   = box.getSize(new THREE.Vector3()).length();
-        const boxCenter = box.getCenter(new THREE.Vector3());
-
-        // set the camera to frame the box
-        Utils.frameArea(boxSize, boxSize, boxCenter, camera);
-
-        // update the Trackball controls to handle the new size
-        controls.maxDistance = boxSize * 10;
-        controls.target.copy(boxCenter);
-        controls.update();//*/
+        //updateCamera(player.get3DModel());
 
         //console.log("camera.position.z: " + camera.position.z);
 
@@ -999,7 +1085,7 @@ window.onload = function main() {
 
 
 
-
+      // For bullet raycast vehicle
       for (var i = 0; i < syncList.length; i++)
 					syncList[i](deltaTime);
 
@@ -1014,21 +1100,28 @@ window.onload = function main() {
 
       // Update rigid bodies
       for (let i = 0; i < rigidBodies.length; i++) {
-          let model = rigidBodies[i];
-          let objAmmo = model.physicsBody;
-          let ms = objAmmo.getMotionState();
+          const model = rigidBodies[i];
+          const objAmmo = model.physicsBody;
+          const ms = objAmmo.getMotionState();
           if (ms) {
               ms.getWorldTransform(TRANSFORM_AUX);
-              let p = TRANSFORM_AUX.getOrigin();
-              let q = TRANSFORM_AUX.getRotation();
+              const p = TRANSFORM_AUX.getOrigin();
+              const q = TRANSFORM_AUX.getRotation();
               model.get3DModel().position.set( p.x(), p.y(), p.z() );
               model.get3DModel().quaternion.set( q.x(), q.y(), q.z(), q.w() );
           }
       }
 
+      // Check if police has caught the player
+      if (!car || !policeCar) return;
+
+      physicsWorld.contactPairTest(player.getPhysicsBody(), policeCar.getPhysicsBody(), cbContactPairResult);
+      if(cbContactPairResult.hasContact) {
+        // TODO: game over
+        console.log("GAME OVER");
+      }
+
     }
-
-
 
 
 
@@ -1101,7 +1194,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
         }
       });
@@ -1110,8 +1203,8 @@ window.onload = function main() {
     }
 
     // Add a car model to the scene
-    /*function AddCarModel(model, wheelsNames, isUserCar, carName, audioFile) {
-      if(!model || !wheelsNames || !carName || !audioFile)  return;
+    function addCarModel(model, wheelsNames, carName) {
+      if (!model || !wheelsNames || !carName)  return;
 
       const modelScene = model.gltf.scene;
       //console.log(Utils.dumpObject(modelScene).join('\n'));
@@ -1124,7 +1217,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
         }
 
@@ -1135,9 +1228,23 @@ window.onload = function main() {
         else if (o.name === wheelsNames[3])   wheels[3] = o;
       });
 
-      scene.add(modelScene);
+      // Specs for range rover
+      const carInfo = {
+        mass: 1787,    // Kg
+        maxSpeed: 201, // Km/h
+        boxSizeXFactor: 0.38,
+        boxSizeYFactor: 0.43
+      };
 
-      if(isUserCar) {
+      const components = {
+        wheels: wheels,
+        //brakes: brakes
+      };
+
+      //scene.add(modelScene);
+      new Car(modelScene, carInfo, game, carName, components);
+
+      /*if(isUserCar) {
         // Create the Car object
         car = new Car(modelScene, 800, game, carName, wheels);
 
@@ -1153,10 +1260,12 @@ window.onload = function main() {
         // Create the PositionalAudio object (passing in the listener)
         audioObjects.policeCar = new THREE.PositionalAudio(listener);
         applySound(o, audioFile, audioObjects.policeCar);
-      }
-    }*/
+      }*/
+    }
 
     function addPoliceCar(modelScene) {
+      if (!modelScene)  return;
+
       modelScene.position.set(...dynamicModels.policeCar.position);
       modelScene.scale.set(...dynamicModels.policeCar.scale)
       modelScene.rotation.set(...dynamicModels.policeCar.rotation);
@@ -1174,7 +1283,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
 
           if (o.name === "Roof_light_bar_0") {
@@ -1207,6 +1316,8 @@ window.onload = function main() {
     }
 
     function addBmwCar(modelScene) {
+      if (!modelScene)  return;
+
       modelScene.position.set(...dynamicModels.bmwCar.position);
       modelScene.scale.set(...dynamicModels.bmwCar.scale)
       modelScene.rotation.set(...dynamicModels.bmwCar.rotation);
@@ -1220,7 +1331,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
         }
 
@@ -1230,8 +1341,8 @@ window.onload = function main() {
         else if (o.name === 'wheel012')   wheels[2] = o;
         else if (o.name === 'wheel004')   wheels[3] = o;
 
-        // z axis for front wheels when the car goes left and right
-        // x axis for forward movement
+        // Z axis for front wheels when the car turns
+        // X axis for front wheels forward movement
       });
 
       // Adjust front wheels orientation before to animate them
@@ -1257,6 +1368,8 @@ window.onload = function main() {
     }
 
     function addTeslaCar(modelScene) {
+      if (!modelScene)  return;
+
       modelScene.position.set(...dynamicModels.teslaCar.position);
       modelScene.scale.set(...dynamicModels.teslaCar.scale)
       modelScene.rotation.set(...dynamicModels.teslaCar.rotation);
@@ -1270,7 +1383,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
         }
 
@@ -1305,6 +1418,8 @@ window.onload = function main() {
     }
 
     function addLamborghiniCar(modelScene) {
+      if (!modelScene)  return;
+
       modelScene.position.set(...dynamicModels.lamborghiniCar.position);
       modelScene.scale.set(...dynamicModels.lamborghiniCar.scale)
       modelScene.rotation.set(...dynamicModels.lamborghiniCar.rotation);
@@ -1318,20 +1433,13 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel001') {
-          wheels[0] = o;
-          //(o.parent).add(frontAxle);
-          //frontAxle.add(o);
-        }
-        else if (o.name === 'wheel002') {
-          wheels[1] = o;
-          //frontAxle.add(o);
-        }
+        if (o.name === 'wheel001')        wheels[0] = o;
+        else if (o.name === 'wheel002')   wheels[1] = o;
         else if (o.name === 'wheel003')   wheels[2] = o;
         else if (o.name === 'wheel005')   wheels[3] = o;
 
@@ -1366,6 +1474,8 @@ window.onload = function main() {
 
 
     function addNathanCharacter(modelScene) {
+      if (!modelScene)  return;
+
       modelScene.position.set(...dynamicModels.nathan.position);
       modelScene.scale.set(...dynamicModels.nathan.scale)
       modelScene.rotation.set(...dynamicModels.nathan.rotation);
@@ -1383,7 +1493,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow = true;
+          o.castShadow    = true;
           o.receiveShadow = true;
         }
 

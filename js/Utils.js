@@ -88,6 +88,15 @@ class Utils {
     return rad / Math.PI * 180;
   }
 
+  // Convert m/s speed to Km/h
+  static toKmHour(speed) {
+    return speed * 3.6;
+  }
+
+  // Convert Km/h speed to m/s
+  static toMsecond(speed) {
+    return speed / 3.6;
+  }
 }
 
 export {Utils}

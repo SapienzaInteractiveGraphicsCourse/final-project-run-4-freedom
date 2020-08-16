@@ -29,8 +29,8 @@ class Player {
     update(deltaTime) {
       if(!deltaTime || !this.model)   return;
 
-      const turnDirection = (this.inputManager.leftAction()  ?  1 : 0) +
-                            (this.inputManager.rightAction() ? -1 : 0);
+      const turnDirection = (this.inputManager.rightAction() ?  1 : 0) +
+                            (this.inputManager.leftAction()  ? -1 : 0);
 
       const turnRotation = this.model.getTurnSpeed() * turnDirection * deltaTime;
 
@@ -78,7 +78,8 @@ class Player {
 
           console.log("getPosition(): ");
           console.log(this.getPosition());
-          this.model.move(-turnDirection, 0, forwardDirection, deltaTime);
+          //this.model.move(-turnDirection, 0, forwardDirection, deltaTime);
+          this.model.move(turnDirection, 0, forwardDirection, deltaTime);
 
           /*const frontLeftWheel  = this.model.getFrontLeftWheel();
           const frontRightWheel = this.model.getFrontRightWheel();
@@ -236,6 +237,16 @@ class Player {
       //this.model.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1), this.model.getMoveSpeed() * deltaTime * difficultyFactor);
 
       //this.game.setScore(this.model.getMoveSpeed() * deltaTime * difficultyFactor);
+    }
+
+    // Get current player 3D model using the model one
+    get3DModel() {
+      return this.model ? this.model.get3DModel() : null;
+    }
+
+    // Get current player physics body using the model one
+    getPhysicsBody() {
+      return this.model ? this.model.getPhysicsBody() : null;
     }
 
     // Get current player position using the model one
