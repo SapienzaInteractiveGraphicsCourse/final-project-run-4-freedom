@@ -102,7 +102,7 @@
 				// ---------------------------------------------------------------------
 				// Perspective Camera
 				// ---------------------------------------------------------------------
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.001, 100000 );
 				camera.position.set( 600, 400, 0 );
 
 				camera.name = "PerspectiveCamera";
@@ -141,13 +141,18 @@
 				scene.add( axes );
 
         const model = {
-          url: 'src/environment/city/street/sidewalk_corner/scene.gltf',
+          /*url: 'src/environment/city/street/sidewalk_corner/scene.gltf',
           position: [0, 0, 0],
           scale:    [1, 1, 1],
-          rotation: [0, -Math.PI/2, 0]
-        }
+          rotation: [0, -Math.PI/2, 0]*/
 
-        const gltfLoader = new GLTFLoader();
+	        url: 'src/environment/city/street/neon_signs_billboards/scene.gltf',
+	        position: [-2000, 0, 0],
+	        scale:    [1, 1, 1],
+	        rotation: [0, 0, 0]
+        };
+
+        /*const gltfLoader = new GLTFLoader();
         gltfLoader.load( model.url, function ( gltf ) {
               object = gltf.scene;
               object.position.set(...model.position);
@@ -156,7 +161,8 @@
 
               console.log(Utils.dumpObject(object).join('\n'));
 
-              let rmObj = null;
+							// For removing the corner of the sidewalk
+              /*let rmObj = null;
 
               object.traverse( o => {
                   if (o.name === "CORNER")
@@ -164,9 +170,33 @@
               } );
 
               if (rmObj)
-                rmObj.parent.remove(rmObj);
+                rmObj.parent.remove(rmObj);*/
 
-              console.log(Utils.dumpObject(object).join('\n'));
+						  // For removing the unused neon billboards
+							/*let rmObjs = [];
+
+							object.traverse( o => {
+									if (o.name === "takoyaki-ya" || o.name === "takoyaki-ta" ||
+									 		o.name === "takoyaki-ko" || o.name === "takoyaki-ki" ||
+											o.name === "cube-letter" || o.name === "cube-letter001" ||
+											o.name === "cube-letter002" || o.name === "cube-letter003" ||
+											o.name === "2-takoyaki-ya" || o.name === "2-takoyaki-ta" ||
+											o.name === "2-takoyaki-ko" || o.name === "2-takoyaki-ki" ||
+											o.name === "cube-letter004" || o.name === "cube-letter005" ||
+											o.name === "cube-letter006" || o.name === "cube-letter007" ||
+											o.name === "takoyaky-ta" || o.name === "takoyaky-ta001" ||
+											o.name === "takoyaky-ta002" || o.name === "jote" ||
+											o.name === "crock-pot" || o.name === "donkey" ||
+											o.name === "text-shibuya" || o.name === "text-shibuya001" ||
+											o.name === "text-shibuya002" || o.name === "text-shibuya003"
+										)
+										rmObjs.push(o);
+							} );
+
+							rmObjs.forEach( o => o.parent.remove(o) );*/
+
+
+              /*console.log(Utils.dumpObject(object).join('\n'));
 
     					scene.add( object );
             },
@@ -174,7 +204,7 @@
             function ( error ) {
               console.error(error);
               alert("Error during the loading of the model!\nTry to refresh the page");
-            } );
+            } );*/
 
 				/*const loader = new OBJLoader();
 				loader.load( model.url, function ( obj ) {
@@ -183,6 +213,42 @@
 					object.position.set( 400, 0, 0 );
 					scene.add( object );
 				} );*/
+
+
+				const models = {
+					gasStation:	  { url: 'src/environment/city/buildings/gas_station/scene.gltf',
+													position: [0, 0, 0],
+													scale:    [1, 1, 1],
+													rotation: [0, 0, 0]
+												},
+					gasStationAd: { url: 'src/environment/city/street/gas_station_ad/scene.gltf',
+													position: [900, 0, 1900],
+													scale:    [24, 24, 24],
+													rotation: [0, 0, 0]
+												},
+					gasStationAdClone: { url: 'src/environment/city/street/gas_station_ad/scene.gltf',
+													position: [900, 0, -1900],
+													scale:    [24, 24, 24],
+													rotation: [0, 0, 0]
+												}
+				};
+
+				const gltfLoader = new GLTFLoader();
+				for (const model of Object.values(models)) {
+					gltfLoader.load(model.url, function (gltf) {
+						object = gltf.scene;
+						object.position.set(...model.position);
+						object.scale.set(...model.scale)
+						object.rotation.set(...model.rotation);
+
+						scene.add( object );
+					},
+					undefined,
+					function (error) {
+						console.error(error);
+						alert("Error during the loading of the models!\nTry to refresh the page");
+					});
+				}
 
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -214,12 +280,6 @@
 			}
 
 			function render() {
-				/*const timer = Date.now() * 0.0001;
-
-				camera.position.x = Math.cos( timer ) * 800;
-				camera.position.z = Math.sin( timer ) * 800;
-
-				camera.lookAt( scene.position );*/
 				renderer.render( scene, camera );
 			}
 

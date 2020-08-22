@@ -54,11 +54,6 @@ window.onload = function main() {
     }
   }
 
-  // Environments
-  const CITY    = 0,
-        HIGHWAY = 1,
-        COUNTRY = 2;
-
   function setupGraphics() {
     const canvas = document.getElementById('canvas');
     const gl = canvas.getContext("webgl2");
@@ -118,6 +113,20 @@ window.onload = function main() {
       for (const audio of Object.values(audioObjects))
         value ? audio.pause() : audio.play();
     }
+
+    // Selectable Environments
+    const environments = {
+      CITY:    0,
+      HIGHWAY: 1,
+      COUNTRY: 2
+    };
+
+    // Selectable Cars
+    const cars = {
+      BMWI8: 0,
+      LAMBORGHINI: 1,
+      TESLA: 2
+    };
 
     // Static 3D models
     const staticModels = {
@@ -199,11 +208,15 @@ window.onload = function main() {
                             scale:    [5, 5, 5],
                             rotation: [0, Math.PI/2, 0],
                           },
-
       easternEuHouse:     { url: 'src/environment/city/buildings/eastern_european_panel_house/scene.gltf',
                             position: [40, 0, 90],
                             scale:    [0.1, 0.1, 0.1],
                             rotation: [0, -Math.PI/2, 0],
+                          },
+      gasStation:         { url: 'src/environment/city/buildings/gas_station/scene.gltf',
+                            position: [-40, 0, -330],
+                            scale:    [0.017, 0.017, 0.017],
+                            rotation: [0, 0, 0],
                           },
       house1:             { url: 'src/environment/city/buildings/house_1/scene.gltf',
                             position: [-60, -1, 160],
@@ -221,7 +234,7 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
       oldGarage:          { url: 'src/environment/city/buildings/old_garage/scene.gltf',
-                            position: [0, 0, -30],
+                            position: [45, 0, -230],
                             scale:    [0.004, 0.004, 0.004],
                             rotation: [0, 0, 0],
                           },
@@ -257,7 +270,7 @@ window.onload = function main() {
                             position: [-90, 1, 300],
                             scale:    [0.01, 0.01, 0.01],
                             rotation: [0, Math.PI/2, 0],
-                          },
+                          },//*/
 
       // Street elements
       /*road:               { url: 'src/environment/street/road/scene.gltf',
@@ -265,9 +278,30 @@ window.onload = function main() {
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, 0, 0],
                           },*/
-      /*bench:              { url: 'src/environment/city/street/bench/scene.gltf',
-                            position: [-29, 1, -7],
+      /*barTable:           { url: 'src/environment/city/street/bar_table/scene.gltf',
+                            position: [-29, 2, 10],
+                            scale:    [0.04, 0.04, 0.04],
+                            rotation: [0, 0, 0],
+                          },
+      barChair:           { url: 'src/environment/city/street/bar_chair/scene.gltf',
+                            position: [-30, 2.8, 10],
+                            scale:    [0.02, 0.02, 0.02],
+                            rotation: [0, 0, 0],
+                          },
+      bench:              { url: 'src/environment/city/street/bench/scene.gltf',
+                            position: [-29, 1.6, -7],
                             scale:    [2, 2, 2],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      // BusStop1 may cause RESULT_CODE_MACHINE_LEVEL_INSTALL_EXISTS error
+      /*busStop1:           { url: 'src/environment/city/street/bus_stop_1/scene.gltf',
+                            position: [30, 0, -7],
+                            scale:    [2, 2, 2],
+                            rotation: [0, -Math.PI/2, 0],
+                          },*/
+      /*busStop2:           { url: 'src/environment/city/street/bus_stop_2/scene.gltf',
+                            position: [-29, 2.3, -20],
+                            scale:    [4, 4, 4],
                             rotation: [0, Math.PI/2, 0],
                           },
       cityFence:          { url: 'src/environment/city/street/city_fence/scene.gltf',
@@ -308,6 +342,16 @@ window.onload = function main() {
       metalFence:         { url: 'src/environment/city/street/metal_fence/scene.gltf',
                             position: [45, 1, 60],
                             scale:    [0.003, 0.003, 0.003],
+                            rotation: [0, 0, 0],
+                          },
+      neonBillboardASR:   { url: 'src/environment/city/street/neon_billboard_1/scene.gltf',
+                            position: [-30, 1, -50],
+                            scale:    [0.007, 0.007, 0.007],
+                            rotation: [0, 0, 0],
+                          },
+      neonBillboardRoma:  { url: 'src/environment/city/street/neon_billboard_2/scene.gltf',
+                            position: [30, 1, -50],
+                            scale:    [0.007, 0.007, 0.007],
                             rotation: [0, 0, 0],
                           },
       roadSign:           { url: 'src/environment/city/street/road_sign/scene.gltf',
@@ -356,12 +400,12 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
       trashCan2:          { url: 'src/environment/city/street/trash_can_2/scene.gltf',
-                            position: [-29, 0, -3],
-                            scale:    [0.4, 0.4, 0.4],
+                            position: [-29, 0.8, -3],
+                            scale:    [0.3, 0.3, 0.3],
                             rotation: [0, 0, 0],
                           },
       trashCan3:          { url: 'src/environment/city/street/trash_can_3/scene.gltf',
-                            position: [-29, 1, -10],
+                            position: [-29, 1.6, -10],
                             scale:    [1, 1, 1],
                             rotation: [0, 0, 0],
                           },
@@ -383,7 +427,17 @@ window.onload = function main() {
 
 
       // Country - desert
-      /*factory:            { url: 'src/environment/country - desert/buildings/factory/scene.gltf',
+      /*abandonedGas:       { url: 'src/environment/country - desert/buildings/abandoned_gas_station/scene.gltf',
+                            position: [-80, 0.3, -50],
+                            scale:    [1, 1, 1],
+                            rotation: [0, 0, 0],
+                          },
+      abandonedShop:      { url: 'src/environment/country - desert/buildings/abandoned_shopmall/scene.gltf',
+                            position: [-60, 0, 20],
+                            scale:    [0.02, 0.02, 0.02],
+                            rotation: [0, 0, 0],
+                          },
+      factory:            { url: 'src/environment/country - desert/buildings/factory/scene.gltf',
                             position: [-80, 0, -110],
                             scale:    [6, 6, 6],
                             rotation: [0, 0, 0],
@@ -394,8 +448,13 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
       oldWoodenHouse:     { url: 'src/environment/country - desert/buildings/old_wooden_house/scene.gltf',
-                            position: [-50, 0, 0],
+                            position: [-50, 0, 80],
                             scale:    [0.2, 0.2, 0.2],
+                            rotation: [0, Math.PI, 0],
+                          },
+      serviceStation:     { url: 'src/environment/country - desert/buildings/service_station/scene.gltf',
+                            position: [50, 0, -30],
+                            scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI, 0],
                           },
       stores:            { url: 'src/environment/country - desert/buildings/wasteland_stores/scene.gltf',
@@ -417,7 +476,7 @@ window.onload = function main() {
                             position: [30, 0, -50],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, -Math.PI/2, 0],
-                          },
+                          },//*/
 
       // Road elements
       /*bush:               { url: 'src/environment/country - desert/road/bush/scene.gltf',
@@ -435,7 +494,17 @@ window.onload = function main() {
                             scale:    [0.035, 0.035, 0.035],
                             rotation: [0, 0, 0],
                           },
-      desertPlant:          { url: 'src/environment/country - desert/road/desert_plant/scene.gltf',
+      busStop:            { url: 'src/environment/country - desert/road/bus_stop/scene.gltf',
+                            position: [-30, 4, -20],
+                            scale:    [6, 6, 6],
+                            rotation: [0, 0, 0],
+                          },
+      desertMesa:         { url: 'src/environment/country - desert/road/desert_mesa/scene.gltf',
+                            position: [50, 17, -60],
+                            scale:    [50, 50, 50],
+                            rotation: [0, 0, 0],
+                          },
+      desertPlant:        { url: 'src/environment/country - desert/road/desert_plant/scene.gltf',
                             position: [0, 0, -20],
                             scale:    [0.4, 0.4, 0.4],
                             rotation: [0, 0, 0],
@@ -459,7 +528,24 @@ window.onload = function main() {
                             position: [10, 0, -45],
                             scale:    [0.046, 0.046, 0.046],
                             rotation: [0, 0, 0],
-                          },//*/
+                          },
+      woodPallets:        { url: 'src/environment/country - desert/road/wood_pallets/scene.gltf',
+                            position: [10, 0.2, -10],
+                            scale:    [0.007, 0.007, 0.007],
+                            rotation: [0, 0, 0],
+                          }//*/
+
+      // Highway
+      /*highwayFence:       { url: 'src/environment/highway/road/highway_fence/scene.gltf',
+                            position: [-30, 1.6, -10],
+                            scale:    [1.5, 1.5, 1.5],
+                            rotation: [0, 0, 0],
+                          },
+      jersey:             { url: 'src/environment/highway/road/jersey_barrier/scene.gltf',
+                            position: [0, 1.8, -10],
+                            scale:    [1.1, 1.1, 1.1],
+                            rotation: [0, 0, 0],
+                          }*/
     };
 
     const dynamicModels = {
@@ -470,31 +556,111 @@ window.onload = function main() {
                             rotation: [0, Math.PI, 0]
                           },
 
-      /*bmwCar:             { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
+      bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                             position: [0, 2.1, 0],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI, 0],
-                          },//*/
-      lamborghiniCar:     { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
-                            position: [0, 1.73, 0],
+                          },
+      lamborghini:        { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
+                            position: [-10, 1.73, 0],
                             scale:    [0.013, 0.013, 0.013],
                             rotation: [0, Math.PI, 0]
-                          },//*/
-      /*teslaCar:           { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
-                            position: [0, 0.35, 0],
-                            scale:    [0.023, 0.023, 0.023],
+                          },
+      tesla:              { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
+                            position: [10, 0.35, 0],
+                            scale:    [0.025, 0.025, 0.025],
                             rotation: [0, Math.PI, 0]
-                          },//*/
+                          },
 
-      camper:             { url: 'src/vehicles/cars/camper_hippie/scene.gltf',
+      americanMuscleCar:  { url: 'src/vehicles/cars/american_muscle_car/scene.gltf',
+                            position: [20, 2, 0],
+                            scale:    [6, 6, 6],
+                            rotation: [0, Math.PI/2, 0]
+                          },
+      bmwE30:             { url: 'src/vehicles/cars/bmw_e30/scene.gltf',
+                            position: [30, 0, 0],
+                            scale:    [2.7, 2.7, 2.7],
+                            rotation: [0, 0, 0]
+                          },
+      camper1:            { url: 'src/vehicles/cars/camper_volkswagen/scene.gltf',
                             position: [16, 0, 20],
                             scale:    [3.5, 3.5, 3.5],
                             rotation: [0, -Math.PI/2, 0]
                           },
+      camper2:            { url: 'src/vehicles/cars/camper_fleetwood_bounder/scene.gltf',
+                            position: [40, 3.5, 0],
+                            scale:    [10.5, 10.5, 10.5],
+                            rotation: [0, 0, 0]
+                          },
+      chevroletCruze:     { url: 'src/vehicles/cars/chevrolet_cruze_2011/scene.gltf',
+                            position: [0, 2.5, -20],
+                            scale:    [0.8, 0.8, 0.8],
+                            rotation: [0, 0, 0]
+                          },
+      chevroletImpala:    { url: 'src/vehicles/cars/chevrolet_impala_1967/scene.gltf',
+                            position: [10, 1, -20],
+                            scale:    [0.7, 0.7, 0.7],
+                            rotation: [0, 0, 0]
+                          },
+      ferrari458:         { url: 'src/vehicles/cars/ferrari_458/scene.gltf',
+                            position: [20, 0.5, -20],
+                            scale:    [0.026, 0.026, 0.026],
+                            rotation: [0, 0, 0]
+                          },
       // 500 is a static model (due to its 3D model)
       fiat500:            { url: 'src/vehicles/cars/fiat_500/scene.gltf',
                             position: [-28, 2.3, -40],
-                            scale:    [5, 5, 5],
+                            scale:    [4, 4, 4],
+                            rotation: [0, 0, 0]
+                          },
+      ford:               { url: 'src/vehicles/cars/ford_crown_victoria/scene.gltf',
+                            position: [30, 0, -20],
+                            scale:    [2.8, 2.8, 2.8],
+                            rotation: [0, 0, 0]
+                          },
+      deliveryVan:        { url: 'src/vehicles/cars/generic_delivery_van/scene.gltf',
+                            position: [40, 3.5, -20],
+                            scale:    [0.08, 0.08, 0.08],
+                            rotation: [0, 0, 0]
+                          },
+      gmcSierra:          { url: 'src/vehicles/cars/gmc_sierra_work_truck/scene.gltf',
+                            position: [-20, 0, 0],
+                            scale:    [0.06, 0.06, 0.06],
+                            rotation: [0, 0, 0]
+                          },
+      hyundaiBus:         { url: 'src/vehicles/cars/hyundai_universe/scene.gltf',
+                            position: [-30, 0, 0],
+                            scale:    [2, 2, 2],
+                            rotation: [0, 0, 0]
+                          },
+      lotus:              { url: 'src/vehicles/cars/lotus_3-eleven/scene.gltf',
+                            position: [-40, 0.3, 0],
+                            scale:    [2.7, 2.7, 2.7],
+                            rotation: [0, 0, 0]
+                          },
+      mercedes:           { url: 'src/vehicles/cars/mercedes_sls/scene.gltf',
+                            position: [-50, 2, 0],
+                            scale:    [8, 8, 8],
+                            rotation: [0, Math.PI/2, 0]
+                          },
+      militaryTruck:      { url: 'src/vehicles/cars/military_truck/scene.gltf',
+                            position: [-10, 0, -20],
+                            scale:    [2, 2, 2],
+                            rotation: [0, Math.PI/2, 0]
+                          },
+      militaryTruck2:     { url: 'src/vehicles/cars/military_truck_12_ton/scene.gltf',
+                            position: [-20, 0, -20],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, 0, 0]
+                          },
+      nissanGT:           { url: 'src/vehicles/cars/nissan_gt/scene.gltf',
+                            position: [-30, 0.3, -20],
+                            scale:    [0.025, 0.025, 0.025],
+                            rotation: [0, 0, 0]
+                          },
+      nissanDatsun:       { url: 'src/vehicles/cars/nissan_datsun_280zx/scene.gltf',
+                            position: [-40, 1.2, -20],
+                            scale:    [0.013, 0.013, 0.013],
                             rotation: [0, 0, 0]
                           },
       rangeRover:         { url: 'src/vehicles/cars/range_rover_evoque/scene.gltf',
@@ -502,6 +668,16 @@ window.onload = function main() {
                             scale:    [6, 6, 6],
                             rotation: [0, 0, 0]
                           },
+      truck:              { url: 'src/vehicles/cars/truck/scene.gltf',
+                            position: [-50, 1.5, -20],
+                            scale:    [3, 3, 3],
+                            rotation: [0, 0, 0]
+                          },
+      zis101:             { url: 'src/vehicles/cars/zis-101/scene.gltf',
+                            position: [0, 0, -40],
+                            scale:    [2, 2, 2],
+                            rotation: [0, 0, 0]
+                          },//*/
 
 
       // Characters
@@ -647,6 +823,7 @@ window.onload = function main() {
         const modelScene = model.gltf.scene;
         scene.add(modelScene);
         //console.log(Utils.dumpObject(modelScene).join('\n'));
+        let carInfo;
 
         switch (model) {
           // Cars
@@ -654,18 +831,67 @@ window.onload = function main() {
             addPoliceCar(modelScene);
             break;
 
-          case dynamicModels.bmwCar:
+          case dynamicModels.bmwI8:
             addBmwCar(modelScene);
             break;
-          case dynamicModels.lamborghiniCar:
+          case dynamicModels.lamborghini:
             addLamborghiniCar(modelScene);
             break;
-          case dynamicModels.teslaCar:
+          case dynamicModels.tesla:
             addTeslaCar(modelScene);
             break;
 
+          case dynamicModels.camper1:
+            // Specs for camper Volkswagen T2
+            carInfo = {
+              mass: 1000,    // Kg
+              maxSpeed: 105, // Km/h
+              boxSizeXFactor: 0.08,
+              boxSizeYFactor: 0.08,
+              carName: "Volkswagen T2"
+            };
+            // Group261 is driver door
+            // Group231 is passenger door
+            // Group1 & Group15 central doors
+            // Maybe useful as environment element
+            addCarModel(model, ["Group225", "Group324", "Group318", "Group330"], carInfo);
+            break;
+          /*case dynamicModels.camper2:
+            // Specs for camper Fleetwood bounder
+            carInfo = {
+              mass: 1000,    // Kg
+              maxSpeed: 105, // Km/h
+              boxSizeXFactor: 0.08,
+              boxSizeYFactor: 0.08,
+              carName: "Fleetwood Bounder"
+            };
+            // Group261 is driver door
+            // Group231 is passenger door
+            // Group1 & Group15 central doors
+            // Maybe useful as environment element
+            addCarModel(model, ["Group225", "Group324", "Group318", "Group330"], carInfo);
+            break;*/
+          case dynamicModels.mercedes:
+            // Specs for mercedes sls
+            carInfo = {
+              mass: 1000,    // Kg
+              maxSpeed: 105, // Km/h
+              boxSizeXFactor: 0.5,
+              boxSizeYFactor: 0.5,
+              carName: "Mercedes SLS"
+            };
+            addCarModel(model, ["Wheel_FL", "Wheel_FR", "Wheel_RL", "Wheel_RR"], carInfo);
+            break;
           case dynamicModels.rangeRover:
-            addCarModel(model, ["wheel", "wheel001", "wheel002", "wheel003"], "Range Rover");
+            // Specs for range rover
+            carInfo = {
+              mass: 1787,    // Kg
+              maxSpeed: 201, // Km/h
+              boxSizeXFactor: 0.3,
+              boxSizeYFactor: 0.43,
+              carName: "Range Rover"
+            };
+            addCarModel(model, ["wheel", "wheel001", "wheel002", "wheel003"], carInfo);
             break;
 
           // Characters
@@ -715,10 +941,12 @@ window.onload = function main() {
       scene.background = new THREE.Color(color);
     }*/
 
-    let environment = CITY;
+    // TODO: set this variables according to user choices in the menu
+    let environment = environments.CITY;
+    let selectedCar = cars.LAMBORGHINI;
 
     // Infinite terrain with a texture
-    if (environment == CITY) {
+    if (environment == environments.CITY) {
       // City environment
       let texInfo = {
         repeat: { x: 300, y: 300 },
@@ -740,7 +968,7 @@ window.onload = function main() {
 
       setEnvironment("../src/textures/street_texture.jpg", texInfo, false);
     }
-    else if (environment == HIGHWAY) {
+    else if (environment == environments.HIGHWAY) {
       // Highway environment
       let texInfo = {
         repeat: { x: 300, y: 300 },
@@ -825,7 +1053,7 @@ window.onload = function main() {
     }
 
     // Road crosswalks
-    if (environment == CITY) {
+    if (environment == environments.CITY) {
       const tex = new THREE.TextureLoader().load("../src/textures/street_crosswalks.png");
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       tex.repeat.set(3, 1);
@@ -993,21 +1221,21 @@ window.onload = function main() {
       if (car) {
         player.update(deltaTime);
 
+        // Update speedometer
         const speed = player.getSpeed().toFixed(2);
         speedometer.innerHTML = (speed < 0 ? '(R) ' : '') + Math.abs(speed) + ' Km/h';
 
         // Update Score
-        //let score = game.getScore();
         score += Utils.toMsecond( Math.abs(speed) ) * deltaTime;
         game.setScore(score);
 
         if (score < 1000)
-          scoreElem.innerHTML = "Score: " + score + " m";
+          scoreElem.innerHTML = "Score: " + score.toFixed(2) + " m";
         else
-          scoreElem.innerHTML = "Score: " + (score / 1000) + " Km";
+          scoreElem.innerHTML = "Score: " + (score / 1000).toFixed(2) + " Km";
 
         // Update camera
-        camera.position.z = player.getPosition().z + 21;
+        //camera.position.z = player.getPosition().z + 21;
 
         //console.log("car.position.z: " + car.position.z);
         //camera.position.z -= player.getModel().getMoveSpeed() * deltaTime * 0.029;
@@ -1203,8 +1431,8 @@ window.onload = function main() {
     }
 
     // Add a car model to the scene
-    function addCarModel(model, wheelsNames, carName) {
-      if (!model || !wheelsNames || !carName)  return;
+    function addCarModel(model, wheelsNames, carInfo) {
+      if (!model || !wheelsNames || !carInfo)  return;
 
       const modelScene = model.gltf.scene;
       //console.log(Utils.dumpObject(modelScene).join('\n'));
@@ -1228,21 +1456,17 @@ window.onload = function main() {
         else if (o.name === wheelsNames[3])   wheels[3] = o;
       });
 
-      // Specs for range rover
-      const carInfo = {
-        mass: 1787,    // Kg
-        maxSpeed: 201, // Km/h
-        boxSizeXFactor: 0.38,
-        boxSizeYFactor: 0.43
-      };
-
       const components = {
         wheels: wheels,
         //brakes: brakes
       };
 
+      // Adjust front wheels orientation before to animate them
+      wheels[0].rotation.z = 0;
+      wheels[1].rotation.z = 0;
+
       //scene.add(modelScene);
-      new Car(modelScene, carInfo, game, carName, components);
+      new Car(modelScene, carInfo, game, carInfo.carName, components);
 
       /*if(isUserCar) {
         // Create the Car object
@@ -1318,13 +1542,13 @@ window.onload = function main() {
     function addBmwCar(modelScene) {
       if (!modelScene)  return;
 
-      modelScene.position.set(...dynamicModels.bmwCar.position);
-      modelScene.scale.set(...dynamicModels.bmwCar.scale)
-      modelScene.rotation.set(...dynamicModels.bmwCar.rotation);
+      modelScene.position.set(...dynamicModels.bmwI8.position);
+      modelScene.scale.set(...dynamicModels.bmwI8.scale)
+      modelScene.rotation.set(...dynamicModels.bmwI8.rotation);
 
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.car = new THREE.PositionalAudio(listener);
-      applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
+      applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       let wheels = [],
           brakes = [];
@@ -1363,20 +1587,21 @@ window.onload = function main() {
         brakes: brakes
       };
 
-      car = new Car(modelScene, carInfo, game, "Bmw i8", components);
+      selectedCar == cars.BMWI8 ? car = new Car(modelScene, carInfo, game, "Bmw i8", components) :
+                                  new Car(modelScene, carInfo, game, "Bmw i8", components);
       player.setModel(car);
     }
 
     function addTeslaCar(modelScene) {
       if (!modelScene)  return;
 
-      modelScene.position.set(...dynamicModels.teslaCar.position);
-      modelScene.scale.set(...dynamicModels.teslaCar.scale)
-      modelScene.rotation.set(...dynamicModels.teslaCar.rotation);
+      modelScene.position.set(...dynamicModels.tesla.position);
+      modelScene.scale.set(...dynamicModels.tesla.scale)
+      modelScene.rotation.set(...dynamicModels.tesla.rotation);
 
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.car = new THREE.PositionalAudio(listener);
-      applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
+      applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       let wheels = [],
           brakes = [];
@@ -1405,7 +1630,7 @@ window.onload = function main() {
         mass: 2316,    // Kg
         maxSpeed: 261, // Km/h
         boxSizeXFactor: 0.5,
-        boxSizeYFactor: 0.2
+        boxSizeYFactor: 0.11
       };
 
       const components = {
@@ -1413,20 +1638,21 @@ window.onload = function main() {
         brakes: brakes
       };
 
-      car = new Car(modelScene, carInfo, game, "Tesla Model S", components);
+      selectedCar == cars.TESLA ? car = new Car(modelScene, carInfo, game, "Tesla Model S", components) :
+                                  new Car(modelScene, carInfo, game, "Tesla Model S", components);
       player.setModel(car);
     }
 
     function addLamborghiniCar(modelScene) {
       if (!modelScene)  return;
 
-      modelScene.position.set(...dynamicModels.lamborghiniCar.position);
-      modelScene.scale.set(...dynamicModels.lamborghiniCar.scale)
-      modelScene.rotation.set(...dynamicModels.lamborghiniCar.rotation);
+      modelScene.position.set(...dynamicModels.lamborghini.position);
+      modelScene.scale.set(...dynamicModels.lamborghini.scale)
+      modelScene.rotation.set(...dynamicModels.lamborghini.rotation);
 
       // Create the PositionalAudio object (passing in the listener)
       audioObjects.car = new THREE.PositionalAudio(listener);
-      applySound(car, 'src/sounds/Car acceleration.mka', audioObjects.car);
+      applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       let wheels = [],
           brakes = [];
@@ -1468,7 +1694,8 @@ window.onload = function main() {
         brakes: brakes
       };
 
-      car = new Car(modelScene, carInfo, game, "Lamborghini Aventador S", components);
+      selectedCar == cars.LAMBORGHINI ? car = new Car(modelScene, carInfo, game, "Lamborghini Aventador S", components) :
+                                        new Car(modelScene, carInfo, game, "Lamborghini Aventador S", components);
       player.setModel(car);
     }
 
