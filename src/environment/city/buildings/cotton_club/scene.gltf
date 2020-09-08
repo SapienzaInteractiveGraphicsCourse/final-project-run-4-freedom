@@ -1,0 +1,706 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 3786,
+      "max": [
+        2131.265869140625,
+        1138.757568359375,
+        214.62380981445312
+      ],
+      "min": [
+        -723.42156982421875,
+        -1.3738404512405396,
+        -1005.8974609375
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 45432,
+      "componentType": 5126,
+      "count": 3786,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 3786,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 3786,
+      "max": [
+        0.99736893177032471,
+        0.99548554420471191
+      ],
+      "min": [
+        0.00060850381851196289,
+        0.0025684311985969543
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 30288,
+      "componentType": 5126,
+      "count": 3786,
+      "max": [
+        0.99736893177032471,
+        0.99548554420471191
+      ],
+      "min": [
+        0.00060850381851196289,
+        0.0025684311985969543
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 6798,
+      "max": [
+        3785
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 90864,
+      "componentType": 5126,
+      "count": 12,
+      "max": [
+        251.68060302734375,
+        450.28668212890625,
+        214.62380981445312
+      ],
+      "min": [
+        -242.826416015625,
+        307.3466796875,
+        -71.237823486328125
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 91008,
+      "componentType": 5126,
+      "count": 12,
+      "max": [
+        1,
+        0,
+        1
+      ],
+      "min": [
+        -1,
+        0,
+        0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 60576,
+      "componentType": 5126,
+      "count": 12,
+      "max": [
+        0.80315011739730835,
+        0.99866741895675659
+      ],
+      "min": [
+        0.0060999393463134766,
+        0.84708160161972046
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 60672,
+      "componentType": 5126,
+      "count": 12,
+      "max": [
+        0.80315011739730835,
+        0.99866741895675659
+      ],
+      "min": [
+        0.0060999393463134766,
+        0.84708160161972046
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 60768,
+      "componentType": 5126,
+      "count": 12,
+      "max": [
+        0.80315011739730835,
+        0.99866741895675659
+      ],
+      "min": [
+        0.0060999393463134766,
+        0.84708160161972046
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 27192,
+      "componentType": 5125,
+      "count": 18,
+      "max": [
+        11
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 91152,
+      "componentType": 5126,
+      "count": 1056,
+      "max": [
+        1923.5634765625,
+        606.0911865234375,
+        -25.834300994873047
+      ],
+      "min": [
+        436.2041015625,
+        431.54843139648438,
+        -53.646137237548828
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 103824,
+      "componentType": 5126,
+      "count": 1056,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 60864,
+      "componentType": 5126,
+      "count": 1056,
+      "max": [
+        0.99546760320663452,
+        0.9971168041229248
+      ],
+      "min": [
+        0.0091270208358764648,
+        0.0029683038592338562
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 69312,
+      "componentType": 5126,
+      "count": 1056,
+      "max": [
+        0.99546760320663452,
+        0.9971168041229248
+      ],
+      "min": [
+        0.0091270208358764648,
+        0.0029683038592338562
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 27264,
+      "componentType": 5125,
+      "count": 2130,
+      "max": [
+        1055
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 116496,
+      "componentType": 5126,
+      "count": 496,
+      "max": [
+        2100.4931640625,
+        867.17974853515625,
+        170.24943542480469
+      ],
+      "min": [
+        -733.62164306640625,
+        -3.814697265625e-06,
+        -953.49072265625
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 122448,
+      "componentType": 5126,
+      "count": 496,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 77760,
+      "componentType": 5126,
+      "count": 496,
+      "max": [
+        0.99893933534622192,
+        0.99982631206512451
+      ],
+      "min": [
+        0.00040374323725700378,
+        0.0024551153182983398
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 81728,
+      "componentType": 5126,
+      "count": 496,
+      "max": [
+        0.99893933534622192,
+        0.99982631206512451
+      ],
+      "min": [
+        0.00040374323725700378,
+        0.0024551153182983398
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 35784,
+      "componentType": 5125,
+      "count": 744,
+      "max": [
+        495
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "The Center for Digital Humanities UArizona (https://sketchfab.com/UofA-CDH)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/cotton-club-a662d232dd3c49eebbc854e7fb8c7599",
+      "title": "Cotton Club"
+    },
+    "generator": "Sketchfab-8.20.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 38760,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 85696,
+      "byteOffset": 38760,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 128400,
+      "byteOffset": 124456,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 60576,
+      "byteOffset": 252856,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 313432,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Cotton_Club_Exterior_MAT_baseColor.png"
+    },
+    {
+      "uri": "textures/Cotton_Club_Exterior_MAT_emissive.jpeg"
+    },
+    {
+      "uri": "textures/Cotton_Club_Exterior_MAT_normal.png"
+    },
+    {
+      "uri": "textures/cotton_club_3Dsignlambert3_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/CottonClub_Exterior_Signs_MAT_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        1,
+        1,
+        1
+      ],
+      "emissiveTexture": {
+        "index": 1,
+        "texCoord": 0
+      },
+      "name": "Cotton_Club_Exterior_MAT",
+      "normalTexture": {
+        "index": 2,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.59999999999999998
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        1,
+        1,
+        1
+      ],
+      "emissiveTexture": {
+        "index": 0,
+        "texCoord": 0
+      },
+      "name": "SHINE_CottonClub_sign",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.59999999999999998
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        1,
+        1,
+        1
+      ],
+      "emissiveTexture": {
+        "index": 3,
+        "texCoord": 0
+      },
+      "name": "cotton_club_3Dsignlambert3",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 3,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.59999999999999998
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        1,
+        1,
+        1
+      ],
+      "emissiveTexture": {
+        "index": 4,
+        "texCoord": 0
+      },
+      "name": "CottonClub_Exterior_Signs_MAT",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 4,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.59999999999999998
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "polySurface117_Cotton_Club_Exterior_MAT_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "polySurface117_SHINE_CottonClub_sign_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6,
+            "TEXCOORD_0": 8,
+            "TEXCOORD_1": 9,
+            "TEXCOORD_2": 10
+          },
+          "indices": 11,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "polySurface117_cotton_club_3Dsign:lambert3_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12,
+            "TEXCOORD_0": 14,
+            "TEXCOORD_1": 15
+          },
+          "indices": 16,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "polySurface117_CottonClub_Exterior_Signs_MAT_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 18,
+            "POSITION": 17,
+            "TEXCOORD_0": 19,
+            "TEXCOORD_1": 20
+          },
+          "indices": 21,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "a7c91f65fa9d476e93408a9dc4065e58.fbx"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "name": "polySurface117"
+    },
+    {
+      "mesh": 0,
+      "name": "polySurface117_Cotton_Club_Exterior_MAT_0"
+    },
+    {
+      "mesh": 1,
+      "name": "polySurface117_SHINE_CottonClub_sign_0"
+    },
+    {
+      "mesh": 2,
+      "name": "polySurface117_cotton_club_3Dsign:lambert3_0"
+    },
+    {
+      "mesh": 3,
+      "name": "polySurface117_CottonClub_Exterior_Signs_MAT_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    }
+  ]
+}
+

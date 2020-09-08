@@ -59,7 +59,10 @@ window.onload = function main() {
     const gl = canvas.getContext("webgl2");
     if (!gl)  alert("WebGL 2.0 isn't available");
 
-    const renderer = new THREE.WebGLRenderer({canvas});
+    // Disable antialias if high pixel density screen
+    const aa = window.devicePixelRatio > 1 ? false : true; 
+
+    const renderer = new THREE.WebGLRenderer( { canvas:canvas, antialias: aa, powerPreference: "high-performance" } );
     renderer.setClearColor(0xBEF4FF);
     renderer.shadowMap.enabled = true;
 
@@ -67,16 +70,17 @@ window.onload = function main() {
     const scene = new THREE.Scene(),
           fov    = 75,
           aspect = window.innerWidth / window.innerHeight, //2;  // the canvas default
-          near   = 0.01,
-          far    = 10000,
+          near   = 1, //0.01,     // Greater values, best performance
+          far    = 1000, //10000, // Less values, best performance
           camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 10, 8);
-    camera.lookAt(0,4,8);
+    camera.lookAt(0, 5, 0);
 
+    // DISABLE WHEN GAME IS READY
     // Controls for zooming and moving around the scene
-    const controls = new OrbitControls(camera, canvas);
+    /*const controls = new OrbitControls(camera, canvas);
     controls.target.set(0, 5, 0);
-    controls.update();
+    controls.update();*/
 
     // Declare a global AudioListener
     let listener;
@@ -203,9 +207,14 @@ window.onload = function main() {
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, -Math.PI/2, 0],
                           },
-      building7:          { url: 'src/environment/city/buildings/building_kontra/scene.gltf',
-                            position: [-40, 0.5, -260],
-                            scale:    [5, 5, 5],
+      setOfBuildings:     { url: 'src/environment/city/buildings/set_of_buildings/scene.gltf',
+                            position: [300, 118, 240],
+                            scale:    [0.01, 0.01, 0.01],
+                            rotation: [0, 0, 0],
+                          },
+      cottonClub:         { url: 'src/environment/city/buildings/cotton_club/scene.gltf',
+                            position: [-30, 0, -400],
+                            scale:    [0.04, 0.04, 0.04],
                             rotation: [0, Math.PI/2, 0],
                           },
       easternEuHouse:     { url: 'src/environment/city/buildings/eastern_european_panel_house/scene.gltf',
@@ -233,10 +242,25 @@ window.onload = function main() {
                             scale:    [0.035, 0.035, 0.035],
                             rotation: [0, 0, 0],
                           },
-      oldGarage:          { url: 'src/environment/city/buildings/old_garage/scene.gltf',
-                            position: [45, 0, -230],
-                            scale:    [0.004, 0.004, 0.004],
+      kontra:             { url: 'src/environment/city/buildings/building_kontra/scene.gltf',
+                            position: [-40, 0.5, -260],
+                            scale:    [5, 5, 5],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      motel:              { url: 'src/environment/city/buildings/motel/scene.gltf',
+                            position: [-50, 0.3, -530],
+                            scale:    [1.8, 1.8, 1.8],
                             rotation: [0, 0, 0],
+                          },
+      office:             { url: 'src/environment/city/buildings/office_1/scene.gltf',
+                            position: [250, 1, -800],
+                            scale:    [0.002, 0.002, 0.002],
+                            rotation: [0, 0, 0],
+                          },
+      officePorsche:      { url: 'src/environment/city/buildings/office_2/scene.gltf',
+                            position: [40, 0, -260],
+                            scale:    [0.035, 0.035, 0.035],
+                            rotation: [0, -Math.PI/1.645, 0],
                           },
 
       boulangerie:        { url: 'src/environment/city/buildings/boulangerie_de_lopera/scene.gltf',
@@ -247,6 +271,16 @@ window.onload = function main() {
       laCantine:          { url: 'src/environment/city/buildings/la_cantine/scene.gltf',
                             position: [35, -1, 180],
                             scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      metzoCoffeeBar:     { url: 'src/environment/city/buildings/metzo_coffee_bar/scene.gltf',
+                            position: [35, -1, 350],
+                            scale:    [4, 4, 4],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
+      pizzeria:           { url: 'src/environment/city/buildings/pizzeria/scene.gltf',
+                            position: [35, 0, 390],
+                            scale:    [6, 6, 6],
                             rotation: [0, -Math.PI/2, 0],
                           },
       starbucks:          { url: 'src/environment/city/buildings/starbucks_coffee/scene.gltf',
@@ -261,7 +295,7 @@ window.onload = function main() {
                             rotation: [0, Math.PI/3, 0],
                           },
       stadium2:           { url: 'src/environment/city/buildings/stadium2/scene.gltf',
-                            position: [90, 1, 450],
+                            position: [90, 1, 600],
                             scale:    [0.7, 0.7, 0.7],
                             rotation: [0, -Math.PI/2, 0],
                           },
@@ -428,14 +462,24 @@ window.onload = function main() {
 
       // Country - desert
       /*abandonedGas:       { url: 'src/environment/country - desert/buildings/abandoned_gas_station/scene.gltf',
-                            position: [-80, 0.3, -50],
+                            position: [-65, 0.3, 50],
                             scale:    [1, 1, 1],
                             rotation: [0, 0, 0],
                           },
       abandonedShop:      { url: 'src/environment/country - desert/buildings/abandoned_shopmall/scene.gltf',
-                            position: [-60, 0, 20],
-                            scale:    [0.02, 0.02, 0.02],
+                            position: [-60, 0, -200],
+                            scale:    [0.03, 0.03, 0.03],
                             rotation: [0, 0, 0],
+                          },
+      abandonedStores:    { url: 'src/environment/country - desert/buildings/wasteland_stores/scene.gltf',
+                            position: [-50, 0, -170],
+                            scale:    [0.1, 0.1, 0.1],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      cinema:             { url: 'src/environment/country - desert/buildings/cinema/scene.gltf',
+                            position: [40, 0, -110],
+                            scale:    [0.02, 0.02, 0.02],
+                            rotation: [0, Math.PI/2, 0],
                           },
       factory:            { url: 'src/environment/country - desert/buildings/factory/scene.gltf',
                             position: [-80, 0, -110],
@@ -443,37 +487,57 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           },
       grainSilo:          { url: 'src/environment/country - desert/buildings/grain_silo/scene.gltf',
-                            position: [30, 0, -30],
+                            position: [30, 0, 30],
                             scale:    [3, 3, 3],
                             rotation: [0, 0, 0],
                           },
+      motelLoneStar:      { url: 'src/environment/country - desert/buildings/motel_lone_star/scene.gltf',
+                            position: [-55, 4.5, -10],
+                            scale:    [0.0035, 0.0035, 0.0035],
+                            rotation: [0, Math.PI/2, 0],
+                          },
+      motelOld:           { url: 'src/environment/country - desert/buildings/motel_old/scene.gltf',
+                            position: [50, 0.4, -20],
+                            scale:    [1.5, 1.5, 1.5],
+                            rotation: [0, 0, 0],
+                          },
+      oldGarage:          { url: 'src/environment/city/buildings/old_garage/scene.gltf',
+                            position: [45, 0, -200],
+                            scale:    [0.004, 0.004, 0.004],
+                            rotation: [0, 0, 0],
+                          },
       oldWoodenHouse:     { url: 'src/environment/country - desert/buildings/old_wooden_house/scene.gltf',
-                            position: [-50, 0, 80],
+                            position: [-50, 0, 120],
                             scale:    [0.2, 0.2, 0.2],
                             rotation: [0, Math.PI, 0],
                           },
+      postOffice:         { url: 'src/environment/country - desert/buildings/post_office/scene.gltf',
+                            position: [-70, 2.2, -260],
+                            scale:    [1.3, 1.3, 1.3],
+                            rotation: [0, -Math.PI/2, 0],
+                          },
       serviceStation:     { url: 'src/environment/country - desert/buildings/service_station/scene.gltf',
-                            position: [50, 0, -30],
+                            position: [50, 0, -160],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI, 0],
                           },
-      stores:            { url: 'src/environment/country - desert/buildings/wasteland_stores/scene.gltf',
-                            position: [-50, 0, -170],
-                            scale:    [0.1, 0.1, 0.1],
-                            rotation: [0, Math.PI/2, 0],
+      theater:            { url: 'src/environment/country - desert/buildings/harlem_apollo_theater/scene.gltf',
+                            position: [-25, 0, -50],
+                            scale:    [0.02, 0.02, 0.02],
+                            rotation: [0, -Math.PI/2, 0],
                           },
       westernHouse:       { url: 'src/environment/country - desert/buildings/western_house/scene.gltf',
-                            position: [150, 0, -150],
-                            scale:    [0.05, 0.05, 0.05],
-                            rotation: [0, 0, 0],
+                            position: [50, 0, 200],
+                            scale:    [0.03, 0.03, 0.03],
+                            rotation: [0, -Math.PI/2, 0],
                           },
       westernHouse2:       { url: 'src/environment/country - desert/buildings/western_house_2/scene.gltf',
-                            position: [50, 0.3, 30],
+                            position: [50, 0.3, 60],
                             scale:    [0.25, 0.25, 0.25],
                             rotation: [0, 0, 0],
                           },
       windTurbine:        { url: 'src/environment/country - desert/buildings/vintage_wind_turbine/scene.gltf',
-                            position: [30, 0, -50],
+                            position: [30, 0, 50],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, -Math.PI/2, 0],
                           },//*/
@@ -529,6 +593,16 @@ window.onload = function main() {
                             scale:    [0.046, 0.046, 0.046],
                             rotation: [0, 0, 0],
                           },
+      tumbleweed1:        { url: 'src/environment/country - desert/road/tumbleweed_1/scene.gltf',
+                            position: [5, 0.55, 0],
+                            scale:    [0.002, 0.002, 0.002],
+                            rotation: [0, 0, 0],
+                          },
+      tumbleweed2:        { url: 'src/environment/country - desert/road/tumbleweed_2/scene.gltf',
+                            position: [10, 0.2, 0],
+                            scale:    [0.3, 0.3, 0.3],
+                            rotation: [0, 0, 0],
+                          },
       woodPallets:        { url: 'src/environment/country - desert/road/wood_pallets/scene.gltf',
                             position: [10, 0.2, -10],
                             scale:    [0.007, 0.007, 0.007],
@@ -536,7 +610,12 @@ window.onload = function main() {
                           }//*/
 
       // Highway
-      /*highwayFence:       { url: 'src/environment/highway/road/highway_fence/scene.gltf',
+      /*billboard:          { url: 'src/environment/highway/road/billboard/scene.gltf',
+                            position: [30, 1.8, -40],
+                            scale:    [0.08, 0.08, 0.08],
+                            rotation: [0, 0, 0],
+                          },
+      highwayFence:       { url: 'src/environment/highway/road/highway_fence/scene.gltf',
                             position: [-30, 1.6, -10],
                             scale:    [1.5, 1.5, 1.5],
                             rotation: [0, 0, 0],
@@ -545,7 +624,7 @@ window.onload = function main() {
                             position: [0, 1.8, -10],
                             scale:    [1.1, 1.1, 1.1],
                             rotation: [0, 0, 0],
-                          }*/
+                          }//*/
     };
 
     const dynamicModels = {
@@ -556,17 +635,17 @@ window.onload = function main() {
                             rotation: [0, Math.PI, 0]
                           },
 
-      bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
+      /*bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                             position: [0, 2.1, 0],
                             scale:    [0.03, 0.03, 0.03],
                             rotation: [0, Math.PI, 0],
-                          },
+                          },*/
       lamborghini:        { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
                             position: [-10, 1.73, 0],
                             scale:    [0.013, 0.013, 0.013],
                             rotation: [0, Math.PI, 0]
                           },
-      tesla:              { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
+      /*tesla:              { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
                             position: [10, 0.35, 0],
                             scale:    [0.025, 0.025, 0.025],
                             rotation: [0, Math.PI, 0]
@@ -943,6 +1022,7 @@ window.onload = function main() {
 
     // TODO: set this variables according to user choices in the menu
     let environment = environments.CITY;
+    //let environment = environments.COUNTRY;
     let selectedCar = cars.LAMBORGHINI;
 
     // Infinite terrain with a texture
@@ -1067,6 +1147,46 @@ window.onload = function main() {
         mesh.position.set(0, 0.2, -23 - (276 * i)); // 276 = 23 * 12
         mesh.rotation.set(-Math.PI/2, 0, 0);
         scene.add(mesh);
+      }
+    }
+
+    { // Lateral limits
+      // Add left limit
+      const leftLimit = {
+        size:     { x: 1, y: 20, z: 10000 },
+        position: { x: 30, y: 0, z: 0 }
+      };
+
+      if(environment == environment.COUNTRY)       leftLimit.position.x = 20;
+      else if(environment == environment.HIGHWAY)  leftLimit.position.x = 50;
+
+      addLimit(leftLimit);
+
+      // Add right limit
+      leftLimit.position.x = -leftLimit.position.x;
+      addLimit(leftLimit);
+
+      function addLimit(limitInfo){
+        const mass = 0;
+
+        const transform = new Ammo.btTransform();
+        transform.setIdentity();
+        transform.setOrigin( new Ammo.btVector3(limitInfo.position.x, limitInfo.position.y, limitInfo.position.z) );
+        transform.setRotation( new Ammo.btQuaternion(0, 0, 0, 1) );
+
+        const motionState = new Ammo.btDefaultMotionState(transform);
+
+        const collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(limitInfo.size.x, limitInfo.size.y, limitInfo.size.z) );
+
+        const localInertia = new Ammo.btVector3(limitInfo.position.x, limitInfo.position.y, limitInfo.position.z);
+        collisionShape.calculateLocalInertia(mass, localInertia);
+
+        const rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, collisionShape, localInertia);
+        const body = new Ammo.btRigidBody(rbInfo);
+        body.setFriction(2);
+
+        // Add rigid body and set collision masks
+        physicsWorld.addRigidBody(body, 1, 1);
       }
     }
 
@@ -1235,7 +1355,9 @@ window.onload = function main() {
           scoreElem.innerHTML = "Score: " + (score / 1000).toFixed(2) + " Km";
 
         // Update camera
-        //camera.position.z = player.getPosition().z + 21;
+        const zPosPlayer = player.getPosition().z;
+        camera.position.z = zPosPlayer + 21;
+        camera.lookAt(0, 5, zPosPlayer);
 
         //console.log("car.position.z: " + car.position.z);
         //camera.position.z -= player.getModel().getMoveSpeed() * deltaTime * 0.029;

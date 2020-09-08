@@ -1,0 +1,368 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 2322,
+      "max": [
+        3.9412999153137207,
+        3.3501400947570801,
+        6.543449878692627
+      ],
+      "min": [
+        -9.5239095687866211,
+        -2.338170051574707,
+        -7.9935598373413086
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 27864,
+      "componentType": 5126,
+      "count": 2322,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 2322,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 2322,
+      "max": [
+        0.99915999174118042,
+        1.0017399787902832
+      ],
+      "min": [
+        -0.00023999999393709004,
+        -0.00050999998347833753
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 4692,
+      "max": [
+        2321
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "colpolstudios (https://sketchfab.com/colpolstudios)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/metzo-coffee-bar-7ec9272de6b046c78fa0ea3bfd60fc05",
+      "title": "Metzo coffee bar"
+    },
+    "generator": "Sketchfab-6.3.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 18768,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 18576,
+      "byteOffset": 18768,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 55728,
+      "byteOffset": 37344,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 37152,
+      "byteOffset": 93072,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 130224,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Material.001_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Material.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.59999999999999998
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "metzo coffee bar_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3,
+        5,
+        7,
+        9,
+        11
+      ],
+      "name": "Root"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        0.24553000000000003,
+        0.72638000000000003,
+        0.64194000000000018,
+        0,
+        -0.95884000000000014,
+        0.27940000000000004,
+        0.05059000000000001,
+        0,
+        -0.14262,
+        -0.62794000000000016,
+        0.76508000000000009,
+        0,
+        0.87257000000000007,
+        0.43755000000000005,
+        4.78287,
+        1
+      ],
+      "name": "Lamp"
+    },
+    {
+      "name": "Lamp"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        0.67715000000000014,
+        0,
+        -0,
+        0,
+        0,
+        -0,
+        0.67715000000000014,
+        0,
+        0,
+        -0.67715000000000014,
+        -0,
+        0,
+        1.8634500000000001,
+        2.8292299999999999,
+        1.5764899999999999,
+        1
+      ],
+      "name": "metzo coffee bar"
+    },
+    {
+      "mesh": 0,
+      "name": "metzo coffee bar_0"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        0.20300000000000001,
+        0.97907,
+        0.014550000000000002,
+        0,
+        -0.51541999999999999,
+        0.09421000000000003,
+        0.85174000000000016,
+        0,
+        0.83255000000000001,
+        -0.18040000000000003,
+        0.52376,
+        0,
+        6.9592800000000006,
+        3.9333200000000001,
+        5.3183199999999999,
+        1
+      ],
+      "name": "Lamp.002"
+    },
+    {
+      "name": "Lamp.002"
+    },
+    {
+      "children": [
+        10
+      ],
+      "matrix": [
+        -0.072330000000000005,
+        -0.94817000000000007,
+        -0.30942000000000008,
+        0,
+        0.02735000000000001,
+        -0.31200000000000006,
+        0.94969000000000015,
+        0,
+        -0.99700999999999995,
+        0.060230000000000013,
+        0.048500000000000008,
+        0,
+        -9.1518099999999993,
+        5.0116900000000006,
+        2.1132200000000001,
+        1
+      ],
+      "name": "Lamp.003"
+    },
+    {
+      "name": "Lamp.003"
+    },
+    {
+      "children": [
+        12
+      ],
+      "matrix": [
+        -0.98499000000000003,
+        -0.020050000000000005,
+        0.17146000000000003,
+        0,
+        0.16754000000000005,
+        -0.35031000000000007,
+        0.92152999999999996,
+        0,
+        0.041590000000000009,
+        0.93642000000000003,
+        0.34841000000000011,
+        0,
+        -1.81023,
+        11.8847,
+        2.1132200000000001,
+        1
+      ],
+      "name": "Lamp.004"
+    },
+    {
+      "name": "Lamp.004"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ]
+}
+

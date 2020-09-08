@@ -25,6 +25,10 @@ class Car extends Model {
     // Dot product to calculate if orientation and velocity vectors are facing the same direction.
     this.dot = this.orientation.dot(this.velocityVec);
 
+    this.tractionForce     = new THREE.Vector3();
+    this.airResistance     = new THREE.Vector3();
+    this.rollingResistance = new THREE.Vector3();
+
     this.steeringIncrement = 0.04;
     this.steeringClamp     = 0.5;
     this.steeringAngle     = 0;
@@ -292,6 +296,10 @@ class Car extends Model {
     const velocity = super.getPhysicsBody().getLinearVelocity();
 
     this.velocityVec.set( velocity.x(), velocity.y(), velocity.z() );
+    // Remove noise
+    this.velocityVec.x = Math.abs(this.velocityVec.x) > 0.7 ? this.velocityVec.x : 0;
+    this.velocityVec.y = Math.abs(this.velocityVec.y) > 0.7 ? this.velocityVec.y : 0;
+    this.velocityVec.z = Math.abs(this.velocityVec.z) > 0.7 ? this.velocityVec.z : 0;
     console.log("velocity vector:");
     console.log(this.velocityVec);
 
@@ -318,33 +326,40 @@ class Car extends Model {
     }
 
     // Init forces for the longitudinal movement
-    const tractionForce     = new THREE.Vector3(this.orientation.x, this.orientation.y, this.orientation.z);
-    const airResistance     = new THREE.Vector3(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
+    this.tractionForce.copy(this.orientation);
+    // Remove noise
+    this.tractionForce.x = Math.abs(this.tractionForce.x) > 0.7 ? this.tractionForce.x : 0;
+    this.tractionForce.y = Math.abs(this.tractionForce.y) > 0.7 ? this.tractionForce.y : 0;
+    this.tractionForce.z = Math.abs(this.tractionForce.z) > 0.7 ? this.tractionForce.z : 0;
+    this.airResistance.set(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
     //const rollingResistance = new THREE.Vector3(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
 
     // Compute them
-    tractionForce.multiplyScalar(engineForce);
-    airResistance.multiplyScalar(-airResistanceCoef * speed);
-    //rollingResistance.multiplyScalar(-friction);
+    this.tractionForce.multiplyScalar(engineForce);
+    this.airResistance.multiplyScalar(-airResistanceCoef * speed);
+    //this.rollingResistance.multiplyScalar(-friction);
 
     // Compute longitudinal or horizontal friction force
-    let rollingResistance;
     if (this.steeringAngle == 0) {
-      rollingResistance = new THREE.Vector3(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
-      rollingResistance.multiplyScalar(-friction);
+      this.rollingResistance.set(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
+      this.rollingResistance.multiplyScalar(-friction);
 
       // Compute resultant longitudinal force subtracting resistant forces
-      tractionForce.add( airResistance.add(rollingResistance) );
+      //this.tractionForce.add(this.airResistance).add(this.rollingResistance);
     }
     else {
-      rollingResistance = this.orientation.clone();
+      /*rollingResistance = this.orientation.clone();
       const axis = new THREE.Vector3(0, 1, 0);
       const ang = moveX > 0 ? -90 : 90;
-      rollingResistance.applyAxisAngle(axis, ang);
+      rollingResistance.applyAxisAngle(axis, ang);*/
 
       //rollingResistance = super.getPosition().clone();
 
       console.log("this.steeringAngle: " + this.steeringAngle);
+
+      this.rollingResistance.set(moveX * 200 * speed, 0, 0);
+      //this.tractionForce.add(this.airResistance).add(this.rollingResistance);
+
 
       // Reverse the steering angle if reverse movement
       /*const rad = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) :
@@ -375,7 +390,7 @@ class Car extends Model {
       //rollingResistance = new THREE.Vector3( this.isForwardMovement() ? -radius : radius, 0, this.axlesDistance / 2 );
 
       //rollingResistance.multiplyScalar( super.getMass() * (speed * speed) / radius );
-      rollingResistance.multiplyScalar( super.getMass() * 9.82 * friction );
+      /*rollingResistance.multiplyScalar( super.getMass() * 9.82 * friction );
       //rollingResistance.multiplyScalar( speed != 0 ? 400 : 0 );
 
       // Compute resultant longitudinal force subtracting resistant forces
@@ -391,16 +406,19 @@ class Car extends Model {
       r.z += this.axlesDistance / 2;
       rollingResistance.cross(r);
       super.getPhysicsBody().applyTorque(
-        new Ammo.btVector3(rollingResistance.x, rollingResistance.y, rollingResistance.z) );
+        new Ammo.btVector3(rollingResistance.x, rollingResistance.y, rollingResistance.z) );*/
     }
 
 
     console.log("tractionForce");
-    console.log(tractionForce);
+    console.log(this.tractionForce);
     console.log("airResistance");
-    console.log(airResistance);
+    console.log(this.airResistance);
     console.log("rollingResistance");
-    console.log(rollingResistance);//*/
+    console.log(this.rollingResistance);//*/
+
+    // Compute resultant longitudinal force subtracting resistant forces
+    this.tractionForce.add(this.airResistance).add(this.rollingResistance);
 
     //const axis = new THREE.Vector3(0, 1, 0);
     //const r = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) : Utils.toRadiants(-this.steeringAngle * 40);
@@ -409,13 +427,14 @@ class Car extends Model {
     //tractionForce.addVectors( tractionForce, airResistance.addVectors(airResistance, rollingResistance) )
     //             .applyAxisAngle(axis, r);
 
-    //console.log("tractionForce");
-    //console.log(tractionForce);
+    console.log("tractionForce");
+    console.log(this.tractionForce);
 
-    // IN THE GAME THE PLAYER NEVER WILL GO IN REVERSE
+    // IN THE GAME THE PLAYER WILL NEVER GO IN REVERSE
     if (this.isForwardMovement()) {
       if (speed < this.maxSpeed)
-        super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(tractionForce.x, tractionForce.y, tractionForce.z) );
+        super.getPhysicsBody().applyCentralForce(
+          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );
       //else
       //  super.getPhysicsBody().setLinearVelocity( );
 
@@ -428,7 +447,8 @@ class Car extends Model {
 
     // IN THE GAME THE PLAYER NEVER WILL GO IN REVERSE
     else if (speed < this.maxSpeedReverse)
-        super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(tractionForce.x, tractionForce.y, tractionForce.z) );
+        super.getPhysicsBody().applyCentralForce(
+          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );
       /*else
         //super.getPhysicsBody().setLinearVelocity( );
         super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(tractionForce.x, tractionForce.y, tractionForce.z).operator*=(0.9) );*/

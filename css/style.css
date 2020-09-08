@@ -433,8 +433,41 @@ h1.main, p.demos {
   color: #000;
   position: absolute;
   top: 2%;
-  left: 45%;
+  left: 48%;
   z-index : 1;
+}
+
+/* On screens that are 1024px or less */
+@media screen and (max-width: 1024px) {
+  #score {
+    color: #000;
+    position: absolute;
+    top: 2%;
+    left: 46%;
+    z-index : 1;
+  }
+}
+
+/* On screens that are 992px or less */
+@media screen and (max-width: 992px) {
+  #score {
+    color: #000;
+    position: absolute;
+    top: 2%;
+    left: 45%;
+    z-index : 1;
+  }
+}
+
+/* On screens that are 600px or less */
+@media screen and (max-width: 600px) {
+  #score {
+    color: #000;
+    position: absolute;
+    top: 2%;
+    left: 40%;
+    z-index : 1;
+  }
 }
 
 #speedometer {
