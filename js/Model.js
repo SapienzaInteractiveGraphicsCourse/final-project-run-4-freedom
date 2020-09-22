@@ -15,6 +15,9 @@ class Model {
     console.log("model3D.quaternion.z: " + model3D.quaternion.z);
     console.log("model3D.quaternion.w: " + model3D.quaternion.w);
 
+    // Store initial quaternion for respawning
+    this.initialQuaternion = model3D.quaternion.clone();
+
     // 3D model bounding box
     const box     = new THREE.Box3().setFromObject(model3D);
     const boxSize = new THREE.Vector3();
@@ -31,7 +34,8 @@ class Model {
     let motionState = new Ammo.btDefaultMotionState(transform);
 
     let collisionShape = new Ammo.btBoxShape(
-      new Ammo.btVector3(boxSize.x * modelInfo.boxSizeXFactor, boxSize.y * modelInfo.boxSizeYFactor, boxSize.z * 0.5)
+      new Ammo.btVector3( boxSize.x * modelInfo.boxSizeXFactor, boxSize.y * modelInfo.boxSizeYFactor,
+                          boxSize.z * modelInfo.boxSizeZFactor )
     );
 
     let localInertia = new Ammo.btVector3(0, 0, 0);
@@ -61,6 +65,10 @@ class Model {
 
   getPosition() {
     return this.model3D.position;
+  }
+
+  getInitialQuaternion() {
+    return this.initialQuaternion;
   }
 
 }

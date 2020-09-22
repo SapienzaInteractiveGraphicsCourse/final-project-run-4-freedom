@@ -11,8 +11,8 @@ class Player {
       this.name         = null;
 
       // Character animation
-      this.deltaMovement = 0;
-      this.movementThreshold = 0.7;
+      /*this.deltaMovement = 0;
+      this.movementThreshold = 0.7;*/
     }
 
     // Get current model for the player (model is not 3D model)
@@ -37,7 +37,7 @@ class Player {
       const forwardDirection = (this.inputManager.backAction()    ?  1 : 0) +
                                (this.inputManager.forwardAction() ? -1 : 0);
 
-      if (this.model instanceof Car) {
+      if (this.model /*instanceof Car*/) {
         const updateVehiclePhysics = () => {
           /*const speed = this.model.vehicle.getCurrentSpeedKmHour();
           console.log("Player speed: " + Math.abs(speed).toFixed(2) + ' km/h');
@@ -78,80 +78,13 @@ class Player {
 
           console.log("getPosition(): ");
           console.log(this.getPosition());
-          //this.model.move(-turnDirection, 0, forwardDirection, deltaTime);
           this.model.move(turnDirection, 0, forwardDirection, deltaTime);
-
-          /*const frontLeftWheel  = this.model.getFrontLeftWheel();
-          const frontRightWheel = this.model.getFrontRightWheel();
-          const backLeftWheel  = this.model.getBackLeftWheel();
-          const backRightWheel = this.model.getBackRightWheel();
-
-          console.log("getPosition(): ");
-          console.log(this.getPosition());
-          console.log("frontLeftWheel.position.x: " + frontLeftWheel.position.x);
-          console.log("frontLeftWheel.position.y: " + frontLeftWheel.position.y);
-          console.log("frontLeftWheel.position.z: " + frontLeftWheel.position.z);
-          console.log("frontRightWheel.position.x: " + frontRightWheel.position.x);
-          console.log("frontRightWheel.position.y: " + frontRightWheel.position.y);
-          console.log("frontRightWheel.position.z: " + frontRightWheel.position.z);
-          console.log("backLeftWheel.position.x: " + backLeftWheel.position.x);
-          console.log("backLeftWheel.position.y: " + backLeftWheel.position.y);
-          console.log("backLeftWheel.position.z: " + backLeftWheel.position.z);
-          console.log("backRightWheel.position.x: " + backRightWheel.position.x);
-          console.log("backRightWheel.position.y: " + backRightWheel.position.y);
-          console.log("backRightWheel.position.z: " + backRightWheel.position.z);
-
-          console.log("engineForce: " + engineForce);
-          console.log("breakingForce: " + breakingForce);
-
-          // Apply engine force to rear wheels
-					this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_LEFT_WHEEL_ID);
-					this.model.vehicle.applyEngineForce(engineForce, this.model.BACK_RIGHT_WHEEL_ID);
-
-          // Apply brake force to all wheels
-          this.model.vehicle.setBrake(breakingForce / 2, this.model.FRONT_LEFT_WHEEL_ID);
-					this.model.vehicle.setBrake(breakingForce / 2, this.model.FRONT_RIGHT_WHEEL_ID);
-					this.model.vehicle.setBrake(breakingForce, this.model.BACK_LEFT_WHEEL_ID);
-					this.model.vehicle.setBrake(breakingForce, this.model.BACK_RIGHT_WHEEL_ID);
-
-          // Apply steering to front wheels
-					this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_LEFT_WHEEL_ID);
-
-          // Lamborghini right wheel orientation is inverted
-          if (this.model.getName() === "Lamborghini")
-            this.model.vehicle.setSteeringValue(-this.model.vehicleSteering, this.model.FRONT_RIGHT_WHEEL_ID);
-          else
-					  this.model.vehicle.setSteeringValue(this.model.vehicleSteering, this.model.FRONT_RIGHT_WHEEL_ID);
-
-          let tm, p, q, i;
-					const n = this.model.vehicle.getNumWheels();
-          const wheels = this.model.getWheels();
-					for (i = 0; i < n; i++) {
-						this.model.vehicle.updateWheelTransform(i, true);
-						tm = this.model.vehicle.getWheelTransformWS(i);
-						p = tm.getOrigin();
-						q = tm.getRotation();
-						wheels[i].position.set(p.x(), p.y(), p.z());
-						wheels[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
-					}//*/
-
-          // Adjust Lamborghini right wheels after transformation
-          /*if (this.model.getName() === "Lamborghini") {
-            frontRightWheel.rotation.y = Math.PI;
-            backRightWheel.rotation.y  = Math.PI;
-          }
-
-					tm = this.model.vehicle.getChassisWorldTransform();
-					p = tm.getOrigin();
-					q = tm.getRotation();
-					this.model.get3DModel().position.set(p.x(), p.y(), p.z());
-					this.model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());*/
         }
 
         updateVehiclePhysics();
       }
 
-      else if (this.model instanceof Character) {
+      /*else if (this.model instanceof Character) {
         // Animate body components
         const run = () => {
           // Debug
@@ -168,7 +101,7 @@ class Player {
           console.log("this.model.getLeftFoot().rotation.z: "  + this.model.getLeftFoot().rotation.z);
           console.log("this.model.getRightFoot().rotation.z: " + this.model.getRightFoot().rotation.z);*/
 
-          if(this.deltaMovement >= this.movementThreshold) {
+          /*if(this.deltaMovement >= this.movementThreshold) {
             this.deltaMovement = 0;
             this.movementThreshold = 1.4;
             this.forwardMovement = !this.forwardMovement;
@@ -230,7 +163,7 @@ class Player {
       }
 
       // TODO: FACTOR FOR METERS TRAVELED
-      const metersFactor = this.game.getScore() * 0.001;
+      const metersFactor = this.game.getScore() * 0.001;*/
 
       // ISSUE! NOT ALL VEHICLES USE X AND Y axis
       //this.model.get3DModel().rotation.y += turnRotation;

@@ -1,0 +1,583 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        0.9165307879447937,
+        0.58444845676422119,
+        2.1143510341644287
+      ],
+      "min": [
+        -0.92791301012039185,
+        -0.59996867179870605,
+        -2.2416772842407227
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 22632,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        1,
+        0.99557071924209595,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -0.99243032932281494,
+        -1,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        1.8189460039138794,
+        0.99584901332855225
+      ],
+      "min": [
+        0.0028409999795258045,
+        0.0028409999795258045
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 7038,
+      "max": [
+        1885
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 45264,
+      "componentType": 5126,
+      "count": 2514,
+      "max": [
+        0.97519391775131226,
+        0.6556243896484375,
+        2.0775506496429443
+      ],
+      "min": [
+        -0.9863961935043335,
+        -0.35178777575492859,
+        -2.1396465301513672
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 75432,
+      "componentType": 5126,
+      "count": 2514,
+      "max": [
+        0.99963581562042236,
+        0.99999880790710449,
+        1
+      ],
+      "min": [
+        -0.99963587522506714,
+        -1,
+        -0.9999997615814209
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 30176,
+      "componentType": 5126,
+      "count": 2514,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -0.99976706504821777,
+        -0.9999840259552002,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 15088,
+      "componentType": 5126,
+      "count": 2514,
+      "max": [
+        1.9972035884857178,
+        0.99376177787780762
+      ],
+      "min": [
+        0.00394099997356534,
+        0.00394099997356534
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 28152,
+      "componentType": 5125,
+      "count": 9936,
+      "max": [
+        2513
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 105600,
+      "componentType": 5126,
+      "count": 4593,
+      "max": [
+        0.85437577962875366,
+        0.59031844139099121,
+        1.9720802307128906
+      ],
+      "min": [
+        -0.87923997640609741,
+        -0.40141859650611877,
+        -1.9908428192138672
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 160716,
+      "componentType": 5126,
+      "count": 4593,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 35200,
+      "componentType": 5126,
+      "count": 4593,
+      "max": [
+        0.99869698286056519,
+        0.99903202056884766
+      ],
+      "min": [
+        0,
+        0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 67896,
+      "componentType": 5125,
+      "count": 13548,
+      "max": [
+        4592
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "FelikinRuslan (https://sketchfab.com/FelikinRuslan)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/derby-car-free-30331d8e1355492f8be6ec7bb5b556bc",
+      "title": "Derby car. Free"
+    },
+    "generator": "Sketchfab-8.4.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 122088,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 71944,
+      "byteOffset": 122088,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 215832,
+      "byteOffset": 194032,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 70400,
+      "byteOffset": 409864,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 480264,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Dodge_details_baseColor.png"
+    },
+    {
+      "uri": "textures/Dodge_details_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Dodge_details_normal.png"
+    },
+    {
+      "uri": "textures/Dodge_baseColor.png"
+    },
+    {
+      "uri": "textures/Dodge_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Dodge_normal.png"
+    },
+    {
+      "uri": "textures/Dodge_inside_baseColor.png"
+    },
+    {
+      "uri": "textures/Dodge_inside_metallicRoughness.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaCutoff": 0.11756859756097561,
+      "alphaMode": "MASK",
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Dodge_details",
+      "normalTexture": {
+        "index": 2,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 1,
+        "metallicRoughnessTexture": {
+          "index": 1,
+          "texCoord": 0
+        },
+        "roughnessFactor": 1
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Dodge",
+      "normalTexture": {
+        "index": 5,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 3,
+          "texCoord": 0
+        },
+        "metallicFactor": 1,
+        "metallicRoughnessTexture": {
+          "index": 4,
+          "texCoord": 0
+        },
+        "roughnessFactor": 1
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Dodge_inside",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 6,
+          "texCoord": 0
+        },
+        "metallicFactor": 1,
+        "metallicRoughnessTexture": {
+          "index": 7,
+          "texCoord": 0
+        },
+        "roughnessFactor": 1
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "hood_stock.001_Dodge_details_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "hood_stock.001_Dodge_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "hood_stock.001_Dodge_inside_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 11,
+            "POSITION": 10,
+            "TEXCOORD_0": 12
+          },
+          "indices": 13,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "e4fe3c203bdb467e9ec4ba1333773c25.fbx"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5,
+        6,
+        7
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0.0056911604478955269,
+        0.59132683277130127,
+        0.072377026081085205,
+        1
+      ],
+      "name": "hood_stock.001"
+    },
+    {
+      "mesh": 0,
+      "name": "hood_stock.001_Dodge_details_0"
+    },
+    {
+      "mesh": 1,
+      "name": "hood_stock.001_Dodge_0"
+    },
+    {
+      "mesh": 2,
+      "name": "hood_stock.001_Dodge_inside_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    },
+    {
+      "sampler": 0,
+      "source": 6
+    },
+    {
+      "sampler": 0,
+      "source": 7
+    }
+  ]
+}
+

@@ -1,0 +1,311 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1696,
+      "max": [
+        16.130786895751953,
+        35.115203857421875,
+        16.360363006591797
+      ],
+      "min": [
+        -16.130039215087891,
+        -42.122711181640625,
+        -9.423741340637207
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 20352,
+      "componentType": 5126,
+      "count": 1696,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 1696,
+      "max": [
+        1,
+        1,
+        0.99609476327896118,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -0.99610525369644165,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1696,
+      "max": [
+        0.99594897031784058,
+        0.99568301439285278
+      ],
+      "min": [
+        0.00099199998658150434,
+        0.00099199998658150434
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 4692,
+      "max": [
+        1695
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "TSB3DMODELS (https://sketchfab.com/TSB3DMODELS)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/carbon-motors-e7-taxi-cities-skylines-210f95a0ea374c4fbdd27849f8c3c7a0",
+      "title": "CARBON MOTORS E7 TAXI (Cities Skylines)"
+    },
+    "generator": "Sketchfab-8.64.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 18768,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 13568,
+      "byteOffset": 18768,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 40704,
+      "byteOffset": 32336,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 27136,
+      "byteOffset": 73040,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 100176,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Scene_-_Root_baseColor.png"
+    },
+    {
+      "uri": "textures/Scene_-_Root_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": false,
+      "name": "Scene_-_Root",
+      "normalTexture": {
+        "index": 1,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0.5,
+        "roughnessFactor": 0.53280917953395246
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "e7_taxi_0__0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "29d39413a57b4910a5282e71e3f2e780.fbx"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0.999999999999999,
+        4.3711388286737922e-08,
+        0,
+        0,
+        -4.3711388286737922e-08,
+        0.999999999999999,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "e7_taxi_0"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        7.0468311309814453,
+        0,
+        0,
+        0,
+        0,
+        9.3834219625161711e-07,
+        -7.0468301773070667,
+        0,
+        -0,
+        7.0468301773070667,
+        9.3834219625161711e-07,
+        0,
+        -0.0017021651146933436,
+        66.089775085449219,
+        -35.899681091308594,
+        1
+      ],
+      "name": ""
+    },
+    {
+      "mesh": 0,
+      "name": "e7_taxi_0__0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ]
+}
+
