@@ -12,13 +12,31 @@ canvas {
 /* Start menu */
 @import url('https://fonts.googleapis.com/css?family=Barlow');
 
+@font-face {
+  font-family: overwatch;
+  src: url(https://us.battle.net/forums/static/fonts/f014015d/f014015d.woff);
+}
+
+@font-face {
+  font-family: overwatch-italic;
+  src: url(https://us.battle.net/forums/static/fonts/bignoodletoo/bignoodletoo.woff);
+}
+
+* {
+  cursor: url(https://cdn.discordapp.com/attachments/303406782104207362/315839175406649345/Overwatch.cur), auto;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 #menu {
 	background: #310404 url(https://i.ytimg.com/vi/wOvQAhzWCrM/maxresdefault.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	font-family: 'Barlow', sans-serif;
+	font-family: overwatch-italic;
 }
 .container {
 	width: 100%;
@@ -27,6 +45,7 @@ canvas {
 }
 a {
 	text-decoration: none;
+	height: fit-content;
 }
 h1.main, p.demos {
 	-webkit-animation-delay: 18s;
@@ -60,7 +79,7 @@ h1.main, p.demos {
 	line-height: 100px;
 	height: 90px;
 	margin-top: -50px;
-	font-size: 90px;
+	font-size: 180px;
 	width: 100%;
 	text-align: center;
 	color: transparent;
@@ -105,10 +124,10 @@ h1.main, p.demos {
 	-ms-animation-delay: 4s;
 	animation-delay: 4s;
 }
-/* .btn-group{
-  position: absolute;
-  top: 0%;
-} */
+ #btn-group{
+  position: relative;
+  top: 8%;
+} 
 
 .sp-globe {
 	position: absolute;
@@ -160,6 +179,159 @@ h1.main, p.demos {
 	background: #85373b;
 	color: #fff;
 }
+
+
+/* Menu buttons */
+.italic {
+	text-align: center;
+	position: relative;
+	top: 0%;
+    left: 0%;
+    font-family: overwatch-italic;
+    font-size: 60px;
+    color: #fff;
+    text-shadow: 0px 0px 3px #cecece;
+    transform-origin: bottom;
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 6s backwards;
+	-moz-animation: blurFadeIn 1s linear 6s backwards;
+	-ms-animation: blurFadeIn 1s linear 6s backwards;
+	animation: blurFadeIn 1s linear 6s backwards;
+  }
+  
+  .italic.highlight {
+    color: #f3c026;
+    text-shadow: 0px 0px 5px #bb7e29;
+  }
+
+.scenario {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -300px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+}
+
+.eButton {
+	/* position: absolute;
+	top: 50%; */
+	font-size: 30px;
+	background-color: transparent;
+	color: black;
+}
+
+#vehicle {
+	position: relative;
+	top: 30px;
+}
+
+.vButton {
+  font-size: 30px;
+  background-color: transparent;
+  color: black;
+}
+
+button:hover {
+	background-color: red;
+}
+
+#scenarioBtn button {
+	width: 200px;
+	height: 200px;
+}
+
+#vehicleBtn button {
+	position: relative;
+	top: 30px;
+	width: 150px;
+	height: 150px;
+	/* background-image: url('');
+	background-repeat: no-repeat;
+	background-position: center center; */
+}
+
+ #tutorialBtn {
+	position: relative;
+	top: 80px;
+}
+
+#startBtn {
+	position: relative;
+	top: 80px;
+	font-size: 100px;
+
+	-webkit-animation: blurFadeIn 1s linear 0s backwards;
+	-moz-animation: blurFadeIn 1s linear 0s backwards;
+	-ms-animation: blurFadeIn 1s linear 0s backwards;
+	animation: blurFadeIn 1s linear 0s backwards;
+}
+
+/* #highwayBtn {
+	width: 250px;
+	height: 250px;
+	background-color: #FF0000;
+	background-image: url('');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#countryBtn {
+	width: 250px;
+	height: 250px;
+	background-color: #FF0000;
+	background-image: url('');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#forestBtn {
+	width: 250px;
+	height: 250px;
+	background-color: #FF0000;
+	background-image: url('');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+ */
+
+#charBtn {
+	width: 250px;
+	height: 250px;
+	background-color: #FF0000;
+	background-image: url('/src/sounds/head.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#text{
+  background-color: rgba(255, 255, 255, 0.74);
+  font-family: 'Electrolize', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 70px;
+  color: rgb(0, 0, 0);
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
 /**/
 
 /* @keyframes moving {
@@ -358,7 +530,8 @@ h1.main, p.demos {
 }
 
 #loadingText {
-  font-family: consolas;
+  font-family: overwatch-italic;
+  font-size: 25px;
   display: flex;
 	justify-content: center;
 	align-items: center;
@@ -430,6 +603,8 @@ h1.main, p.demos {
 }
 
 #score {
+  font-family: overwatch-italic;
+  font-size: 30px;
   color: #000;
   position: absolute;
   top: 2%;
@@ -471,6 +646,8 @@ h1.main, p.demos {
 }
 
 #speedometer {
+  font-family: overwatch-italic;
+  font-size: 30px;
   color: #ffffff;
   background-color: #990000;
   position: absolute;
@@ -479,6 +656,122 @@ h1.main, p.demos {
   z-index: 1;
 }
 
+#finalscore {
+	position: absolute;
+    padding-top: 15%;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-family: overwatch-italic;
+	font-size: 100px;
+	
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
+	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
+	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
+	animation: blurFadeIn 1s linear 0.5s backwards;
+}
+
+#highscore {
+	position: absolute;
+    padding-top: 22%;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-family: overwatch-italic;
+	font-size: 100px;
+	
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
+	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
+	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
+	animation: blurFadeIn 1s linear 0.5s backwards;
+}
+
+
+/* Game Over and Pause phases */
+#gameover, #pause {
+	position: absolute;
+    padding-top: 2%;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 100%;
+    color: red;
+    font-family: overwatch-italic;
+	font-size: 200px;
+	
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 0s backwards;
+	-moz-animation: blurFadeIn 1s linear 0s backwards;
+	-ms-animation: blurFadeIn 1s linear 0s backwards;
+	animation: blurFadeIn 1s linear 0s backwards;
+}
+
+#resume {
+	position: absolute;
+    padding-top: 27%;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-family: overwatch-italic;
+	font-size: 100px;
+	
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
+	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
+	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
+	animation: blurFadeIn 1s linear 0.5s backwards;
+}
+
+#restart {
+	position: absolute;
+    padding-top: 35%;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-family: overwatch-italic;
+	font-size: 100px;
+	
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
+	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
+	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
+	animation: blurFadeIn 1s linear 0.5s backwards;
+}
+
+#mainmenu {
+	position: absolute;
+    padding-top: 43%;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-family: overwatch-italic;
+	font-size: 100px;
+	
+	transition: all .05s ease-in;
+	
+	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
+	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
+	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
+	animation: blurFadeIn 1s linear 0.5s backwards;
+}
 
 /* Import from Bootstrap */
 .btn {

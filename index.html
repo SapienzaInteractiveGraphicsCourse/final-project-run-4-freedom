@@ -19,6 +19,7 @@
 	</head>
 
 	<body>
+		<!-- Loading phase -->
 		<div id="loading">
 			<div id="loadingText" class="wavy">
 				<span style="--i:1;">L</span>
@@ -43,8 +44,24 @@
 			<span class="btn btn-primary btn-lg btn-custom">Play</span>
 		</p>
 
+		<!-- In-Play values -->
 		<div id="speedometer" class="hide">0.0 km/h</div>
 		<div id="score" class="hide">Score: 0</div>
+
+		<!-- Pause phase -->
+		<div id="pause" class="hide">Pause</div>
+		<div id="resume" class="hide">Resume</div>
+
+		<!-- Game Over phase -->
+		<div id="gameover" class="hide">Game Over</div>
+
+		<!-- Score -->
+		<div id="finalscore" class="hide"></div>
+		<div id="highscore" class="hide"></div>
+
+		<!-- Buttons -->
+		<a href="index.html" id="restart" class="hide">Restart</a>
+		<a href="menu.html" id="mainmenu" class="hide">Main Menu</a>
 
 		<canvas id="canvas" class="hide"></canvas>
 	</body>

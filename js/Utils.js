@@ -1,4 +1,4 @@
-import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.module.js";
+import * as THREE from "https://unpkg.com/three@0.118.3/build/three.module.js";
 
 class Utils {
   // Prints the tree of the object
@@ -16,10 +16,30 @@ class Utils {
     return lines;
   }
 
+  static getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  static setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue;
+  }
+
   static resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
     const pixelRatio = window.devicePixelRatio;
-    const width  = canvas.clientWidth  * pixelRatio | 0;
+    const width = canvas.clientWidth * pixelRatio | 0;
     const height = canvas.clientHeight * pixelRatio | 0;
     const needResize = canvas.width !== width || canvas.height !== height;
 
@@ -38,9 +58,9 @@ class Utils {
     // Compute a unit vector that points in the direction the camera is now
     // in the X,Z plane from the center of the box
     const direction = (new THREE.Vector3())
-        .subVectors(camera.position, boxCenter)
-        .multiply(new THREE.Vector3(1, 0, 1))
-        .normalize();
+      .subVectors(camera.position, boxCenter)
+      .multiply(new THREE.Vector3(1, 0, 1))
+      .normalize();
 
     // Move the camera to a position distance units way from the center
     // in whatever direction the camera was from the center already
@@ -56,7 +76,7 @@ class Utils {
 
     // Pick some near and far values for the frustum that will contain the box.
     camera.near = boxSize / 100;
-    camera.far  = boxSize * 100;
+    camera.far = boxSize * 100;
 
     camera.updateProjectionMatrix();
 
@@ -80,7 +100,7 @@ class Utils {
 
   // Convert a degree angle to radiants (x : 180 = y : Math.PI)
   static toRadiants(ang) {
-    return ang / 180 * Math.PI ;
+    return ang / 180 * Math.PI;
   }
 
   // Convert radiants to a degree angle (x : 180 = y : Math.PI)
@@ -99,4 +119,4 @@ class Utils {
   }
 }
 
-export {Utils}
+export { Utils }

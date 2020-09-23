@@ -1,80 +1,80 @@
-import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.module.js";
-import { GLTFLoader }    from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
+import * as THREE from "https://unpkg.com/three@0.118.3/build/three.module.js";
+import { GLTFLoader } from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js";
 import { GUI } from "https://unpkg.com/three@0.118.3/examples/jsm/libs/dat.gui.module.js";
-import Stats   from "https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js";
+import Stats from "https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js";
 
-import { Utils }        from "./Utils.js";
+import { Utils } from "./Utils.js";
 import { InputManager } from "./InputManager.js";
-import { Game }         from "./Game.js";
-import { Player }       from "./Player.js";
-import { Car }          from "./Car.js";
-import { PoliceCar }    from "./PoliceCar.js";
-import { Character }    from "./Character.js";
+import { Game } from "./Game.js";
+import { Player } from "./Player.js";
+import { Car } from "./Car.js";
+import { PoliceCar } from "./PoliceCar.js";
+import { Character } from "./Character.js";
 
 "use strict"
 
 window.onload = function main() {
   let physicsWorld,
-      TRANSFORM_AUX,
-      cbContactPairResult;
+    TRANSFORM_AUX,
+    cbContactPairResult;
 
   // Ammojs Initialization
-  Ammo().then( function() {
+  Ammo().then(function () {
     setupPhysicsWorld();
     setupGraphics();
-  } );
+  });
 
-  function setupPhysicsWorld(){
-    let collisionConfiguration  = new Ammo.btDefaultCollisionConfiguration(),
-        dispatcher              = new Ammo.btCollisionDispatcher(collisionConfiguration),
-        overlappingPairCache    = new Ammo.btDbvtBroadphase(),
-        solver                  = new Ammo.btSequentialImpulseConstraintSolver();
+  function setupPhysicsWorld() {
+    let collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(),
+      dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration),
+      overlappingPairCache = new Ammo.btDbvtBroadphase(),
+      solver = new Ammo.btSequentialImpulseConstraintSolver();
 
     physicsWorld = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-    physicsWorld.setGravity( new Ammo.btVector3(0, -9.82, 0) );
+    physicsWorld.setGravity(new Ammo.btVector3(0, -9.82, 0));
 
     TRANSFORM_AUX = new Ammo.btTransform();
     setupContactPairResultCallback();
 
 
     function setupContactPairResultCallback() {
-    	cbContactPairResult = new Ammo.ConcreteContactResultCallback();
-    	cbContactPairResult.hasContact = false;
+      cbContactPairResult = new Ammo.ConcreteContactResultCallback();
+      cbContactPairResult.hasContact = false;
 
-    	cbContactPairResult.addSingleResult = function(cp, colObj0Wrap, partId0, index0, colObj1Wrap, partId1, index1) {
-    		const contactPoint = Ammo.wrapPointer(cp, Ammo.btManifoldPoint);
-    		const distance = contactPoint.getDistance();
+      cbContactPairResult.addSingleResult = function (cp, colObj0Wrap, partId0, index0, colObj1Wrap, partId1, index1) {
+        const contactPoint = Ammo.wrapPointer(cp, Ammo.btManifoldPoint);
+        const distance = contactPoint.getDistance();
 
-        if(distance > 0) return;
+        if (distance > 0) return;
 
-    		this.hasContact = true;
-    	}
+        this.hasContact = true;
+      }
     }
   }
 
   function setupGraphics() {
     const canvas = document.getElementById('canvas');
     const gl = canvas.getContext("webgl2");
-    if (!gl)  alert("WebGL 2.0 isn't available");
+    if (!gl) alert("WebGL 2.0 isn't available");
 
     // Disable antialias if high pixel density screen
     const aa = window.devicePixelRatio > 1 ? false : true;
     // Adjust pixel ratio for retina screen
     const pixelRatio = Math.min(0.7, window.devicePixelRatio);
 
-    const renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: aa, powerPreference: "high-performance" } );
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: aa, powerPreference: "high-performance" });
     renderer.setClearColor(0xBEF4FF);
     renderer.shadowMap.enabled = true;
     renderer.setPixelRatio(pixelRatio);
 
     // Init scene and camera
     const scene = new THREE.Scene(),
-          fov    = 75,
-          aspect = window.innerWidth / window.innerHeight, //2;  // the canvas default
-          near   = 1, //0.01,     // Greater values, best performance
-          far    = 2000, //10000, // Less values, best performance
-          camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+      fov = 75,
+      aspect = window.innerWidth / window.innerHeight, //2;  // the canvas default
+      near = 1, //0.01,     // Greater values, best performance
+      far = 2000, //10000, // Less values, best performance
+      camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 10, 8);
     camera.lookAt(0, 5, 0);
     camera.updateProjectionMatrix();
@@ -685,36 +685,37 @@ window.onload = function main() {
                             rotation: [0, 0, 0],
                           }//*/
 
-    //NOT USED ANYMORE
-    /*jungleTree:             { url: 'src/environment/forest/jungle_tree/scene.gltf',
-                                                       position: [0, 0, -70],
-                                                       scale:    [0.5, 0.5, 0.5],
-                                                       rotation: [0, 0, 0],
-                                                     },
-    bushPlant:             { url: 'src/environment/country - desert/road/bush_plant/scene.gltf',
-                                                       position: [0, 0, -120],
-                                                       scale:    [0.005, 0.005, 0.005],
-                                                       rotation: [0, Math.PI/2, 0],
-                                                     },*/
+      //NOT USED ANYMORE
+      /*jungleTree:             { url: 'src/environment/forest/jungle_tree/scene.gltf',
+                                                         position: [0, 0, -70],
+                                                         scale:    [0.5, 0.5, 0.5],
+                                                         rotation: [0, 0, 0],
+                                                       },
+      bushPlant:             { url: 'src/environment/country - desert/road/bush_plant/scene.gltf',
+                                                         position: [0, 0, -120],
+                                                         scale:    [0.005, 0.005, 0.005],
+                                                         rotation: [0, Math.PI/2, 0],
+                                                       },*/
     };
 
     const dynamicModels = {
       // Cars
-      policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
-                            position: [-1.5, 0, 25],
-                            scale:    [2.3, 2, 2.3],
-                            rotation: [0, Math.PI, 0],
+      policeCar: {
+        url: 'src/vehicles/cars/police_car/scene.gltf',
+        position: [-1.5, 0, 25],
+        scale: [2.3, 2, 2.3],
+        rotation: [0, Math.PI, 0],
 
-                            carInfo: {
-                              mass: 1840,    // Kg
-                              maxSpeed: 207, // Km/h
-                              boxSizeXFactor: 0.4,
-                              boxSizeYFactor: 0.043,
-                              boxSizeZFactor: 0.4,
-                              carName: "policeCar1"
-                            },
-                            wheelsNames: []
-                          },
+        carInfo: {
+          mass: 1840,    // Kg
+          maxSpeed: 207, // Km/h
+          boxSizeXFactor: 0.4,
+          boxSizeYFactor: 0.043,
+          boxSizeZFactor: 0.4,
+          carName: "policeCar1"
+        },
+        wheelsNames: []
+      },
 
       /*bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                             position: [0, 1.5, 0],
@@ -731,21 +732,22 @@ window.onload = function main() {
                             },
                             wheelsNames: ["wheel020", "wheel028", "wheel012", "wheel004"]
                           },*/
-      lamborghini:        { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
-                            position: [-10, 1.73, 0],
-                            scale:    [0.013, 0.013, 0.013],
-                            rotation: [0, Math.PI, 0],
+      lamborghini: {
+        url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
+        position: [-10, 1.73, 0],
+        scale: [0.013, 0.013, 0.013],
+        rotation: [0, Math.PI, 0],
 
-                            carInfo: {
-                              mass: 1625,    // Kg
-                              maxSpeed: 350, // Km/h
-                              boxSizeXFactor: 0.4, //0.5,
-                              boxSizeYFactor: 0.56,
-                              boxSizeZFactor: 0.2,
-                              carName: "Lamborghini Aventador S"
-                            },
-                            wheelsNames: ["wheel001", "wheel002", "wheel003", "wheel005"]
-                          },
+        carInfo: {
+          mass: 1625,    // Kg
+          maxSpeed: 350, // Km/h
+          boxSizeXFactor: 0.4, //0.5,
+          boxSizeYFactor: 0.56,
+          boxSizeZFactor: 0.2,
+          carName: "Lamborghini Aventador S"
+        },
+        wheelsNames: ["wheel001", "wheel002", "wheel003", "wheel005"]
+      },
       /*tesla:              { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
                             position: [10, 0.35, 0],
                             scale:    [0.026, 0.024, 0.026],
@@ -776,21 +778,22 @@ window.onload = function main() {
                             },
                             wheelsNames: null // static model (due to its 3D model)
                           },*/
-      audiR8:             { url: 'src/vehicles/cars/audi_r8/scene.gltf',
-                            position: [20, 0.5, 0],
-                            scale:    [0.026, 0.025, 0.026],
-                            rotation: [0, 0, 0],
+      audiR8: {
+        url: 'src/vehicles/cars/audi_r8/scene.gltf',
+        position: [20, 0.5, 0],
+        scale: [0.026, 0.025, 0.026],
+        rotation: [0, 0, 0],
 
-                            carInfo: {
-                              mass: 1700,    // Kg
-                              maxSpeed: 325, // Km/h
-                              boxSizeXFactor: 0.7,
-                              boxSizeYFactor: 0.15,
-                              boxSizeZFactor: 0.5,
-                              carName: "Audi R8"
-                            },
-                            wheelsNames: ["object008", "object031", "object035", "object034"]
-                          },
+        carInfo: {
+          mass: 1700,    // Kg
+          maxSpeed: 325, // Km/h
+          boxSizeXFactor: 0.7,
+          boxSizeYFactor: 0.15,
+          boxSizeZFactor: 0.5,
+          carName: "Audi R8"
+        },
+        wheelsNames: ["object008", "object031", "object035", "object034"]
+      },
       /*bmwE30:             { url: 'src/vehicles/cars/bmw_e30/scene.gltf',
                             position: [30, 0, 0],
                             scale:    [2.6, 2.5, 2.6],
@@ -1445,14 +1448,17 @@ window.onload = function main() {
 
     // Selectable Environments
     const environments = {
-      CITY:    0,
+      CITY: 0,
       HIGHWAY: 1,
       COUNTRY: 2,
-      FOREST:  3
+      FOREST: 3
     };
 
     let playerModel, policeCar;
     let lanexUp, lanexDown;
+
+    let isPlay = true;
+    let isBlur = false;
 
     // Create a loading manager for 3D models
     const manager = new THREE.LoadingManager();
@@ -1474,15 +1480,15 @@ window.onload = function main() {
         gltfLoader.load(model.url, function (gltf) {
           model.gltf = gltf;
         },
-        undefined,
-        function (error) {
-          console.error(error);
-          alert("Error during the loading of the game!\nTry to refresh the page");
-        });
+          undefined,
+          function (error) {
+            console.error(error);
+            alert("Error during the loading of the game!\nTry to refresh the page");
+          });
       }
     }
 
-    const scoreElem   = document.getElementById("score");
+    const scoreElem = document.getElementById("score");
     const speedometer = document.getElementById("speedometer");
 
     // Called when all models are loaded
@@ -1506,7 +1512,7 @@ window.onload = function main() {
       const play = document.getElementById('playBtn');
       play.style.display = 'inherit';
 
-      play.onclick = function() {
+      play.onclick = function () {
         // Create audio context after a user gesture
         const audioCtx = new AudioContext();
 
@@ -1533,7 +1539,7 @@ window.onload = function main() {
         else if (model == staticModels.sidewalkStraight) {
           const n = 50, nHalf = 25, dist = 25.3;
 
-          for (let i=0; i<n; i+=1) {
+          for (let i = 0; i < n; i += 1) {
             const clone = modelScene.clone();
 
             let posX = model.position[0], posZ = 0 - (dist * i), rad = model.rotation[1];
@@ -1545,9 +1551,9 @@ window.onload = function main() {
             }
 
             const modelClone = {
-              clone:    clone,
+              clone: clone,
               position: [posX, 0, posZ],
-              scale:    [1, 1, 1],
+              scale: [1, 1, 1],
               rotation: [0, rad, 0],
             };
 
@@ -1566,13 +1572,13 @@ window.onload = function main() {
     }
 
     const inputManager = new InputManager();
-    const game         = new Game(inputManager, "easy", physicsWorld);
-    const player       = new Player(game);
+    const game = new Game(inputManager, "easy", physicsWorld);
+    const player = new Player(game);
 
     // Start the game
     function start() {
       // Show score & speedometer
-      scoreElem.style.display   = 'inherit';
+      scoreElem.style.display = 'inherit';
       speedometer.style.display = 'inherit';
 
       // Add dynamic models to the scene
@@ -1640,7 +1646,7 @@ window.onload = function main() {
 
           default:
             addStaticModel(model);
-            //alert("Error during starting the game!\nTry to refresh the page");
+          //alert("Error during starting the game!\nTry to refresh the page");
         }
       }
     }
@@ -1675,11 +1681,13 @@ window.onload = function main() {
       scene.background = new THREE.Color(color);
     }*/
 
-    // TODO: set this variables according to user choices in the menu
-    let environment = environments.CITY;
-    //let environment = environments.COUNTRY;
-    //let environment = environments.HIGHWAY;
-    let selectedModel = dynamicModels.lamborghini;
+    let chosenEnv = Utils.getCookie("env");
+    let environment = environments.chosenEnv;
+    //let environment = environments.CITY;
+
+    let chosenCar = Utils.getCookie("car");
+    let selectedModel = dynamicModels.chosenCar;
+    //let selectedModel = dynamicModels.lamborghini;
     //let selectedModel = dynamicModels.nathan;
 
     // Infinite terrain with a texture
@@ -1688,76 +1696,76 @@ window.onload = function main() {
       let texInfo = {
         //repeat: { x: 30, y: 3000 },
         repeat: { x: 300, y: 4000 },
-        size:   { x: 1000, y: 100000 },
+        size: { x: 1000, y: 100000 },
         position: { x: 0, y: 0, z: 0 },
-        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
       setEnvironment("../src/textures/street_blank.jpg", texInfo);
 
       texInfo = {
         repeat: { x: 2, y: 4000 },
-        size:   { x: 50, y: 100000 },
+        size: { x: 50, y: 100000 },
         position: { x: 0, y: 0.1, z: 0 },
-        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
       setEnvironment("../src/textures/street_texture.jpg", texInfo, false);
 
-      lanexUp   = [6, 14];
+      lanexUp = [6, 14];
       lanexDown = [-14, -6];
     }
     else if (environment == environments.COUNTRY) {
       // Country - desert environment
       let texInfo = {
         repeat: { x: 17, y: 170 },
-        size:   { x: 1000, y: 10000 },
+        size: { x: 1000, y: 10000 },
         position: { x: 0, y: 0, z: 0 },
-        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
       setEnvironment("../src/textures/desert_texture.jpg", texInfo);
 
       texInfo = {
         repeat: { x: 1, y: 3000 },
-        size:   { x: 45, y: 100000 },
+        size: { x: 45, y: 100000 },
         position: { x: 0, y: 0.1, z: 0 },
-        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
       setEnvironment("../src/textures/road66.jpg", texInfo, false);
 
-      lanexUp   = [5];
+      lanexUp = [5];
       lanexDown = [-5];
     }
     else if (environment == environments.HIGHWAY) {
       // Highway environment
       let texInfo = {
         repeat: { x: 30, y: 3000 },
-        size:   { x: 1000, y: 100000 },
+        size: { x: 1000, y: 100000 },
         position: { x: 0, y: 0, z: 0 },
-        rotation: { x: -Math.PI/2, y: 0, z: 0 }
+        rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
       setEnvironment("../src/textures/terrain_texture.jpg", texInfo);
 
       texInfo = {
         repeat: { x: 3000, y: 3 },
-        size:   { x: 100000, y: 100},
+        size: { x: 100000, y: 100 },
         position: { x: 0, y: 0.1, z: 0 },
-        rotation: { x: -Math.PI/2, y: 0, z: Math.PI/2 }
+        rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 2 }
       };
 
       setEnvironment("../src/textures/highway_texture.jpg", texInfo, false);
 
-      lanexUp   = [4, 11, 16];
+      lanexUp = [4, 11, 16];
       lanexDown = [-16, -11, -4];
     }
     else {
       // Walker environment
       let texInfo = {
         repeat: { x: 1, y: 300 },
-        size:   { x: 30, y: 3000 },
+        size: { x: 30, y: 3000 },
         position: { x: 0, y: 0, z: 0 },
         rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
@@ -1765,8 +1773,8 @@ window.onload = function main() {
       setEnvironment("../src/textures/forest.jpg", texInfo);
     }
 
-    function setEnvironment(texFilename, texInfo, physics=true) {
-      if (!texFilename || !texInfo)   return;
+    function setEnvironment(texFilename, texInfo, physics = true) {
+      if (!texFilename || !texInfo) return;
 
       const tex = new THREE.TextureLoader().load(texFilename);
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -1787,12 +1795,12 @@ window.onload = function main() {
 
         const transform = new Ammo.btTransform();
         transform.setIdentity();
-        transform.setOrigin( new Ammo.btVector3(texInfo.position.x, texInfo.position.y, texInfo.position.z) );
-        transform.setRotation( new Ammo.btQuaternion(0, 0, 0, 1) );
+        transform.setOrigin(new Ammo.btVector3(texInfo.position.x, texInfo.position.y, texInfo.position.z));
+        transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
 
         const motionState = new Ammo.btDefaultMotionState(transform);
 
-        const collisionShape = new Ammo.btBoxShape( new Ammo.btVector3(texInfo.size.x, 0.01, texInfo.size.y) );
+        const collisionShape = new Ammo.btBoxShape(new Ammo.btVector3(texInfo.size.x, 0.01, texInfo.size.y));
 
         const localInertia = new Ammo.btVector3(texInfo.position.x, texInfo.position.y, texInfo.position.z);
         collisionShape.calculateLocalInertia(mass, localInertia);
@@ -1816,10 +1824,10 @@ window.onload = function main() {
       const geo = new THREE.PlaneBufferGeometry(48, 11);
       const mat = new THREE.MeshLambertMaterial({ map: tex });
 
-      for(let i=0; i<2; i++) {
+      for (let i = 0; i < 2; i++) {
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.set(0, 0.2, -23 - (276 * i)); // 276 = 23 * 12
-        mesh.rotation.set(-Math.PI/2, 0, 0);
+        mesh.rotation.set(-Math.PI / 2, 0, 0);
         scene.add(mesh);
       }
     }
@@ -1874,7 +1882,7 @@ window.onload = function main() {
       const geo = new THREE.PlaneBufferGeometry(150, 35);
       const mat = new THREE.MeshLambertMaterial({ map: tex, transparent: true });
 
-      for(let i=0; i<5; i++) {
+      for (let i = 0; i < 5; i++) {
         const cloud = new THREE.Mesh(geo, mat);
         cloud.position.set(
           Math.random() * 1000 - 500,
@@ -1906,7 +1914,7 @@ window.onload = function main() {
 
 
     const syncList = [];
-    const materialInteractive = new THREE.MeshPhongMaterial( { color:0x990000 } );
+    const materialInteractive = new THREE.MeshPhongMaterial({ color: 0x990000 });
 
     //createVehicle(new THREE.Vector3(0, 10, -20), new THREE.Quaternion(0, 0, 0, 1));
 
@@ -1917,7 +1925,7 @@ window.onload = function main() {
     // Show app stats
     const stats = new Stats();
     stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild( stats.dom );
+    document.body.appendChild(stats.dom);
 
     let before = 0, deltaTime = 0;
     let score = 0;
@@ -1936,7 +1944,7 @@ window.onload = function main() {
       time *= 0.001;
 
       // Make sure delta time isn't too big
-      deltaTime = Math.min(time - before, 1/20);
+      deltaTime = Math.min(time - before, 1 / 20);
       before = time;
 
       // Debug
@@ -1981,7 +1989,7 @@ window.onload = function main() {
         speedometer.innerHTML = (speed < 0 ? '(R) ' : '') + Math.abs(speed) + ' Km/h';
 
         // Update Score
-        score += Utils.toMsecond( Math.abs(speed) ) * deltaTime;
+        score += Utils.toMsecond(Math.abs(speed)) * deltaTime;
         game.setScore(score);
 
         if (score < 1000)
@@ -2063,7 +2071,7 @@ window.onload = function main() {
 
       // For bullet raycast vehicle
       for (var i = 0; i < syncList.length; i++)
-					syncList[i](deltaTime);
+        syncList[i](deltaTime);
 
 
 
@@ -2076,16 +2084,16 @@ window.onload = function main() {
 
       // Update rigid bodies
       for (let i = 0; i < rigidBodies.length; i++) {
-          const model = rigidBodies[i];
-          const objAmmo = model.physicsBody;
-          const ms = objAmmo.getMotionState();
-          if (ms) {
-              ms.getWorldTransform(TRANSFORM_AUX);
-              const p = TRANSFORM_AUX.getOrigin();
-              const q = TRANSFORM_AUX.getRotation();
-              model.get3DModel().position.set( p.x(), p.y(), p.z() );
-              model.get3DModel().quaternion.set( q.x(), q.y(), q.z(), q.w() );
-          }
+        const model = rigidBodies[i];
+        const objAmmo = model.physicsBody;
+        const ms = objAmmo.getMotionState();
+        if (ms) {
+          ms.getWorldTransform(TRANSFORM_AUX);
+          const p = TRANSFORM_AUX.getOrigin();
+          const q = TRANSFORM_AUX.getRotation();
+          model.get3DModel().position.set(p.x(), p.y(), p.z());
+          model.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());
+        }
       }
 
       // Check if police has caught the player
@@ -2093,7 +2101,50 @@ window.onload = function main() {
 
       physicsWorld.contactPairTest(player.getPhysicsBody(), policeCar.getPhysicsBody(), cbContactPairResult);
       if (cbContactPairResult.hasContact) {
-        // TODO: game over
+
+        // Show Game Over text and restart the game
+        if (!isBlur)
+          window.blur();
+
+        const finalscore = score;
+
+        const gameover = document.getElementById("gameover");
+        gameover.style.display = "block";
+
+        const currscore = document.getElementById("score");
+        currscore.style.display = "none";
+
+        const fscore = document.getElementById("finalscore");
+        fscore.style.display = "inherit";
+        fscore.innerHTML = "Final score: " + finalscore.toFixed(2);
+
+        const highscore = document.getElementById("highscore");
+        highscore.style.display = "inherit";
+
+        const restart = document.getElementById("restart");
+        //restart.onclick = window.location.replace("index.html");
+        restart.style.display = "inherit";
+
+        const mainmenu = document.getElementById("mainmenu");
+        //mainmenu.onclick = window.location.replace("index.html");
+        mainmenu.style.display = "inherit";
+
+        isPlay = false;
+        isBlur = true;
+
+        var prevScore = Utils.getCookie("score");
+
+        if (prevScore == "")
+          Utils.setCookie("score", 0);
+
+        if (finalscore > prevScore) {
+          highscore.innerHTML = "New Highscore!";
+          highscore.style.color = "orange";
+          Utils.setCookie("score", finalscore.toFixed(2));
+        }
+        else
+          highscore.innerHTML = "Highscore: " + parseFloat(prevScore).toFixed(2);
+
         console.log("GAME OVER");
       }
 
@@ -2123,7 +2174,7 @@ window.onload = function main() {
       // compute the box that contains all the stuff from model and below
       const box = new THREE.Box3().setFromObject(modelScene);
 
-      const boxSize   = box.getSize(new THREE.Vector3()).length();
+      const boxSize = box.getSize(new THREE.Vector3()).length();
       const boxCenter = box.getCenter(new THREE.Vector3());
 
       // set the camera to frame the box
@@ -2157,7 +2208,7 @@ window.onload = function main() {
       for (const model of Object.values(dynamicModels)) {
         if (model != playerModel) {
           const carPosition = model.gltf.scene.position,
-                currentCar  = model.car;
+            currentCar = model.car;
 
           /*if (model == dynamicModels.policeCar) {
                             if (player.getPosition().z < -20) {
@@ -2173,7 +2224,7 @@ window.onload = function main() {
 
           if (currentCar) {
             // Check if currentCar is near to the player and move it
-            if ( Math.abs(zPosPlayer > carPosition.z - 200) || model.gltf.scene.visible == false ) {
+            if (Math.abs(zPosPlayer > carPosition.z - 200) || model.gltf.scene.visible == false) {
               model.gltf.scene.visible = true;
               // TODO choose between the two: -1 move in the same way of player car, 1 viceversa
               // To be fixed, temp
@@ -2185,24 +2236,24 @@ window.onload = function main() {
             // Otherwise translate it far away resetting initial orientation and picking random the lane
             else {
               if (model == dynamicModels.lowpolyVanHippie)
-                var random = lanexDown[ Math.floor(Math.random() * lanexDown.length) ];
+                var random = lanexDown[Math.floor(Math.random() * lanexDown.length)];
               else
-                var random = lanexUp[ Math.floor(Math.random() * lanexUp.length) ];
+                var random = lanexUp[Math.floor(Math.random() * lanexUp.length)];
 
               let ms = currentCar.getPhysicsBody().getMotionState();
               if (ms) {
                 const transform = new Ammo.btTransform();
                 ms.getWorldTransform(transform);
-                transform.setOrigin( new Ammo.btVector3(
+                transform.setOrigin(new Ammo.btVector3(
                   random,
                   carPosition.y,
-                  carPosition.z - 500) );
+                  carPosition.z - 500));
                 const quaternion = currentCar.getInitialQuaternion();
-                transform.setRotation( new Ammo.btQuaternion(
+                transform.setRotation(new Ammo.btQuaternion(
                   quaternion.x,
                   quaternion.y,
                   quaternion.z,
-                  quaternion.w) );
+                  quaternion.w));
                 ms = new Ammo.btDefaultMotionState(transform);
                 currentCar.getPhysicsBody().setMotionState(ms);
               }
@@ -2216,23 +2267,23 @@ window.onload = function main() {
 
     // Apply a sound to a mesh
     function applySound(mesh, filename, sound) {
-      if(!mesh || !filename || !sound)  return;
+      if (!mesh || !filename || !sound) return;
 
       // Load a sound and set it as the PositionalAudio object's buffer
-      audioLoader.load(filename, function( buffer ) {
-      	sound.setBuffer( buffer );
-        sound.setLoop( true );
-      	sound.setRefDistance( 20 );
-      	sound.play();
+      audioLoader.load(filename, function (buffer) {
+        sound.setBuffer(buffer);
+        sound.setLoop(true);
+        sound.setRefDistance(20);
+        sound.play();
       });
 
       // Finally add the sound to the mesh
-      mesh.add( sound );
+      mesh.add(sound);
     }
 
     // Add a static model to the scene
     function addStaticModel(model) {
-      if(!model)  return;
+      if (!model) return;
 
       let modelScene;
       try {
@@ -2249,7 +2300,7 @@ window.onload = function main() {
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
         }
       });
@@ -2259,7 +2310,7 @@ window.onload = function main() {
 
     // Add a car model to the scene
     function addCarModel(model) {
-      if (!model)  return;
+      if (!model) return;
 
       const modelScene = model.gltf.scene;
       //console.log(Utils.dumpObject(modelScene).join('\n'));
@@ -2269,21 +2320,21 @@ window.onload = function main() {
       modelScene.rotation.set(...model.rotation);
 
       let wheels = [],
-          brakes = [];
+        brakes = [];
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
         }
 
         // Check if the 3D car model has references to the wheels
         if (model.wheelsNames) {
           // Reference the four wheels
-          if (o.name === model.wheelsNames[0])        wheels[0] = o;
-          else if (o.name === model.wheelsNames[1])   wheels[1] = o;
-          else if (o.name === model.wheelsNames[2])   wheels[2] = o;
-          else if (o.name === model.wheelsNames[3])   wheels[3] = o;
+          if (o.name === model.wheelsNames[0]) wheels[0] = o;
+          else if (o.name === model.wheelsNames[1]) wheels[1] = o;
+          else if (o.name === model.wheelsNames[2]) wheels[2] = o;
+          else if (o.name === model.wheelsNames[3]) wheels[3] = o;
         }
 
       });
@@ -2317,7 +2368,7 @@ window.onload = function main() {
     }
 
     function addPoliceCar(model) {
-      if (!model)  return;
+      if (!model) return;
 
       const modelScene = model.gltf.scene;
       //console.log(Utils.dumpObject(modelScene).join('\n'));
@@ -2327,11 +2378,11 @@ window.onload = function main() {
       modelScene.rotation.set(...model.rotation);
 
       let wheels = [],
-          brakes = [];
+        brakes = [];
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
 
           if (o.name === "Roof_light_bar_0") {
@@ -2342,10 +2393,10 @@ window.onload = function main() {
         }
 
         // Reference the four wheels
-        if (o.isBone && o.name === 'DEF-WheelFtL_Car_Rig')        wheels[0] = o;
-        else if (o.isBone && o.name === 'DEF-WheelFtR_Car_Rig')   wheels[1] = o;
-        else if (o.isBone && o.name === 'DEF-WheelBkL_Car_Rig')   wheels[2] = o;
-        else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig')   wheels[3] = o;
+        if (o.isBone && o.name === 'DEF-WheelFtL_Car_Rig') wheels[0] = o;
+        else if (o.isBone && o.name === 'DEF-WheelFtR_Car_Rig') wheels[1] = o;
+        else if (o.isBone && o.name === 'DEF-WheelBkL_Car_Rig') wheels[2] = o;
+        else if (o.isBone && o.name === 'DEF-WheelBkR_Car_Rig') wheels[3] = o;
       });
 
       const components = {
@@ -2357,7 +2408,7 @@ window.onload = function main() {
     }
 
     function addBmwCar(modelScene) {
-      if (!modelScene)  return;
+      if (!modelScene) return;
 
       modelScene.position.set(...dynamicModels.bmwI8.position);
       modelScene.scale.set(...dynamicModels.bmwI8.scale)
@@ -2368,19 +2419,19 @@ window.onload = function main() {
       applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       let wheels = [],
-          brakes = [];
+        brakes = [];
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel020')        wheels[0] = o;
-        else if (o.name === 'wheel028')   wheels[1] = o;
-        else if (o.name === 'wheel012')   wheels[2] = o;
-        else if (o.name === 'wheel004')   wheels[3] = o;
+        if (o.name === 'wheel020') wheels[0] = o;
+        else if (o.name === 'wheel028') wheels[1] = o;
+        else if (o.name === 'wheel012') wheels[2] = o;
+        else if (o.name === 'wheel004') wheels[3] = o;
 
         // Z axis for front wheels when the car turns
         // X axis for front wheels forward movement
@@ -2406,12 +2457,12 @@ window.onload = function main() {
       };
 
       selectedModel == cars.BMWI8 ? car = new Car(modelScene, carInfo, game, components) :
-                                  new Car(modelScene, carInfo, game, components);
+        new Car(modelScene, carInfo, game, components);
       player.setModel(car);
     }
 
     function addTeslaCar(modelScene) {
-      if (!modelScene)  return;
+      if (!modelScene) return;
 
       modelScene.position.set(...dynamicModels.tesla.position);
       modelScene.scale.set(...dynamicModels.tesla.scale)
@@ -2422,19 +2473,19 @@ window.onload = function main() {
       applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       let wheels = [],
-          brakes = [];
+        brakes = [];
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel')           wheels[0] = o;
-        else if (o.name === 'wheel001')   wheels[1] = o;
-        else if (o.name === 'wheel003')   wheels[2] = o;
-        else if (o.name === 'wheel002')   wheels[3] = o;
+        if (o.name === 'wheel') wheels[0] = o;
+        else if (o.name === 'wheel001') wheels[1] = o;
+        else if (o.name === 'wheel003') wheels[2] = o;
+        else if (o.name === 'wheel002') wheels[3] = o;
       });
 
       // Adjust front wheels orientation before to animate them
@@ -2458,12 +2509,12 @@ window.onload = function main() {
       };
 
       selectedModel == cars.TESLA ? car = new Car(modelScene, carInfo, game, components) :
-                                  new Car(modelScene, carInfo, game, components);
+        new Car(modelScene, carInfo, game, components);
       player.setModel(car);
     }
 
     function addLamborghiniCar(modelScene) {
-      if (!modelScene)  return;
+      if (!modelScene) return;
 
       modelScene.position.set(...dynamicModels.lamborghini.position);
       modelScene.scale.set(...dynamicModels.lamborghini.scale)
@@ -2474,25 +2525,25 @@ window.onload = function main() {
       applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
 
       let wheels = [],
-          brakes = [];
+        brakes = [];
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
         }
 
         // Reference the four wheels
-        if (o.name === 'wheel001')        wheels[0] = o;
-        else if (o.name === 'wheel002')   wheels[1] = o;
-        else if (o.name === 'wheel003')   wheels[2] = o;
-        else if (o.name === 'wheel005')   wheels[3] = o;
+        if (o.name === 'wheel001') wheels[0] = o;
+        else if (o.name === 'wheel002') wheels[1] = o;
+        else if (o.name === 'wheel003') wheels[2] = o;
+        else if (o.name === 'wheel005') wheels[3] = o;
 
         // Reference the four brakes associated with wheels
-        else if (o.name === 'wheel007')   brakes[0] = o;
-        else if (o.name === 'wheel006')   brakes[1] = o;
-        else if (o.name === 'wheel000')   brakes[2] = o;
-        else if (o.name === 'wheel004')   brakes[3] = o;
+        else if (o.name === 'wheel007') brakes[0] = o;
+        else if (o.name === 'wheel006') brakes[1] = o;
+        else if (o.name === 'wheel000') brakes[2] = o;
+        else if (o.name === 'wheel004') brakes[3] = o;
       });
 
       // Adjust front right wheel orientation before to animate it
@@ -2515,13 +2566,13 @@ window.onload = function main() {
       };
 
       selectedModel == cars.LAMBORGHINI ? car = new Car(modelScene, carInfo, game, components) :
-                                        new Car(modelScene, carInfo, game, components);
+        new Car(modelScene, carInfo, game, components);
       player.setModel(car);
     }
 
 
     function addCharacter(model) {
-      if (!model)  return;
+      if (!model) return;
 
       const modelScene = model.gltf.scene;
       //console.log(Utils.dumpObject(modelScene).join('\n'));
@@ -2531,63 +2582,63 @@ window.onload = function main() {
       modelScene.rotation.set(...model.rotation);
 
       let head,
-          leftArm  = [],
-          leftHand = [],
-          rightArm  = [],
-          rightHand = [],
+        leftArm = [],
+        leftHand = [],
+        rightArm = [],
+        rightHand = [],
 
-          leftLeg  = [],
-          leftFoot = [],
-          rightLeg  = [],
-          rightFoot = [];
+        leftLeg = [],
+        leftFoot = [],
+        rightLeg = [],
+        rightFoot = [];
 
       modelScene.traverse(o => {
         if (o.isMesh) {
-          o.castShadow    = true;
+          o.castShadow = true;
           o.receiveShadow = true;
         }
 
         // Reference the components of the character
-        if (o.name === 'rp_nathan_animated_003_walking_head_07')               head = o;
+        if (o.name === 'rp_nathan_animated_003_walking_head_07') head = o;
 
-        if (o.name === 'rp_nathan_animated_003_walking_shoulder_l_023')        leftArm[0] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_upperarm_l_024')   leftArm[1] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_lowerarm_l_025')   leftArm[2] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_hand_l_026')       leftHand[0]  = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_thumb_01_l_027')   leftHand[1]  = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_index_01_l_031')   leftHand[2]  = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_middle_01_l_00')   leftHand[3]  = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_ring_01_l_038')    leftHand[4]  = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_pinky_01_l_042')   leftHand[5]  = o;
+        if (o.name === 'rp_nathan_animated_003_walking_shoulder_l_023') leftArm[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_upperarm_l_024') leftArm[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerarm_l_025') leftArm[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_hand_l_026') leftHand[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_thumb_01_l_027') leftHand[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_index_01_l_031') leftHand[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_middle_01_l_00') leftHand[3] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_ring_01_l_038') leftHand[4] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_pinky_01_l_042') leftHand[5] = o;
 
-        else if (o.name === 'rp_nathan_animated_003_walking_shoulder_r_048')   rightArm[0] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_upperarm_r_049')   rightArm[1] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_lowerarm_r_050')   rightArm[2] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_hand_r_051')       rightHand[0] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_thumb_01_r_052')   rightHand[1] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_index_01_r_056')   rightHand[2] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_middle_01_r_060')  rightHand[3] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_ring_01_r_064')    rightHand[4] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_pinky_01_r_068')   rightHand[5] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_shoulder_r_048') rightArm[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_upperarm_r_049') rightArm[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerarm_r_050') rightArm[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_hand_r_051') rightHand[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_thumb_01_r_052') rightHand[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_index_01_r_056') rightHand[2] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_middle_01_r_060') rightHand[3] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_ring_01_r_064') rightHand[4] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_pinky_01_r_068') rightHand[5] = o;
 
-        else if (o.name === 'rp_nathan_animated_003_walking_upperleg_l_074')   leftLeg[0] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_lowerleg_l_075')   leftLeg[1] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_foot_l_076')       leftFoot[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_upperleg_l_074') leftLeg[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerleg_l_075') leftLeg[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_foot_l_076') leftFoot[0] = o;
 
-        else if (o.name === 'rp_nathan_animated_003_walking_upperleg_r_081')   rightLeg[0] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_lowerleg_r_082')   rightLeg[1] = o;
-        else if (o.name === 'rp_nathan_animated_003_walking_foot_r_083')       rightFoot[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_upperleg_r_081') rightLeg[0] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_lowerleg_r_082') rightLeg[1] = o;
+        else if (o.name === 'rp_nathan_animated_003_walking_foot_r_083') rightFoot[0] = o;
       });
 
       const components = {
-        head:      head,
-        leftArm:   leftArm,
-        leftHand:  leftHand,
-        rightArm:  rightArm,
+        head: head,
+        leftArm: leftArm,
+        leftHand: leftHand,
+        rightArm: rightArm,
         rightHand: rightHand,
-        leftLeg:   leftLeg,
-        leftFoot:  leftFoot,
-        rightLeg:  rightLeg,
+        leftLeg: leftLeg,
+        leftFoot: leftFoot,
+        rightLeg: rightLeg,
         rightFoot: rightFoot
       }
 
@@ -2609,11 +2660,11 @@ window.onload = function main() {
     // Must run each time the DOM window resize event fires.
     // Resets the canvas dimensions to match the window
     function resizeCanvas() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
 
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
 
 
@@ -2630,7 +2681,7 @@ window.onload = function main() {
       var t = new THREE.CylinderGeometry(radius, radius, width, 24, 1);
       t.rotateZ(Math.PI / 2);
       var mesh = new THREE.Mesh(t, materialInteractive);
-      mesh.add(new THREE.Mesh(new THREE.BoxGeometry(width * 1.5, radius * 1.75, radius*.25, 1, 1, 1), materialInteractive));
+      mesh.add(new THREE.Mesh(new THREE.BoxGeometry(width * 1.5, radius * 1.75, radius * .25, 1, 1, 1), materialInteractive));
       scene.add(mesh);
       return mesh;
     }
@@ -2723,97 +2774,97 @@ window.onload = function main() {
           tuning,
           isFront);
 
-          wheelInfo.set_m_suspensionStiffness(suspensionStiffness);
-          wheelInfo.set_m_wheelsDampingRelaxation(suspensionDamping);
-          wheelInfo.set_m_wheelsDampingCompression(suspensionCompression);
-          wheelInfo.set_m_frictionSlip(friction);
-          wheelInfo.set_m_rollInfluence(rollInfluence);
+        wheelInfo.set_m_suspensionStiffness(suspensionStiffness);
+        wheelInfo.set_m_wheelsDampingRelaxation(suspensionDamping);
+        wheelInfo.set_m_wheelsDampingCompression(suspensionCompression);
+        wheelInfo.set_m_frictionSlip(friction);
+        wheelInfo.set_m_rollInfluence(rollInfluence);
 
-          wheelMeshes[index] = createWheelMesh(radius, width);
+        wheelMeshes[index] = createWheelMesh(radius, width);
+      }
+
+      addWheel(true, new Ammo.btVector3(wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront, wheelWidthFront, FRONT_LEFT);
+      addWheel(true, new Ammo.btVector3(-wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront, wheelWidthFront, FRONT_RIGHT);
+      addWheel(false, new Ammo.btVector3(-wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack, wheelWidthBack, BACK_LEFT);
+      addWheel(false, new Ammo.btVector3(wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack, wheelWidthBack, BACK_RIGHT);
+
+      // Sync keybord actions and physics and graphics
+      function sync(dt) {
+
+        var speed = vehicle.getCurrentSpeedKmHour();
+
+        breakingForce = 0;
+        engineForce = 0;
+
+        if (inputManager.forwardAction()) {
+          if (speed < -1)
+            breakingForce = maxBreakingForce;
+          else engineForce = maxEngineForce;
+        }
+        if (inputManager.backAction()) {
+          if (speed > 1)
+            breakingForce = maxBreakingForce;
+          else engineForce = -maxEngineForce / 2;
+        }
+        if (inputManager.leftAction()) {
+          if (vehicleSteering < steeringClamp)
+            vehicleSteering += steeringIncrement;
+        }
+        else {
+          if (inputManager.rightAction()) {
+            if (vehicleSteering > -steeringClamp)
+              vehicleSteering -= steeringIncrement;
+          }
+          else {
+            if (vehicleSteering < -steeringIncrement)
+              vehicleSteering += steeringIncrement;
+            else {
+              if (vehicleSteering > steeringIncrement)
+                vehicleSteering -= steeringIncrement;
+              else {
+                vehicleSteering = 0;
+              }
+            }
+          }
         }
 
-        addWheel(true, new Ammo.btVector3(wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront, wheelWidthFront, FRONT_LEFT);
-        addWheel(true, new Ammo.btVector3(-wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront, wheelWidthFront, FRONT_RIGHT);
-        addWheel(false, new Ammo.btVector3(-wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack, wheelWidthBack, BACK_LEFT);
-        addWheel(false, new Ammo.btVector3(wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack, wheelWidthBack, BACK_RIGHT);
+        console.log("engineForce: " + engineForce);
+        console.log("breakingForce: " + breakingForce);
 
-        // Sync keybord actions and physics and graphics
-				function sync(dt) {
+        console.log("chassisMesh.position: ");
+        console.log(chassisMesh.position);
 
-					var speed = vehicle.getCurrentSpeedKmHour();
+        vehicle.applyEngineForce(engineForce, BACK_LEFT);
+        vehicle.applyEngineForce(engineForce, BACK_RIGHT);
 
-					breakingForce = 0;
-					engineForce = 0;
+        vehicle.setBrake(breakingForce / 2, FRONT_LEFT);
+        vehicle.setBrake(breakingForce / 2, FRONT_RIGHT);
+        vehicle.setBrake(breakingForce, BACK_LEFT);
+        vehicle.setBrake(breakingForce, BACK_RIGHT);
 
-					if (inputManager.forwardAction()) {
-						if (speed < -1)
-							breakingForce = maxBreakingForce;
-						else engineForce = maxEngineForce;
-					}
-					if (inputManager.backAction()) {
-						if (speed > 1)
-							breakingForce = maxBreakingForce;
-						else engineForce = -maxEngineForce / 2;
-					}
-					if (inputManager.leftAction()) {
-						if (vehicleSteering < steeringClamp)
-							vehicleSteering += steeringIncrement;
-					}
-					else {
-						if (inputManager.rightAction()) {
-							if (vehicleSteering > -steeringClamp)
-								vehicleSteering -= steeringIncrement;
-						}
-						else {
-							if (vehicleSteering < -steeringIncrement)
-								vehicleSteering += steeringIncrement;
-							else {
-								if (vehicleSteering > steeringIncrement)
-									vehicleSteering -= steeringIncrement;
-								else {
-									vehicleSteering = 0;
-								}
-							}
-						}
-					}
+        vehicle.setSteeringValue(vehicleSteering, FRONT_LEFT);
+        vehicle.setSteeringValue(vehicleSteering, FRONT_RIGHT);
 
-          console.log("engineForce: " + engineForce);
-          console.log("breakingForce: " + breakingForce);
-
-          console.log("chassisMesh.position: ");
-          console.log(chassisMesh.position);
-
-					vehicle.applyEngineForce(engineForce, BACK_LEFT);
-					vehicle.applyEngineForce(engineForce, BACK_RIGHT);
-
-          vehicle.setBrake(breakingForce / 2, FRONT_LEFT);
-          vehicle.setBrake(breakingForce / 2, FRONT_RIGHT);
-          vehicle.setBrake(breakingForce, BACK_LEFT);
-          vehicle.setBrake(breakingForce, BACK_RIGHT);
-
-          vehicle.setSteeringValue(vehicleSteering, FRONT_LEFT);
-          vehicle.setSteeringValue(vehicleSteering, FRONT_RIGHT);
-
-          var tm, p, q, i;
-          var n = vehicle.getNumWheels();
-          for (i = 0; i < n; i++) {
-            vehicle.updateWheelTransform(i, true);
-            tm = vehicle.getWheelTransformWS(i);
-            p = tm.getOrigin();
-            q = tm.getRotation();
-            wheelMeshes[i].position.set(p.x(), p.y(), p.z());
-            wheelMeshes[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
-          }
-
-          tm = vehicle.getChassisWorldTransform();
+        var tm, p, q, i;
+        var n = vehicle.getNumWheels();
+        for (i = 0; i < n; i++) {
+          vehicle.updateWheelTransform(i, true);
+          tm = vehicle.getWheelTransformWS(i);
           p = tm.getOrigin();
           q = tm.getRotation();
-          chassisMesh.position.set(p.x(), p.y(), p.z());
-          chassisMesh.quaternion.set(q.x(), q.y(), q.z(), q.w());
+          wheelMeshes[i].position.set(p.x(), p.y(), p.z());
+          wheelMeshes[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
         }
 
-        syncList.push(sync);
+        tm = vehicle.getChassisWorldTransform();
+        p = tm.getOrigin();
+        q = tm.getRotation();
+        chassisMesh.position.set(p.x(), p.y(), p.z());
+        chassisMesh.quaternion.set(q.x(), q.y(), q.z(), q.w());
       }
+
+      syncList.push(sync);
+    }
 
   }
 
