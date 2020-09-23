@@ -234,11 +234,11 @@ class Car extends Model {
       this.getFrontRightWheel().rotation.x = speed;
     }*/
 
-    this.getFrontLeftWheel().rotation.x  = speed;
-    this.getFrontRightWheel().rotation.x = speed;
+    this.getFrontLeftWheel().rotation.x  += speed;
+    this.getFrontRightWheel().rotation.x += speed;
 
-    this.getBackLeftWheel().rotation.x  = speed;
-    this.getBackRightWheel().rotation.x = speed;
+    this.getBackLeftWheel().rotation.x  += speed;
+    this.getBackRightWheel().rotation.x += speed;
   }
 
   // Return current speed in Km/h, negative value if reverse
@@ -424,6 +424,7 @@ class Car extends Model {
 
     // Compute resultant longitudinal force subtracting resistant forces
     this.tractionForce.add(this.airResistance).add(this.rollingResistance);
+    //this.tractionForce.multiplyScalar(deltaTime);
 
     /*const axis = new THREE.Vector3(0, 1, 0);
     const r = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) : Utils.toRadiants(-this.steeringAngle * 40);

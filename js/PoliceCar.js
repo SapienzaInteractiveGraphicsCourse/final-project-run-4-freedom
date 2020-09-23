@@ -3,11 +3,13 @@ import { Car } from "./Car.js";
 import { Utils }    from "./Utils.js";
 
 class PoliceCar extends Car {
-  constructor(model3D, carInfo, game, name, components, scene, gui) {
-    super(model3D, carInfo, game, name, components);
+  constructor(model3D, carInfo, game, components, scene, gui) {
+    super(model3D, carInfo, game, components);
 
-    // Pointlights for police car
-    const createLight = (color, intensity, x, y, z) => {
+    this.roofLights = components.roofLights;
+
+    // Spotlights for police car rooflights
+    /*const createLight = (color, intensity, x, y, z) => {
       const distance = 40;
       const spotLight = new THREE.SpotLight(color, intensity, distance);
       spotLight.position.set(x, y, z);
@@ -41,7 +43,7 @@ class PoliceCar extends Car {
     console.log("this.roofLightBlue.position.y: " + this.roofLightBlue.position.y);
     console.log("this.roofLightBlue.position.z: " + this.roofLightBlue.position.z);*/
 
-    model3D.add( this.roofLightRed.target );
+    /*model3D.add( this.roofLightRed.target );
     model3D.add( this.roofLightBlue.target );
 
     /*let helper = new THREE.SpotLightHelper(this.roofLightRed);
@@ -62,7 +64,7 @@ class PoliceCar extends Car {
     Utils.makeXYZGUI(gui, this.roofLightBlue.position, 'positionB');//*/
 
     // For roof lights blinking
-    this.addIntensity        = true;
+    /*this.addIntensity        = true;
     this.deltaIntensity      = 0;
     this.roofLightsThreshold = 1;
 
@@ -70,92 +72,24 @@ class PoliceCar extends Car {
     this.moveRightThreshold    = 20;
     this.moveForwardThreshold  = 20;
     this.moveLeftThreshold     = 40;
-    this.moveBackwardThreshold = 40;
+    this.moveBackwardThreshold = 40;*/
   }
 
-  setRoofLightsIntensity (value) {
+  /*setRoofLightsIntensity (value) {
     this.roofLightRed.intensity  = value;
     this.roofLightBlue.intensity = value;
+  }*/
+
+  blinkRoofLights() {
+    if (this.roofLights) {
+      for (let i=0; i < this.roofLights.length; i++)
+        this.roofLights[i].rotation.z += 0.1;
+    }
   }
 
   // Called in main animate function
-  update(deltaTime) {
+  /*update(deltaTime) {
     if(!deltaTime)   return;
-
-    //super.rotateWheels(deltaTime);
-
-    //super.get3DModel().translateOnAxis(new THREE.Vector3(0, 0, 1),  super.getMoveSpeed() * deltaTime * 0.029);
-
-    /*const updateVehiclePhysics = () => {
-      const speed = this.vehicle.getCurrentSpeedKmHour();
-      console.log("PoliceCar speed: " + Math.abs(speed).toFixed(1) + ' km/h');
-
-      let breakingForce = 0;
-      let engineForce = 0;
-
-      //if (actions.acceleration) {
-        if (speed < -1)   breakingForce = this.maxBreakingForce;
-        else              engineForce   = this.maxEngineForce;
-      //}
-      /*if (actions.braking) {
-        if (speed > 1)  breakingForce = maxBreakingForce;
-        else            engineForce = -maxEngineForce / 2;
-      }*/
-
-      /*const frontLeftWheel  = super.getFrontLeftWheel();
-      const frontRightWheel = super.getFrontRightWheel();
-      const backLeftWheel  = super.getBackLeftWheel();
-      const backRightWheel = super.getBackRightWheel();
-
-      console.log("PoliceCar getPosition(): ");
-      console.log(this.getPosition());
-      console.log("PoliceCar frontLeftWheel.position.x: " + frontLeftWheel.position.x);
-      console.log("PoliceCar frontLeftWheel.position.y: " + frontLeftWheel.position.y);
-      console.log("PoliceCar frontLeftWheel.position.z: " + frontLeftWheel.position.z);
-      console.log("PoliceCar frontRightWheel.position.x: " + frontRightWheel.position.x);
-      console.log("PoliceCar frontRightWheel.position.y: " + frontRightWheel.position.y);
-      console.log("PoliceCar frontRightWheel.position.z: " + frontRightWheel.position.z);
-      console.log("PoliceCar backLeftWheel.position.x: " + backLeftWheel.position.x);
-      console.log("PoliceCar backLeftWheel.position.y: " + backLeftWheel.position.y);
-      console.log("PoliceCar backLeftWheel.position.z: " + backLeftWheel.position.z);
-      console.log("PoliceCar backRightWheel.position.x: " + backRightWheel.position.x);
-      console.log("PoliceCar backRightWheel.position.y: " + backRightWheel.position.y);
-      console.log("PoliceCar backRightWheel.position.z: " + backRightWheel.position.z);
-
-
-      // Apply engine force to rear wheels
-      this.vehicle.applyEngineForce(engineForce, this.BACK_LEFT_WHEEL_ID);
-      this.vehicle.applyEngineForce(engineForce, this.BACK_RIGHT_WHEEL_ID);
-
-      // Apply brake force to all wheels
-      this.vehicle.setBrake(breakingForce / 2, this.FRONT_LEFT_WHEEL_ID);
-      this.vehicle.setBrake(breakingForce / 2, this.FRONT_RIGHT_WHEEL_ID);
-      this.vehicle.setBrake(breakingForce, this.BACK_LEFT_WHEEL_ID);
-      this.vehicle.setBrake(breakingForce, this.BACK_RIGHT_WHEEL_ID);
-
-      // Apply steering to front wheels
-      this.vehicle.setSteeringValue(this.vehicleSteering, this.FRONT_LEFT_WHEEL_ID);
-      this.vehicle.setSteeringValue(this.vehicleSteering, this.FRONT_RIGHT_WHEEL_ID);
-
-      let tm, p, q, i;
-      const n = this.vehicle.getNumWheels();
-      for (i = 0; i < n; i++) {
-        this.vehicle.updateWheelTransform(i, true);
-        tm = this.vehicle.getWheelTransformWS(i);
-        p = tm.getOrigin();
-        q = tm.getRotation();
-        this.wheels[i].position.set(p.x(), p.y(), p.z());
-        this.wheels[i].quaternion.set(q.x(), q.y(), q.z(), q.w());
-      }
-
-      tm = this.vehicle.getChassisWorldTransform();
-      p = tm.getOrigin();
-      q = tm.getRotation();
-      super.get3DModel().position.set(p.x(), p.y(), p.z());
-      super.get3DModel().quaternion.set(q.x(), q.y(), q.z(), q.w());
-    }
-
-    updateVehiclePhysics();*/
 
     // Debug
     //console.log("model3D.position.z: " + this.model3D.position.z);
@@ -163,7 +97,7 @@ class PoliceCar extends Car {
     //console.log("this.roofLightBlue.position.z: " + this.roofLightBlue.position.z);
 
     // Blinks police roof lights
-    const blink = () => {
+    /*const blink = () => {
       if(this.deltaIntensity >= this.roofLightsThreshold) {
         this.deltaIntensity = 0;
         this.roofLightsThreshold = 2.5;
@@ -229,7 +163,7 @@ class PoliceCar extends Car {
     }
 
     blink();
-  }
+  }*/
 
 }
 

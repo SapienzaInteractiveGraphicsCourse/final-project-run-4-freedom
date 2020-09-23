@@ -5,6 +5,8 @@ class Game {
     this.inputManager = inputManager;
     this.physicsWorld = physicsWorld;
     this.rigidBodies  = [];
+    this.player = null;
+    this.police = null;
   }
 
   getScore() {
@@ -46,6 +48,28 @@ class Game {
       this.rigidBodies.splice(i, 1);
   }
 
+  getPlayer() {
+    return this.player;
+  }
+
+  setPlayer(player) {
+    this.player = player;
+  }
+
+  getPolice() {
+    return this.police;
+  }
+
+  setPolice(police) {
+    this.police = police;
+  }
+
+  update(deltaTime) {
+    if(!deltaTime || !this.player || !this.police)   return;
+
+    this.player.update(deltaTime);
+    this.police.update(deltaTime);
+  }
 }
 
 export {Game}
