@@ -130,7 +130,7 @@ window.onload = function main() {
     const staticModels = {
         // Environment
         // City
-  
+
         /*
         abandonedBuilding:  { url: 'src/environment/city/buildings/abandoned_building/scene.gltf',
                               //position: [80, 0, -45],
@@ -138,42 +138,42 @@ window.onload = function main() {
                               scale:    [15, 15, 15],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-   
+
         apartment2:         { url: 'src/environment/city/buildings/apartment_2/scene.gltf',
                               //position: [-50, 0, -60],
                               position: [-52, 0, -110],
                               scale:    [0.05, 0.05, 0.05],
                               rotation: [0, Math.PI/2, 0],
                             }, // ENABLE
-     
+
         apartment5:         { url: 'src/environment/city/buildings/apartment_5/scene.gltf',
                               //position: [-250, 1, -40],
                               position: [-80, 1, -1250],
                               scale:    [0.015, 0.015, 0.015],
                               rotation: [0, Math.PI/2, 0],
                             }, // ENABLE
-    
+
         building1:          { url: 'src/environment/city/buildings/building_1/scene.gltf',
                               //position: [-45, 11, -10],
                               position: [-52, 11, -50],
                               scale:    [0.05, 0.05, 0.05],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-    
+
         cottonClub:         { url: 'src/environment/city/buildings/cotton_club/scene.gltf',
                               //position: [-30, 0, -400],
                               position: [-40, 0, -520],
                               scale:    [0.04, 0.04, 0.04],
                               rotation: [0, Math.PI/2, 0],
                             }, // ENABLE
-       
+
         officePorsche:      { url: 'src/environment/city/buildings/office_2/scene.gltf',
                               //position: [40, 0, -260],
                               position: [30, 0, -700],
                               scale:    [0.055, 0.055, 0.055],
                               rotation: [0, -Math.PI/1.645, 0],
                             }, // ENABLE
-  
+
         boulangerie:        { url: 'src/environment/city/buildings/boulangerie_de_lopera/scene.gltf',
                               //position: [35, -1, 150],
                               position: [-35, -1, -350],
@@ -204,7 +204,7 @@ window.onload = function main() {
                               scale:    [0.03, 0.03, 0.03],
                               rotation: [0, Math.PI/2, 0],
                             },
-  
+
         stadium1:           { url: 'src/environment/city/buildings/stadium1/scene.gltf',
                               //position: [200, -4, -450],
                               position: [-120, -4, -1050],
@@ -217,32 +217,32 @@ window.onload = function main() {
                               scale:    [0.7, 0.7, 0.7],
                               rotation: [0, -Math.PI/2, 0],
                             }, // ENABLE
-  
+
           //*/
-  
+
         // Street elements
-  
+
         /*
         barTable:           { url: 'src/environment/city/street/bar_table/scene.gltf',
                               position: [-29, 2, -410],
                               scale:    [0.08, 0.08, 0.08],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-       
+
         bench:              { url: 'src/environment/city/street/bench/scene.gltf',
                               //position: [-29, 1.6, -7],
                               position: [-35, 1.6, -170],
                               scale:    [3.5, 3.5, 3.5],
                               rotation: [0, Math.PI/2, 0],
                             }, // ENABLE
-    
+
         dumpster:           { url: 'src/environment/city/street/dumpster/scene.gltf',
                               //position: [45, 1.8, 20],
                               position: [35, 1.8, -450],
                               scale:    [5.3, 5.3, 5.3],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-     
+
         menuSign:           { url: 'src/environment/city/street/menu_sign/scene.gltf',
                               //position: [31, 2, 5],
                               position: [31, 2, -390],
@@ -255,7 +255,7 @@ window.onload = function main() {
                               scale:    [0.25, 0.25, 0.25],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-       
+
         speedSign30:        { url: 'src/environment/city/street/speed_sign_30/scene.gltf',
                               //position: [25, 0, -12],
                               position: [25, 0, -300],
@@ -283,16 +283,22 @@ window.onload = function main() {
                               position: [26.5, 0, 0],
                               scale:    [1, 1, 1],
                               rotation: [0, 0, 0],
+                            },
+        sidewalks:          { url: 'src/environment/city/street/sidewalks/scene.gltf',
+                              position: [0, 0, 0],
+                              scale:    [1, 1, 1],
+                              rotation: [0, 0, 0],
                             }, // ENABLE
-      
-        trafficLight:       { url: 'src/environment/city/street/traffic_light/scene.gltf',
+
+
+        /*trafficLight:       { url: 'src/environment/city/street/traffic_light/scene.gltf',
                               //position: [25, 0, -25],
                               position: [25, 0, -1000],
                               scale:    [0.15, 0.15, 0.15],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-    
-  
+
+
         trashCan3:          { url: 'src/environment/city/street/trash_can_3/scene.gltf',
                               //position: [-29, 1.6, -10],
                               position: [-35, 1.6, -180],
@@ -306,13 +312,13 @@ window.onload = function main() {
                               rotation: [0, 0, 0],
                           }
       //*/
-  
-  
+
+
         // Country - desert
-  
-        
-        
-        abandonedShop:      { url: 'src/environment/country - desert/buildings/abandoned_shopmall/scene.gltf',
+
+
+
+        /*abandonedShop:      { url: 'src/environment/country - desert/buildings/abandoned_shopmall/scene.gltf',
                               //position: [-60, 0, -200],
                               position: [-40, 0, -300],
                               scale:    [0.03, 0.03, 0.03],
@@ -330,21 +336,21 @@ window.onload = function main() {
                               scale:    [0.02, 0.02, 0.02],
                               rotation: [0, Math.PI/2, 0],
                             }, // ENABLE
-    
+
         motelOld:           { url: 'src/environment/country - desert/buildings/motel_old/scene.gltf',
                               //position: [50, 0.4, -20],
                               position: [50, 0.4, -500],
                               scale:    [1.8, 1.8, 1.8],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-       
+
         oldWoodenHouse:     { url: 'src/environment/country - desert/buildings/old_wooden_house/scene.gltf',
                               //position: [-50, 0, 120],
                               position: [-40, 0, -60],
                               scale:    [0.2, 0.2, 0.2],
                               rotation: [0, Math.PI, 0],
                             }, // ENABLE
-     
+
         westernHouse:       { url: 'src/environment/country - desert/buildings/western_house/scene.gltf',
                               //position: [50, 0, 200],
                               position: [35, 0, -40],
@@ -352,12 +358,12 @@ window.onload = function main() {
                               rotation: [0, -Math.PI/2, 0],
                             },// ENABLE
       //*/
-  
+
         // Road elements
-  
-        
-      
-        bushGroup:          { url: 'src/environment/country - desert/road/bush_group/scene.gltf',
+
+
+
+        /*bushGroup:          { url: 'src/environment/country - desert/road/bush_group/scene.gltf',
                               //position: [0, 0, -40],
                               position: [-35, 0, -550],
                               scale:    [0.065, 0.065, 0.065],
@@ -369,14 +375,14 @@ window.onload = function main() {
                               scale:    [10, 10, 10],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-       
+
         rustyCar2:          { url: 'src/environment/country - desert/road/old_rusty_car_2/scene.gltf',
                               //position: [10, 0, -45],
                               position: [-30, 0, -90],
                               scale:    [0.076, 0.076, 0.076],
                               rotation: [0, 0, 0],
                             }, // ENABLE
-       
+
         tumbleweed2:        { url: 'src/environment/country - desert/road/tumbleweed_2/scene.gltf',
                               //position: [10, 0.2, 0],
                               position: [30, 0.2, -220],
@@ -384,9 +390,9 @@ window.onload = function main() {
                               rotation: [0, 0, 0],
                             }, // ENABLE
        //*/
-  
+
         // Highway
-  
+
         /*
         billboard:          { url: 'src/environment/highway/road/billboard/scene.gltf',
                               position: [30, 1.8, -40],
@@ -406,13 +412,16 @@ window.onload = function main() {
                               rotation: [0, 0, 0],
                             },
         jersey:             { url: 'src/environment/highway/road/jersey_barrier/scene.gltf',
-                              //position: [0, 1.8, -10],
-                              position: [0, 1.8, -700],
-                              //scale:    [1.1, 1.1, 1.1],
-                              scale:    [2, 2, 1000],
+                              position: [0, 1.8, -10],
+                              scale:    [1.2, 1.2, 1.2],
+                              rotation: [0, 0, 0],
+                            },//*/
+        jerseyGroup:        { url: 'src/environment/highway/road/jersey_barrier_group/scene.gltf',
+                              position: [0, 1.8, 50],
+                              scale:    [1, 1, 1],
                               rotation: [0, 0, 0],
                             }//*/
-  
+
         //FOREST
         /*
         lowpolyAbete:       { url: 'src/environment/forest/low_poly_abete/scene.gltf',
@@ -445,32 +454,51 @@ window.onload = function main() {
                               scale:    [7, 7, 7],
                               rotation: [0, 0, 0],
                             }//*/
-  
+
       };
-  
+
       const dynamicModels = {
         // Cars
-        policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
+        /*policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
                               position: [-1.5, 0, 25],
                               scale:    [2.3, 2, 2.3],
                               rotation: [0, Math.PI, 0],
-  
+
                               carInfo: {
                                 mass: 1840,    // Kg
                                 maxSpeed: 207, // Km/h
                                 boxSizeXFactor: 0.4,
                                 boxSizeYFactor: 0.043,
                                 boxSizeZFactor: 0.4,
-                                carName: "policeCar1"
+                                carName: "Police Car"
                               },
-                              wheelsNames: []
+                              wheelsNames: ["DEF-WheelFtL_Car_Rig", "DEF-WheelFtR_Car_Rig", "DEF-WheelBkL_Car_Rig",
+                                "DEF-WheelBkR_Car_Rig"]
+                            },*/
+      chevroletSheriff:     { url: 'src/vehicles/police/chevrolet_suburban_sheriff/scene.gltf',
+                              position: [0, 0, 25],
+                              scale:    [2.4, 2.4, 2.4],
+                              rotation: [0, Math.PI, 0],
+
+                              carInfo: {
+                                mass: 2634,    // Kg
+                                maxSpeed: 174, // Km/h
+                                boxSizeXFactor: 0.6,
+                                boxSizeYFactor: 0.04,
+                                boxSizeZFactor: 0.6,
+                                carName: "Chevrolet Suburban Sheriff"
+                              },
+                              wheelsNames: ["DEF-WheelFtL_Car_Rig", "DEF-WheelFtR_Car_Rig",
+                                            "DEF-WheelBkL_Car_Rig", "DEF-WheelBkR_Car_Rig"],
+                              roofLightsNames: ["Cylinder", "Cylinder001", "Cylinder006", "Cylinder007",
+                                                "Cylinder008", "Cylinder009", "Cylinder010", "Cylinder011"]
                             },
-  
+
         /*bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                               position: [0, 1.5, 0],
                               scale:    [0.027, 0.025, 0.027],
                               rotation: [0, Math.PI, 0],
-  
+
                               carInfo: {
                                 mass: 1920,    // Kg
                                 maxSpeed: 250, // Km/h
@@ -485,13 +513,13 @@ window.onload = function main() {
                               position: [-10, 1.73, 0],
                               scale:    [0.013, 0.013, 0.013],
                               rotation: [0, Math.PI, 0],
-  
+
                               carInfo: {
                                 mass: 1625,    // Kg
                                 maxSpeed: 350, // Km/h
-                                boxSizeXFactor: 0.4, //0.5,
-                                boxSizeYFactor: 0.56,
-                                boxSizeZFactor: 0.2,
+                                boxSizeXFactor: 0.4,
+                                boxSizeYFactor: 0.6,
+                                boxSizeZFactor: 0.3,
                                 carName: "Lamborghini Aventador S"
                               },
                               wheelsNames: ["wheel001", "wheel002", "wheel003", "wheel005"]
@@ -500,7 +528,7 @@ window.onload = function main() {
                               position: [10, 0.35, 0],
                               scale:    [0.026, 0.024, 0.026],
                               rotation: [0, Math.PI, 0],
-  
+
                               carInfo: {
                                 mass: 2316,    // Kg
                                 maxSpeed: 261, // Km/h
@@ -511,12 +539,12 @@ window.onload = function main() {
                               },
                               wheelsNames: ["wheel", "wheel001", "wheel003", "wheel002"]
                             },*/
-  
+
         /*americanMuscleCar:  { url: 'src/vehicles/cars/american_muscle_car/scene.gltf',
                               position: [20, 2, 0],
                               scale:    [6, 6, 6],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1477,    // Kg
                                 maxSpeed: 229, // Km/h
@@ -526,45 +554,47 @@ window.onload = function main() {
                               },
                               wheelsNames: null // static model (due to its 3D model)
                             },*/
-        audiR8:             { url: 'src/vehicles/cars/audi_r8/scene.gltf',
+        /*audiR8:             { url: 'src/vehicles/cars/audi_r8/scene.gltf',
                               position: [20, 0.5, 0],
                               scale:    [0.026, 0.025, 0.026],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1700,    // Kg
                                 maxSpeed: 325, // Km/h
-                                boxSizeXFactor: 0.7,
+                                boxSizeXFactor: 0.9,
                                 boxSizeYFactor: 0.15,
-                                boxSizeZFactor: 0.5,
+                                boxSizeZFactor: 0.63,
                                 carName: "Audi R8"
                               },
                               wheelsNames: ["object008", "object031", "object035", "object034"]
                             },
-        /*bmwE30:             { url: 'src/vehicles/cars/bmw_e30/scene.gltf',
+        bmwE30:             { url: 'src/vehicles/cars/bmw_e30/scene.gltf',
                               position: [30, 0, 0],
                               scale:    [2.6, 2.5, 2.6],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1080,    // Kg
                                 maxSpeed: 197, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.08,
+                                boxSizeXFactor: 0.7,
+                                boxSizeYFactor: 0.05,
+                                boxSizeZFactor: 0.65,
                                 carName: "Bmw E30"
                               },
                               wheelsNames: ["F_wheelL_5", "F_wheelR_6", "B_wheelL_7", "B_wheelR_8"]
                             },
-        camper1:            { url: 'src/vehicles/cars/camper_volkswagen/scene.gltf',
+        /*camper1:            { url: 'src/vehicles/cars/camper_volkswagen/scene.gltf',
                               position: [16, 0, 20],
                               scale:    [2.5, 2.5, 2.5],
                               rotation: [0, -Math.PI/2, 0],
-  
+                              // Bounding box difficult to set properly
                               carInfo: {
                                 mass: 1000,    // Kg
                                 maxSpeed: 105, // Km/h
-                                boxSizeXFactor: 0.08,
-                                boxSizeYFactor: 0.08,
+                                boxSizeXFactor: 0.85, // X and Z axis are swapped compared to other cars
+                                boxSizeYFactor: 0.1,
+                                boxSizeZFactor: 0.8,
                                 carName: "Volkswagen T2"
                               },
                               wheelsNames: ["Group225", "Group324", "Group318", "Group330"]
@@ -572,17 +602,18 @@ window.onload = function main() {
                               // Group231 is passenger door
                               // Group1 & Group15 central doors
                               // Maybe useful as environment element
-                            },
-        camper2:            { url: 'src/vehicles/cars/camper_fleetwood_bounder/scene.gltf',
+                            },*/
+        /*camper2:            { url: 'src/vehicles/cars/camper_fleetwood_bounder/scene.gltf',
                               position: [40, 3.5, 0],
                               scale:    [10.5, 10.5, 10.5],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 8000,     // Kg
                                 maxSpeed: 120, // Km/h
-                                boxSizeXFactor: 0.35,
+                                boxSizeXFactor: 0.6,
                                 boxSizeYFactor: 0.5,
+                                boxSizeZFactor: 0.6,
                                 carName: "Fleetwood Bounder"
                               },
                               wheelsNames: null // static model (due to its 3D model)
@@ -591,7 +622,7 @@ window.onload = function main() {
                               position: [0, 2.5, -20],
                               scale:    [0.8, 0.8, 0.8],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1960,    // Kg
                                 maxSpeed: 202, // Km/h
@@ -605,7 +636,7 @@ window.onload = function main() {
                               position: [10, 1, -20],
                               scale:    [0.7, 0.7, 0.7],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1960,    // Kg
                                 maxSpeed: 209, // Km/h
@@ -619,12 +650,13 @@ window.onload = function main() {
                               position: [50, 3.5, 0],
                               scale:    [0.08, 0.08, 0.08],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 2880,    // Kg
                                 maxSpeed: 185, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.5,
+                                boxSizeXFactor: 0.6,
+                                boxSizeYFactor: 0.52,
+                                boxSizeZFactor: 0.6,
                                 carName: "Delivery Van"
                               },
                               wheelsNames: null // static model (due to its 3D model)
@@ -633,12 +665,13 @@ window.onload = function main() {
                               position: [0, 0, -20],
                               scale:    [3, 3, 3],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1700,    // Kg
                                 maxSpeed: 180, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 0.7,
+                                boxSizeYFactor: 0.08,
+                                boxSizeZFactor: 0.65,
                                 carName: "Derby car"
                               },
                               wheelsNames: null // static model (due to its 3D model)
@@ -647,12 +680,13 @@ window.onload = function main() {
                               position: [10, 2, -20],
                               scale:    [2.5, 2.5, 2.5],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1556,    // Kg
                                 maxSpeed: 331, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 0.7,
+                                boxSizeYFactor: 0.5,
+                                boxSizeZFactor: 0.7,
                                 carName: "Dodge Viper GTS"
                               },
                               wheelsNames: ["Circle001", "Circle002", "Circle", "Circle003"]
@@ -661,12 +695,13 @@ window.onload = function main() {
                               position: [20, 0.2, -20],
                               scale:    [0.026, 0.026, 0.026],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1565,    // Kg
                                 maxSpeed: 320, // Km/h
-                                boxSizeXFactor: 0.25,
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 0.7,
+                                boxSizeYFactor: 0.05,
+                                boxSizeZFactor: 0.7,
                                 carName: "Ferrari 458"
                               },
                               wheelsNames: null // Too many components to be handled for rotating wheels
@@ -675,40 +710,43 @@ window.onload = function main() {
                               position: [-28, 2, -40],
                               scale:    [4.5, 4.5, 4.5],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 499,    // Kg
                                 maxSpeed: 85, // Km/h
-                                boxSizeXFactor: 0.4,
-                                boxSizeYFactor: 0.5,
+                                boxSizeXFactor: 0.8,
+                                boxSizeYFactor: 0.47,
+                                boxSizeZFactor: 0.7,
                                 carName: "Fiat 500"
                               },
-                              wheelsNames: null // static model (due to its 3D model)
+                              wheelsNames: null // Too many components to be handled for rotating wheels
                             },
-        fordCrownVictoria:  { url: 'src/vehicles/cars/ford_crown_victoria/scene.gltf',
+        /*fordCrownVictoria:  { url: 'src/vehicles/cars/ford_crown_victoria/scene.gltf',
                               position: [30, 0, -20],
                               scale:    [3.8, 3.1, 4],
                               rotation: [0, 0, 0],
-  
+                              // Bounding box difficult to set properly
                               carInfo: {
                                 mass: 1873,    // Kg
                                 maxSpeed: 219, // Km/h
-                                boxSizeXFactor: 0.3, // To be fixed maybe with Z
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 0.4,
+                                boxSizeYFactor: 0.07,
+                                boxSizeZFactor: 0.6,
                                 carName: "Ford Crown Victoria"
                               },
                               wheelsNames: null // static model (due to its 3D model)
-                            },
-        fordFoxSedan:       { url: 'src/vehicles/cars/ford_fox_sedan/scene.gltf',
+                            },*/
+        /*fordFoxSedan:       { url: 'src/vehicles/cars/ford_fox_sedan/scene.gltf',
                               position: [40, 0, -20],
                               scale:    [0.065, 0.065, 0.065],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1248,    // Kg
                                 maxSpeed: 176, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 1.7, // X and Z axis are swapped compared to other cars
+                                boxSizeYFactor: 0.06,
+                                boxSizeZFactor: 0.3,
                                 carName: "Ford Fox Sedan"
                               },
                               wheelsNames: ["wheel_01", "wheel_002", "wheel_003", "wheel_004"]
@@ -717,7 +755,7 @@ window.onload = function main() {
                               position: [50, 2, -20],
                               scale:    [0.07, 0.07, 0.07],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 2500,    // Kg
                                 maxSpeed: 169, // Km/h
@@ -731,7 +769,7 @@ window.onload = function main() {
                               position: [60, 1.8, -20],
                               scale:    [7, 7, 7],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1715,    // Kg
                                 maxSpeed: 245, // Km/h
@@ -745,7 +783,7 @@ window.onload = function main() {
                               position: [-50, 0, 0],
                               scale:    [0.06, 0.06, 0.08],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 2670,    // Kg
                                 maxSpeed: 120, // Km/h
@@ -759,7 +797,7 @@ window.onload = function main() {
                               position: [-60, 0, 0],
                               scale:    [2.5, 2.5, 2.5],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 11975,   // Kg
                                 maxSpeed: 150, // Km/h
@@ -773,7 +811,7 @@ window.onload = function main() {
                               position: [-20, 0, 0],
                               scale:    [0.025, 0.023, 0.025],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1000,    // Kg
                                 maxSpeed: 152, // Km/h
@@ -787,21 +825,22 @@ window.onload = function main() {
                               position: [-30, 1.5, 0],
                               scale:    [0.024, 0.024, 0.024],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1625,    // Kg
                                 maxSpeed: 335, // Km/h
-                                boxSizeXFactor: 0.25,
-                                boxSizeYFactor: 0.05,
+                                boxSizeXFactor: 0.7,
+                                boxSizeYFactor: 0.5,
+                                boxSizeZFactor: 0.7,
                                 carName: "lamborghini Diablo SV"
                               },
-                              wheelsNames: ["HLFW", "HRFW", "HRRW", "HLRW"]
+                              wheelsNames: ["HLFW", "HRFW", "HRRW", "HLRW"] // Check rotation axis
                             },
         /*lotus:              { url: 'src/vehicles/cars/lotus_3-eleven/scene.gltf',
                               position: [-40, 0.3, 0],
                               scale:    [2.7, 2.7, 2.7],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 925,   // Kg
                                 maxSpeed: 290, // Km/h
@@ -811,25 +850,26 @@ window.onload = function main() {
                               },
                               wheelsNames: null // Too many components to be handled for rotating wheels
                             },*/
-        /*mercedes:           { url: 'src/vehicles/cars/mercedes_sls/scene.gltf',
+        mercedes:           { url: 'src/vehicles/cars/mercedes_sls/scene.gltf',
                               position: [-40, 1.5, 0],
                               scale:    [7.8, 7, 7.8],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1620,    // Kg
                                 maxSpeed: 317, // Km/h
-                                boxSizeXFactor: 0.1, // To be fixed maybe with Z
+                                boxSizeXFactor: 0.55, // X and Z axis are swapped compared to other cars
                                 boxSizeYFactor: 0.5,
+                                boxSizeZFactor: 0.3,
                                 carName: "Mercedes SLS"
                               },
-                              wheelsNames: ["Wheel_FL", "Wheel_FR", "Wheel_RL", "Wheel_RR"]
+                              wheelsNames: ["Wheel_FL", "Wheel_FR", "Wheel_RL", "Wheel_RR"] // Check rotation axis
                             },
         /*militaryTruck:      { url: 'src/vehicles/cars/military_truck/scene.gltf',
                               position: [-10, 0, -20],
                               scale:    [2, 2, 2],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 2034,    // Kg
                                 maxSpeed: 185, // Km/h
@@ -843,7 +883,7 @@ window.onload = function main() {
                               position: [-10, 0, -20],
                               scale:    [0.028, 0.028, 0.028],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 5840,   // Kg
                                 maxSpeed: 93, // Km/h
@@ -857,7 +897,7 @@ window.onload = function main() {
                               position: [-20, 2, -20],
                               scale:    [6, 6, 5.5],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1700,   // Kg
                                 maxSpeed: 180, // Km/h
@@ -871,7 +911,7 @@ window.onload = function main() {
                               position: [-30, 1.2, -20],
                               scale:    [0.013, 0.013, 0.013],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1281,    // Kg
                                 maxSpeed: 210, // Km/h
@@ -885,35 +925,37 @@ window.onload = function main() {
                               position: [-40, 0.3, -20],
                               scale:    [0.025, 0.025, 0.025],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1740,    // Kg
                                 maxSpeed: 333, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 0.8,
+                                boxSizeYFactor: 0.08,
+                                boxSizeZFactor: 0.7,
                                 carName: "Nissan GT"
                               },
                               wheelsNames: ["wheel", "wheel001", "wheel003", "wheel002"]
                             },
-        nissanSilvia:       { url: 'src/vehicles/cars/nissan_200sx_silvia_s14/scene.gltf',
-                              position: [-50, -1.7, -20],
+        /*nissanSilvia:       { url: 'src/vehicles/cars/nissan_200sx_silvia_s14/scene.gltf',
+                              position: [-50, 0, -20],
                               scale:    [3.5, 3.5, 3.5],
                               rotation: [0, 0, 0],
-  
+                              // Bounding box difficult to set properly
                               carInfo: {
                                 mass: 1253,    // Kg
                                 maxSpeed: 314, // Km/h
-                                boxSizeXFactor: 0.3,
-                                boxSizeYFactor: 0.2,
+                                boxSizeXFactor: 0.7,
+                                boxSizeYFactor: 0.1,
+                                boxSizeZFactor: 0.7,
                                 carName: "Nissan Silvia S14"
                               },
                               wheelsNames: ["Circle_1", "Circle003_7", "Circle002_6", "Circle001_5"]
-                            },
-        pontiac:            { url: 'src/vehicles/cars/pontiac_ventura/scene.gltf',
+                            },*/
+        /*pontiac:            { url: 'src/vehicles/cars/pontiac_ventura/scene.gltf',
                               position: [-60, 0, -20],
                               scale:    [0.06, 0.05, 0.06],
                               rotation: [0, Math.PI/2, 0],
-  
+
                               carInfo: {
                                 mass: 1361,    // Kg
                                 maxSpeed: 180, // Km/h
@@ -923,27 +965,26 @@ window.onload = function main() {
                               },
                               wheelsNames: null // static model (due to its 3D model)
                             },
-          
         rangeRover:         { url: 'src/vehicles/cars/range_rover_evoque/scene.gltf',
                               position: [-6, 1.3, -50],
                               scale:    [5.15, 5.15, 5.15],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                   mass: 1787,    // Kg
                                   maxSpeed: 201, // Km/h
-                                  boxSizeXFactor: 0.3,
-                                  boxSizeYFactor: 0.43,
+                                  boxSizeXFactor: 0.85,
+                                  boxSizeYFactor: 0.4,
+                                  boxSizeZFactor: 0.7,
                                   carName: "Range Rover Evoque"
                                 },
                               wheelsNames: ["wheel", "wheel001", "wheel002", "wheel003"]
                             },
-          
-        taxi:               { url: 'src/vehicles/cars/taxi/scene.gltf',
+        /*taxi:               { url: 'src/vehicles/cars/taxi/scene.gltf',
                               position: [-70, 0, -20],
                               scale:    [0.022, 0.02, 0.022],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1800,    // Kg
                                 maxSpeed: 180, // Km/h
@@ -957,7 +998,7 @@ window.onload = function main() {
                               position: [-80, 0, -20],
                               scale:    [2.5, 2.5, 2.8],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 2268,    // Kg
                                 maxSpeed: 193, // Km/h
@@ -971,7 +1012,7 @@ window.onload = function main() {
                               position: [-90, 0, -20],
                               scale:    [0.06, 0.05, 0.06],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 2000,    // Kg
                                 maxSpeed: 120, // Km/h
@@ -985,7 +1026,7 @@ window.onload = function main() {
                               position: [-100, 1.5, -20],
                               scale:    [3, 3, 3],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                   mass: 8550,    // Kg
                                   maxSpeed: 100, // Km/h
@@ -999,7 +1040,7 @@ window.onload = function main() {
                               position: [0, 0, -40],
                               scale:    [2, 2, 2.6],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                   mass: 2550,    // Kg
                                   maxSpeed: 115, // Km/h
@@ -1013,7 +1054,7 @@ window.onload = function main() {
                               position: [10, 1.3, -40],
                               scale:    [8, 7, 6],
                               rotation: [0, 0, 0],
-  
+
                               carInfo: {
                                 mass: 1200,    // Kg
                                 maxSpeed: 100, // Km/h
@@ -1023,7 +1064,7 @@ window.onload = function main() {
                               },
                               wheelsNames: null // static model (due to its 3D model)
                              },//*/
-  
+
         /*lowpolyBmw:          { url: 'src/vehicles/cars/low_poly_bmw/scene.gltf',
                                position: [0, 0, -10],
                                scale:    [2, 2, 2],
@@ -1033,7 +1074,7 @@ window.onload = function main() {
                                position: [-10, 2, -50],
                                scale:    [2.5, 2.5, 2.5],
                                rotation: [0, 0, 0],
-  
+
                                carInfo: {
                                  mass: 1000,    // Kg
                                  maxSpeed: 100, // Km/h
@@ -1052,7 +1093,7 @@ window.onload = function main() {
                                position: [0, 0, -40],
                                scale:    [50, 50, 50],
                                rotation: [0, Math.PI/2, 0],
-  
+
                                carInfo: {
                                  mass: 500,    // Kg
                                  maxSpeed: 100, // Km/h
@@ -1062,12 +1103,11 @@ window.onload = function main() {
                                },
                                wheelsNames: ["mesh_0", "mesh_1", "mesh_2", "mesh_3"]
                              },*/
-        /*
-        lowpolyVanHippie:    { url: 'src/vehicles/cars/low_poly_van_hippie/scene.gltf',
+        /*lowpolyVanHippie:    { url: 'src/vehicles/cars/low_poly_van_hippie/scene.gltf',
                                position: [20, 0, -40],
                                scale:    [0.04, 0.04, 0.04],
                                rotation: [0, 0, 0],
-  
+
                                carInfo: {
                                  mass: 1800,    // Kg
                                  maxSpeed: 90, // Km/h
@@ -1081,7 +1121,7 @@ window.onload = function main() {
                                position: [14, 0, -150],
                                scale:    [0.02, 0.02, 0.02],
                                rotation: [0, Math.PI, 0],
-  
+
                                carInfo: {
                                  mass: 1000,    // Kg
                                  maxSpeed: 100, // Km/h
@@ -1095,7 +1135,7 @@ window.onload = function main() {
                                position: [30, 0, -40],
                                scale:    [0.7, 0.7, 0.7],
                                rotation: [0, Math.PI, 0],
-  
+
                                carInfo: {
                                  mass: 800,    // Kg
                                  maxSpeed: 90, // Km/h
@@ -1104,7 +1144,7 @@ window.onload = function main() {
                                  carName: "Low Poly Small Car"
                                },
                                wheelsNames: ["FR_Wheel", "RR_Wheel", "FL_Wheel", "RL_Wheel"]
-                             },
+                             },*/
         /*lowpolyFordAngila:   { url: 'src/vehicles/cars/low_poly_ford_angila/scene.gltf',
                                position: [-14, 0, -50],
                                scale:    [3, 3, 3],
@@ -1114,7 +1154,7 @@ window.onload = function main() {
                                position: [14, 0, -50],
                                scale:    [1.5, 1.5, 1.5],
                                rotation: [0, Math.PI/2, 0],
-  
+
                                carInfo: {
                                 mass: 1000,    // Kg
                                 maxSpeed: 100, // Km/h
@@ -1153,7 +1193,7 @@ window.onload = function main() {
                                position: [-14, 0, -80],
                                scale:    [0.3, 0.3, 0.3],
                                rotation: [0, Math.PI, 0],
-  
+
                                carInfo: {
                                 mass: 1000,    // Kg
                                 maxSpeed: 100, // Km/h
@@ -1162,28 +1202,14 @@ window.onload = function main() {
                                 carName: "Low Poly Police Van"
                               };
                               wheelsNames: ["Empty_1", "Empty001_3", "Empty002_5", "Empty003_7"]
-                             },
-       lowpolySheriff:       { url: 'src/vehicles/police/low_poly_sheriff/scene.gltf',
-                               position: [14, 0, -110],
-                               scale:    [3, 3, 3],
-                               rotation: [0, Math.PI, 0],
-  
-                               carInfo: {
-                                mass: 1000,    // Kg
-                                maxSpeed: 100, // Km/h
-                                boxSizeXFactor: 0.5,
-                                boxSizeYFactor: 0.5,
-                                carName: "Low Poly Sheriff"
-                               };
-                               wheelsNames: ["YukonWheelFtL", "YukonWheelFtR", "YukonWheelBkL", "YukonWheelBkR"]
                              },*/
-  
+
         // Characters
         /*nathan:             { url: 'src/characters/nathan/scene.gltf',
                               position: [-4, 1, 0],
                               scale:    [0.025, 0.025, 0.025],
                               rotation: [0, Math.PI, 0],
-  
+
                               modelInfo: {
                                 mass: 80,     // Kg
                                 maxSpeed: 45, // Km/h
@@ -1194,15 +1220,15 @@ window.onload = function main() {
                               componentsNames: ["rp_nathan_animated_003_walking_head_07"]
                               // TODO when hierarchical structure is defined
                             }//,*/
-    };
+      };
 
 
     // Selectable Environments
     const environments = {
       CITY:    0,
-      HIGHWAY: 1,
-      COUNTRY: 2,
-      FOREST:  3
+      COUNTRY: 1,
+      FOREST:  2,
+      HIGHWAY: 3
     };
 
     let playerModel, policeModel;
@@ -1283,7 +1309,7 @@ window.onload = function main() {
         const modelScene = model.gltf.scene;
 
         // TEMP skip this model
-        if (model == staticModels.sidewalkCorner)
+        /*if (model == staticModels.sidewalkCorner)
           continue;
 
         // Create several clones of the sidewalk model
@@ -1315,7 +1341,7 @@ window.onload = function main() {
           }
 
           continue;
-        }
+        }*/
 
         scene.add(modelScene);
         addStaticModel(model);
@@ -1439,19 +1465,12 @@ window.onload = function main() {
     }*/
 
     // Set this variables according to user choices in the menu
-    /*let chosenEnv   = Utils.getCookie("env"),
-        environment = environments.chosenEnv;//*/
-    //let environment = environments.CITY;
-    let environment = environments.COUNTRY;
-    //let environment = environments.HIGHWAY;
-
-    //alert("chosenEnv: " + chosenEnv);
-    //alert("environments.chosenEnv: " + environments.chosenEnv);
+    let chosenEnv   = Utils.getCookie("env"),
+        environment = environments[chosenEnv];
 
     /*let chosenCar     = Utils.getCookie("car"),
-        selectedModel = dynamicModels.chosenCar;//*/
+        selectedModel = dynamicModels[chosenCar];//*/
     let selectedModel = dynamicModels.lamborghini;
-    //let selectedModel = dynamicModels.chevroletSheriff;
     //let selectedModel = dynamicModels.nathan;
 
     let policeSelModel = dynamicModels.chevroletSheriff;

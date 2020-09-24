@@ -30,7 +30,7 @@
       import { GLTFExporter }  from "https://unpkg.com/three@0.118.3/examples/jsm/exporters/GLTFExporter.js";
       import { OrbitControls } from "https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js";
 
-      import { Utils }        from "./js/Utils.js";
+      import { Utils }         from "./js/Utils.js";
 
 			function exportGLTF( input ) {
 
@@ -151,13 +151,24 @@
 	        scale:    [1, 1, 1],
 	        rotation: [0, 0, 0]*/
 
-					url: 'src/environment/country - desert/buildings/motel_lone_star/scene.gltf',
+					/*url: 'src/environment/country - desert/buildings/motel_lone_star/scene.gltf',
 	        position: [0, 0, 0],
 	        scale:    [1, 1, 1],
-	        rotation: [0, 0, 0]
+	        rotation: [0, 0, 0]*/
+
+					/*url: 'src/environment/city/street/sidewalk_straight/scene.gltf',
+	        position: [26.5, 0, 0],
+	        scale:    [1, 1, 1],
+	        rotation: [0, 0, 0],*/
+
+					url: 'src/environment/highway/road/jersey_barrier/scene.gltf',
+	        position: [0, 0, 0],
+					scale:    [1.2, 1.2, 3],
+					rotation: [0, 0, 0]
         };
 
-        const gltfLoader = new GLTFLoader();
+				// GLTF loader for removing meshes
+        /*const gltfLoader = new GLTFLoader();
         gltfLoader.load( model.url, function ( gltf ) {
               object = gltf.scene;
               object.position.set(...model.position);
@@ -203,7 +214,7 @@
 
 
 							// For removing the ground of the lone star motel
-							let rmObjs = [];
+							/*let rmObjs = [];
 
 							object.traverse( o => {
 									if (o.name === "ground" || o.name === "bush" ||
@@ -223,6 +234,98 @@
               console.error(error);
               alert("Error during the loading of the model!\nTry to refresh the page");
             } );//*/
+
+				// GLTF loader for creating a unique object from several clones
+				const gltfLoader = new GLTFLoader();
+		    gltfLoader.load( model.url, function ( gltf ) {
+		        object = new THREE.Group(); 	 // Final object result
+						const obj = gltf.scene; 		 	 // Used to create clones
+
+						// For sidewalks
+						/*object.name = "Big sidewalks";
+						const n = 50, nHalf = 25, dist = 25.3;
+
+						// Create n clones, nHalf to the right and nHalf to the left
+						for (let i=0; i<n; i++) {
+							const clone = obj.clone();
+
+							let posX = model.position[0], posZ = 0, rad = model.rotation[1];
+
+							if (i < nHalf)
+								posZ = 0 - (dist * i);
+							else {
+								posX = -posX;
+								posZ = 19 - (dist * (i - nHalf)); // 19 is a offset due to rotation
+								rad  += Math.PI;
+							}
+
+							const modelClone = {
+								position: [posX, 0, posZ],
+								scale:    [1, 1, 1],
+								rotation: [0, rad, 0],
+							};
+
+							console.log("posX: " + posX + " posZ: " + posZ + " rad: " + rad);
+
+			        clone.position.set(...modelClone.position);
+			        clone.scale.set(...modelClone.scale)
+			        clone.rotation.set(...modelClone.rotation);
+
+							clone.traverse(o => {
+			 		      if (o.isMesh) {
+			 		        o.castShadow    = true;
+			 		        o.receiveShadow = true;
+			 		      }
+			 		    });
+
+							//scene.add(clone);
+							object.add(clone);
+						}*/
+
+						// For jerseys
+						object.name = "Big jerseys";
+						const n = 50, dist = 15; //6;
+
+						// Create n clones, nHalf to the right and nHalf to the left
+						for (let i=0; i<n; i++) {
+							const clone = obj.clone();
+
+							let posX = model.position[0], posZ = 0 - (dist * i), rad = model.rotation[1];
+
+							const modelClone = {
+								position: [posX, 0, posZ],
+								scale:    model.scale,
+								rotation: [0, rad, 0],
+							};
+
+							console.log("posX: " + posX + " posZ: " + posZ + " rad: " + rad);
+
+			        clone.position.set(...modelClone.position);
+			        clone.scale.set(...modelClone.scale)
+			        clone.rotation.set(...modelClone.rotation);
+
+							clone.traverse(o => {
+			 		      if (o.isMesh) {
+			 		        o.castShadow    = true;
+			 		        o.receiveShadow = true;
+			 		      }
+			 		    });
+
+							//scene.add(clone);
+							object.add(clone);
+						}
+
+						scene.add(object);
+					  console.log(Utils.dumpObject(object).join('\n'));
+		       },
+		       undefined,
+		       function ( error ) {
+		         console.error(error);
+		         alert("Error during the loading of the model!\nTry to refresh the page");
+		       } );
+
+
+
 
 				/*const loader = new OBJLoader();
 				loader.load( model.url, function ( obj ) {
