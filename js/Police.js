@@ -10,9 +10,7 @@ class Police {
       this.model        = null;
       this.name         = null;
 
-      // Character animation
-      /*this.deltaMovement = 0;
-      this.movementThreshold = 0.7;*/
+      this.interpolationFactor = 0.008;
     }
 
     // Get current model for the police (model is not 3D model)
@@ -32,7 +30,7 @@ class Police {
       const move = () => {
         // Make the police chasing the player
         const posPlayer = this.game.getPlayer().getPosition();
-        const posPolice = this.getPosition().lerp(posPlayer, 0.008);
+        const posPolice = this.getPosition().lerp(posPlayer, this.interpolationFactor);
 
         let ms = this.model.getPhysicsBody().getMotionState();
         if (ms) {
@@ -54,7 +52,7 @@ class Police {
       }
 
       move();
-      
+
       if (this.model instanceof Car) {
         this.model.rotateWheels();
         this.model.blinkRoofLights();
@@ -90,6 +88,12 @@ class Police {
     getSpeed() {
       return this.model ? this.model.getCurrentSpeedKmHour() : null;
     }
+
+    incrementInterpolation() {
+      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.0001, 0.008, 0.7);
+      console.log("this.interpolationFactor: " + this.interpolationFactor);
+    }
+
   }
 
 export {Police}

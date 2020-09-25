@@ -36,117 +36,11 @@ class Car extends Model {
     // Distance between front and rear axle
     this.axlesDistance = 5;
 
-    //this.carHeading = Math.PI/2;
+    this.engineForce = carInfo.engineForce ? carInfo.engineForce : 25000;
+    this.leftBalance  = carInfo.leftBalance ? carInfo.leftBalance : 0;
+    this.rightBalance = carInfo.rightBalance ? carInfo.rightBalance : 0;
 
     console.log("this.name: " + this.name);
-
-    // Raycast Vehicle
-		/*const tuning    = new Ammo.btVehicleTuning();
-		const rayCaster = new Ammo.btDefaultVehicleRaycaster(game.getPhysicsWorld());
-		this.vehicle    = new Ammo.btRaycastVehicle(tuning, super.getPhysicsBody(), rayCaster);
-		this.vehicle.setCoordinateSystem(0, 1, 2);
-		game.getPhysicsWorld().addAction(this.vehicle);
-
-    this.steeringIncrement = 0.04;
-    this.steeringClamp     = 0.5;
-    this.maxEngineForce   = 2000;
-    this.maxBreakingForce = 100;
-
-    this.FRONT_LEFT_WHEEL_ID  = 0;
-    this.FRONT_RIGHT_WHEEL_ID = 1;
-    this.BACK_LEFT_WHEEL_ID   = 2;
-    this.BACK_RIGHT_WHEEL_ID  = 3;
-
-    // DEFAULT
-    // The direction of ray cast (chassis space)
-    const wheelDirectionCS0 = new Ammo.btVector3(0, -1, 0);
-    // The axis the wheel rotates around (chassis space)
-		const wheelAxleCS       = new Ammo.btVector3(-1, 0, 0);
-
-    const friction = 1000;
-    const suspensionStiffness   = 20.0;
-    const suspensionDamping     = 2.3;
-    const suspensionCompression = 4.4;
-    const suspensionRestLength  = 0.6;
-    const rollInfluence = 0.2;
-
-    const wheelAxisPositionBack = -1;
-		const wheelRadiusBack       = 0.4;
-		const wheelWidthBack        = 0.3;
-		const wheelHalfTrackBack    = 1;
-		const wheelAxisHeightBack   = 0.3;
-
-		const wheelAxisFrontPosition = 1.7;
-		const wheelHalfTrackFront    = 1;
-		const wheelAxisHeightFront   = 0.3;
-		const wheelRadiusFront       = 0.35;
-		const wheelWidthFront        = 0.2;
-
-		const addWheel = (isFront, pos, radius, width) => {
-			const wheelInfo = this.vehicle.addWheel(
-					pos,
-					wheelDirectionCS0,
-					wheelAxleCS,
-					suspensionRestLength,
-					radius,
-					tuning,
-					isFront);
-
-			wheelInfo.set_m_suspensionStiffness(suspensionStiffness);
-			wheelInfo.set_m_wheelsDampingRelaxation(suspensionDamping);
-			wheelInfo.set_m_wheelsDampingCompression(suspensionCompression);
-			wheelInfo.set_m_frictionSlip(friction);
-			wheelInfo.set_m_rollInfluence(rollInfluence);
-    }
-
-    /*addWheel(true, new Ammo.btVector3(wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition),
-             wheelRadiusFront, wheelWidthFront);
-		addWheel(true, new Ammo.btVector3(-wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition),
-             wheelRadiusFront, wheelWidthFront);
-		addWheel(false, new Ammo.btVector3(-wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack),
-             wheelRadiusBack, wheelWidthBack);
-		addWheel(false, new Ammo.btVector3(wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack),
-             wheelRadiusBack, wheelWidthBack);//*/
-
-      // OK WITH LAMBORGHINI
-      /*if (name === "Lamborghini") {
-        addWheel(true, new Ammo.btVector3( -this.wheels[this.FRONT_LEFT_WHEEL_ID].position.x,
-                                           this.wheels[this.FRONT_LEFT_WHEEL_ID].position.y,
-                                           -this.wheels[this.FRONT_LEFT_WHEEL_ID].position.z ),
-                 wheelRadiusFront, wheelWidthFront);
-        addWheel(true, new Ammo.btVector3( -this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.x,
-                                           this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.y,
-                                           -this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.z ),
-                 wheelRadiusFront, wheelWidthFront);
-        addWheel(false, new Ammo.btVector3( -this.wheels[this.BACK_LEFT_WHEEL_ID].position.x,
-                                            this.wheels[this.BACK_LEFT_WHEEL_ID].position.y,
-                                            -this.wheels[this.BACK_LEFT_WHEEL_ID].position.z ),
-                 wheelRadiusBack, wheelWidthBack);
-        addWheel(false, new Ammo.btVector3( -this.wheels[this.BACK_RIGHT_WHEEL_ID].position.x,
-                                            this.wheels[this.BACK_RIGHT_WHEEL_ID].position.y,
-                                            -this.wheels[this.BACK_RIGHT_WHEEL_ID].position.z ),
-                 wheelRadiusBack, wheelWidthBack);
-      }*/
-
-      // POLICE CAR
-      /*else {
-        addWheel(true, new Ammo.btVector3( this.wheels[this.FRONT_LEFT_WHEEL_ID].position.x,
-                                           this.wheels[this.FRONT_LEFT_WHEEL_ID].position.y,
-                                           this.wheels[this.FRONT_LEFT_WHEEL_ID].position.z ),
-                wheelRadiusFront, wheelWidthFront);
-        addWheel(true, new Ammo.btVector3( this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.x,
-                                           this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.y,
-                                           this.wheels[this.FRONT_RIGHT_WHEEL_ID].position.z ),
-                                wheelRadiusFront, wheelWidthFront);
-        addWheel(false, new Ammo.btVector3( -this.wheels[this.BACK_LEFT_WHEEL_ID].position.x - 1.6,
-                                            this.wheels[this.BACK_RIGHT_WHEEL_ID].position.y + 0.5,
-                                            24.7 ),
-                 wheelRadiusBack, wheelWidthBack);
-        addWheel(false, new Ammo.btVector3( -this.wheels[this.BACK_RIGHT_WHEEL_ID].position.x - 1.6,
-                                            this.wheels[this.BACK_RIGHT_WHEEL_ID].position.y + 0.5,
-                                            24.7 ),
-                 wheelRadiusBack, wheelWidthBack);
-      }*/
   }
 
   getName() {
@@ -222,7 +116,13 @@ class Car extends Model {
     return this.dot > 0;
   }
 
-  move(moveX, moveY, moveZ, deltaTime=0) {
+  // Move the car along the 3 axes:
+  // - moveX = -1 => left movement    ; moveX = 1 => right movement
+  // - moveZ = -1 => forward movement ; moveZ = 1 => backward movement
+  move(moveX, moveY, moveZ) {
+    moveX = Utils.clamp(moveX, -1, 1);
+    moveY = Utils.clamp(moveY, -1, 1);
+    moveZ = Utils.clamp(moveZ, -1, 1);
 
     const removeNoise = (v) => {
       v.x = Math.abs(v.x) > 0.7 ? v.x : 0;
@@ -230,59 +130,8 @@ class Car extends Model {
       v.z = Math.abs(v.z) > 0.7 ? v.z : 0;
     }
 
-    // PROVA
-    /*let ms = this.getPhysicsBody().getMotionState();
-    if (ms) {
-      const transform = new Ammo.btTransform();
-      ms.getWorldTransform(transform);
-
-      let relativeForce = new Ammo.btVector3(0,0, 25000);
-
-      const relativeTransform = new Ammo.btTransform();
-      relativeTransform.setOrigin(relativeForce);
-
-      relativeForce = (transform.op_mul(relativeTransform)).getOrigin();
-      this.getPhysicsBody().applyForce(relativeForce, transform.getOrigin());
-    }*/
-    // FINE PROVA
-
-    // PROVA 2
-    /*console.log("orientation:");
-    console.log(this.orientation);
-
-    super.get3DModel().getWorldDirection(this.orientation);
-
-    const velocity = super.getPhysicsBody().getLinearVelocity();
-
-    const engineForce = 25000,   // Force
-    //const engineForce = 1000,  // Impulse
-          speed = velocity.length().toFixed(2);
-
-    // Init forces for the longitudinal movement
-    this.tractionForce.copy(this.orientation);
-    // Remove noise
-    removeNoise(this.tractionForce);
-
-    // Compute them
-    this.tractionForce.multiplyScalar(engineForce);
-
-    console.log("tractionForce");
-    console.log(this.tractionForce);
-
-    console.log(-0.0075);
-
-    if (speed < this.maxSpeed)
-      super.getPhysicsBody().applyForce(
-        new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z),
-        new Ammo.btVector3(-0.0075, 0, 0) );
-        //new Ammo.btVector3(-0.005, 0, 0) );
-        //new Ammo.btVector3(-0.01, 0, 0) );*/
-    // FINE PROVA 2
-
-
-    // ORIGINALE
-    console.log("orientation:");
-    console.log(this.orientation);
+    //console.log("orientation:");
+    //console.log(this.orientation);
 
     super.get3DModel().getWorldDirection(this.orientation);
 
@@ -314,7 +163,11 @@ class Car extends Model {
     }
     else if (moveZ < 0) {
       // Acceleration
-      engineForce = 25000;
+      //engineForce = 25000;
+      // tesla & bmw
+      //engineForce = 40000;
+
+      engineForce = this.engineForce;
       speed = Math.min(speed, this.maxSpeed);
     }
 
@@ -423,17 +276,29 @@ class Car extends Model {
     //console.log(this.tractionForce);
 
     // Boost the steering force
-    this.tractionForce.x = (engineForce-5000) * moveX;
+    if (moveZ != 0)
+      this.tractionForce.x = (engineForce-5000) * moveX;
 
     //console.log("FINAL tractionForce");
     //console.log(this.tractionForce);
+
+    // Correction for the lambo
+    //const correction = this.orientation.x < 0 ? -0.025 : 0;
+    // Correction for audi & tesla
+    //const correction = -0.0075;
+    // Correction for bmw
+    //const correction = this.orientation.x < 0 ? -0.01 : 0.01;
+
+    const correction = this.orientation.x < 0 ? this.leftBalance : this.rightBalance;
+    //console.log("correction: " + correction);
 
     // IN THE GAME THE PLAYER WILL NEVER GO IN REVERSE
     if (this.isForwardMovement()) {
       if (speed < this.maxSpeed)
         super.getPhysicsBody().applyForce(
           new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z),
-          new Ammo.btVector3(-0.0075, 0, 0) );
+          new Ammo.btVector3(correction, 0, 0) );  // FOR ALL
+          //new Ammo.btVector3(-0.0090070000004001, 0, 0) );  // LAMBO NON OK
         /*super.getPhysicsBody().applyCentralForce(
           new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );*/
 

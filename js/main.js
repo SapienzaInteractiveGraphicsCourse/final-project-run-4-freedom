@@ -550,7 +550,7 @@ window.onload = function main() {
                                                 "Cylinder008", "Cylinder009", "Cylinder010", "Cylinder011"]
                             },
 
-        /*bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
+        bmwI8:              { url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                               position: [0, 1.5, 0],
                               scale:    [0.027, 0.025, 0.027],
                               rotation: [0, Math.PI, 0],
@@ -561,10 +561,13 @@ window.onload = function main() {
                                 boxSizeXFactor: 0.4,
                                 boxSizeYFactor: 0.52,
                                 boxSizeZFactor: 0.2,
-                                carName: "Bmw i8"
+                                carName: "Bmw i8",
+                                engineForce: 40000,
+                                leftBalance: -0.01,
+                                rightBalance: 0.01
                               },
                               wheelsNames: ["wheel020", "wheel028", "wheel012", "wheel004"]
-                            },*/
+                            },
         lamborghini:        { url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
                               position: [-10, 1.73, 0],
                               scale:    [0.013, 0.013, 0.013],
@@ -576,11 +579,14 @@ window.onload = function main() {
                                 boxSizeXFactor: 0.4,
                                 boxSizeYFactor: 0.6,
                                 boxSizeZFactor: 0.3,
-                                carName: "Lamborghini Aventador S"
+                                carName: "Lamborghini Aventador S",
+                                engineForce: 25000,
+                                leftBalance: -0.025,
+                                rightBalance: 0
                               },
                               wheelsNames: ["wheel001", "wheel002", "wheel003", "wheel005"]
                             },
-        /*tesla:              { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
+        tesla:              { url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
                               position: [10, 0.35, 0],
                               scale:    [0.026, 0.024, 0.026],
                               rotation: [0, Math.PI, 0],
@@ -591,10 +597,13 @@ window.onload = function main() {
                                 boxSizeXFactor: 0.5,
                                 boxSizeYFactor: 0.11,
                                 boxSizeZFactor: 0.4,
-                                carName: "Tesla Model S"
+                                carName: "Tesla Model S",
+                                engineForce: 40000,
+                                leftBalance:  -0.0075,
+                                rightBalance: -0.0075
                               },
                               wheelsNames: ["wheel", "wheel001", "wheel003", "wheel002"]
-                            },*/
+                            },
 
         /*americanMuscleCar:  { url: 'src/vehicles/cars/american_muscle_car/scene.gltf',
                               position: [20, 2, 0],
@@ -621,7 +630,10 @@ window.onload = function main() {
                                 boxSizeXFactor: 0.9,
                                 boxSizeYFactor: 0.15,
                                 boxSizeZFactor: 0.63,
-                                carName: "Audi R8"
+                                carName: "Audi R8",
+                                engineForce: 25000,
+                                leftBalance:  -0.0075,
+                                rightBalance: -0.0075
                               },
                               wheelsNames: ["object008", "object031", "object035", "object034"]
                             },
@@ -731,8 +743,8 @@ window.onload = function main() {
                                 carName: "Derby car"
                               },
                               wheelsNames: null // static model (due to its 3D model)
-                            },
-        dodgeViper:         { url: 'src/vehicles/cars/srt_viper_gts_2013/scene.gltf',
+                            },*/
+        /*dodgeViper:         { url: 'src/vehicles/cars/srt_viper_gts_2013/scene.gltf',
                               position: [10, 2, -20],
                               scale:    [2.5, 2.5, 2.5],
                               rotation: [0, 0, 0],
@@ -747,7 +759,7 @@ window.onload = function main() {
                               },
                               wheelsNames: ["Circle001", "Circle002", "Circle", "Circle003"]
                             },
-        ferrari458:         { url: 'src/vehicles/cars/ferrari_458/scene.gltf',
+        /*ferrari458:         { url: 'src/vehicles/cars/ferrari_458/scene.gltf',
                               position: [20, 0.2, -20],
                               scale:    [0.026, 0.026, 0.026],
                               rotation: [0, 0, 0],
@@ -1294,9 +1306,10 @@ window.onload = function main() {
 
     /*let chosenCar     = Utils.getCookie("car"),
         selectedModel = dynamicModels[chosenCar];//*/
-    let selectedModel = dynamicModels.lamborghini;
+    let selectedModel = dynamicModels.bmwI8;
+    //let selectedModel = dynamicModels.lamborghini;
     //let selectedModel = dynamicModels.audiR8;
-    //let selectedModel = dynamicModels.chevroletSheriff;
+    //let selectedModel = dynamicModels.tesla;
     //let selectedModel = dynamicModels.nathan;
 
     let policeSelModel = dynamicModels.chevroletSheriff;
@@ -1701,6 +1714,8 @@ window.onload = function main() {
     requestAnimationFrame(animate);
 
     function animate(time) {
+      if (isBlur) return;
+
       stats.begin();
 
       if (Utils.resizeRendererToDisplaySize(renderer)) {
@@ -1759,7 +1774,7 @@ window.onload = function main() {
         camera.updateProjectionMatrix();//*/
 
         translateStaticModels(zPosPlayer);
-        //moveCars(zPosPlayer);
+        moveCars(zPosPlayer);
 
 
         //console.log("car.position.z: " + car.position.z);
@@ -1924,26 +1939,46 @@ window.onload = function main() {
     function updateDaytime(time, zPosPlayer) {
       // Change sunlight position and intensity according to the elapsed time
       // (about 4 seconds of the game corresponds to 1 hour, 96/4 = 24)
-      if (time % 96 < 20) {
+      const daytime = time % 96;
+      if (daytime < 20) {
         // Prepare sunrise (daytime is between midnight and 5 )
-        sunlight.position.set(100, 100, zPosPlayer + 10);
-        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.005, 0.4, 3);
-        renderer.setClearColor(0x2a2a35);
+        sunlight.position.set(100, 100, zPosPlayer + 80);
+        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.003, 0.4, 2.2);
+
+        if (daytime < 4)       renderer.setClearColor(0x2a2a35); // 0 < x < 1
+        else if (daytime < 8)  renderer.setClearColor(0x1c1c24); // 1 < x < 2
+        else if (daytime < 12) renderer.setClearColor(0x1c1c24); // 2 < x < 3
+        else if (daytime < 16) renderer.setClearColor(0x2a2a35); // 3 < x < 4
+        else                   renderer.setClearColor(0x44626e); // 4 < x < 5
       }
-      else if (time % 96 < 60) {
+      else if (daytime < 60) {
         // Growing phase (daytime is between 5 and 15 )
         sunlight.position.x -= sunlightPositionIncrement;
         sunlight.position.y += sunlightPositionIncrement;
-        sunlight.position.z = zPosPlayer + 10;
-        sunlight.intensity = Utils.clamp(sunlight.intensity + 0.005, 0.4, 3);
-        renderer.setClearColor(0xBEF4FF);
+        sunlight.position.z = zPosPlayer + 80;
+        sunlight.intensity = Utils.clamp(sunlight.intensity + 0.003, 0.4, 2.2);
+
+        if (daytime < 24)       renderer.setClearColor(0x598496); // 5 < x < 6
+        else if (daytime < 28)  renderer.setClearColor(0x70a8c0); // 6 < x < 7
+        else if (daytime < 32)  renderer.setClearColor(0x87ceeb); // 7 < x < 8
+        else if (daytime < 36)  renderer.setClearColor(0x9dd6ee); // 8 < x < 9
+        else if (daytime < 36)  renderer.setClearColor(0xc6e6f5); // 9 < x < 10
+        else                    renderer.setClearColor(0xecf7fc); // 10 < x < 15
       }
       else {
         // Waning phase (daytime is between 15 and midnight )
         sunlight.position.x -= sunlightPositionIncrement;
         sunlight.position.y -= sunlightPositionIncrement;
-        sunlight.position.z = zPosPlayer + 10;
-        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.005, 0.4, 3);
+        sunlight.position.z = zPosPlayer + 80;
+        sunlight.intensity = Utils.clamp(sunlight.intensity - 0.003, 0.4, 2.2);
+
+        if (daytime < 72)       renderer.setClearColor(0xecf7fc); // 15 < x < 18
+        else if (daytime < 76)  renderer.setClearColor(0xc6e6f5); // 18 < x < 19
+        else if (daytime < 80)  renderer.setClearColor(0x9dd6ee); // 19 < x < 20
+        else if (daytime < 84)  renderer.setClearColor(0x87ceeb); // 20 < x < 21
+        else if (daytime < 88)  renderer.setClearColor(0x70a8c0); // 21 < x < 22
+        else if (daytime < 92)  renderer.setClearColor(0x598496); // 22 < x < 23
+        else                    renderer.setClearColor(0x44626e); // 23 < x < 24
       }
 
       // DEBUG
@@ -1952,7 +1987,7 @@ window.onload = function main() {
       console.log("sunlight.position.x: " + sunlight.position.x + "\n");
       console.log("sunlight.position.y: " + sunlight.position.y + "\n");
       console.log("sunlight.position.z: " + sunlight.position.z + "\n");
-      console.log("sunlight.intensity: " + sunlight.intensity + "\n");*/
+      console.log("sunlight.intensity: " + sunlight.intensity + "\n");//*/
     }
 
     // Translate static models if surpassed by the player
@@ -2002,19 +2037,24 @@ window.onload = function main() {
             // Check if currentCar is near to the player and move it
             if ( Math.abs(zPosPlayer > carPosition.z - 200) || model.gltf.scene.visible == false ) {
               model.gltf.scene.visible = true;
+              // Move car forward according to its orientation
+              currentCar.move(0, 0, -1);
 
               // Depending on car orientation move cars in the same direction of the player (-1) or viceversa (1)
-              if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan)
+              /*if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan)
                 currentCar.move(0, 0, -1);
               else
-                currentCar.move(0, 0, 1);
+                currentCar.move(0, 0, 1);*/
+
             }
             // Otherwise translate it far away resetting initial orientation and picking random the lane
             else {
-              if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan)
+              /*if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan)
                 var random = lanexUp[ Math.floor(Math.random() * lanexUp.length) ];
               else
-                var random = lanexDown[ Math.floor(Math.random() * lanexDown.length) ];
+                var random = lanexDown[ Math.floor(Math.random() * lanexDown.length) ];*/
+
+              const random = placeCar(model);
 
               let ms = currentCar.getPhysicsBody().getMotionState();
               if (ms) {
@@ -2024,7 +2064,13 @@ window.onload = function main() {
                   random,
                   carPosition.y,
                   carPosition.z - 500) );
-                const quaternion = currentCar.getInitialQuaternion();
+                /*const quaternion = currentCar.getInitialQuaternion();
+                transform.setRotation( new Ammo.btQuaternion(
+                  quaternion.x,
+                  quaternion.y,
+                  quaternion.z,
+                  quaternion.w) );*/
+                const quaternion = currentCar.get3DModel().quaternion;
                 transform.setRotation( new Ammo.btQuaternion(
                   quaternion.x,
                   quaternion.y,
@@ -2092,10 +2138,11 @@ window.onload = function main() {
       //console.log(Utils.dumpObject(modelScene).join('\n'));
 
       // Place cars on the lanes randomly
-      let random;
+      /*let random;
       if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan) {
         random = lanexUp[ Math.floor(Math.random() * lanexUp.length) ];
         modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z + 130);
+        //modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 130);
       }
       else {
         random = lanexDown[ Math.floor(Math.random() * lanexUp.length) ];
@@ -2104,7 +2151,9 @@ window.onload = function main() {
 
       modelScene.position.set(random, model.position[1], model.position[2]);
       modelScene.scale.set(...model.scale)
-      //modelScene.rotation.set(...model.rotation);
+      //modelScene.rotation.set(...model.rotation);*/
+
+
 
 
       let wheels = [],
@@ -2157,7 +2206,12 @@ window.onload = function main() {
         sunlight.target = modelScene;
 
         // Set fixed initial position for the player model
-        modelScene.position.x = model.position[0];
+        //modelScene.position.x = model.position[0];
+        //modelScene.position.z = model.position[2];
+
+        modelScene.position.set(...model.position);
+        modelScene.scale.set(...model.scale);
+        modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 30);
 
         // Create the car, store its reference and set the player model
         playerModel = new Car(modelScene, model.carInfo, game, components);
@@ -2170,16 +2224,54 @@ window.onload = function main() {
 
         components.roofLights = model.roofLightsNames ? roofLights : null;
 
+        // Set fixed initial position for the police model
+        //modelScene.position.x = model.position[0];
+        //modelScene.position.z = model.position[2];
+
+        modelScene.position.set(...model.position);
+        modelScene.scale.set(...model.scale);
+        modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 30);
+
         // Create the car, store its reference and set the police model
         policeModel = new PoliceCar(modelScene, model.carInfo, game, components, scene, gui);
         police.setModel(policeModel);
       }
       else {
-        // Set an offset on Z axis to avoid that a IA car is created in the same position of the player car
-        modelScene.position.z -= 100;
+        // Place car on the lanes randomly
+        placeCar(model, true);
+
+        modelScene.scale.set(...model.scale)
+
         // Create the car and store its reference
         model.car = new Car(modelScene, model.carInfo, game, components);
       }
+    }
+
+    function placeCar(model, initZ=false) {
+      if (!model)  return;
+
+      const modelScene = model.gltf.scene;
+
+      // Place car on the lanes randomly
+      let randomX = Math.random(), randomZ = initZ ? randomX * 470 + randomX * 630 : modelScene.position.z;
+      if (randomX < 0.5) {
+        // Car is placed facing the same direction of the player
+        randomX = lanexUp[ Math.floor(randomX * lanexUp.length) ];
+
+        modelScene.position.set(randomX, model.position[1], randomZ);
+        modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 30);
+      }
+      else {
+        // Car is placed facing the opposite direction of the player
+        randomX = lanexDown[ Math.floor(randomX * lanexUp.length) ];
+
+        modelScene.position.set(randomX, model.position[1], randomZ);
+        modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z + 30);
+      }
+
+      console.log("randomX: " + randomX);
+      console.log("randomZ: " + randomZ);
+      return randomX;
     }
 
     /*function addTeslaCar(modelScene) {
