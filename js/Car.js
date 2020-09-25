@@ -11,8 +11,8 @@ class Car extends Model {
     this.maxSpeed  = Utils.toMsecond( carInfo.maxSpeed );
     this.maxSpeedReverse = Utils.toMsecond(45); // 45 Km/h converted to m/s
 
-    this.moveSpeed = 1000;
-    this.turnSpeed = 4;
+    //this.moveSpeed = 1000;
+    //this.turnSpeed = 4;
 
     this.orientation = new THREE.Vector3();
     model3D.getWorldDirection(this.orientation);
@@ -20,13 +20,15 @@ class Car extends Model {
     const velocity = super.getPhysicsBody().getLinearVelocity();
     this.velocityVec = new THREE.Vector3( velocity.x(), velocity.y(), velocity.z() );
 
-    // Dot product to calculate if orientation and velocity vectors are facing the same direction.
+    // Dot product to calculate if orientation and velocity vectors are facing the same direction
     this.dot = this.orientation.dot(this.velocityVec);
 
+    // Forces
     this.tractionForce     = new THREE.Vector3();
     this.airResistance     = new THREE.Vector3();
     this.rollingResistance = new THREE.Vector3();
 
+    // Steering
     this.steeringIncrement = 0.04;
     this.steeringClamp     = 0.5;
     this.steeringAngle     = 0;
@@ -34,7 +36,7 @@ class Car extends Model {
     // Distance between front and rear axle
     this.axlesDistance = 5;
 
-    this.carHeading = Math.PI/2;
+    //this.carHeading = Math.PI/2;
 
     console.log("this.name: " + this.name);
 
@@ -183,57 +185,12 @@ class Car extends Model {
     return this.turnSpeed;
   }
 
-  rotateWheels(deltaTime=0, turnRotation=0) {
+  rotateWheels() {
     if (!this.getWheels()) return;
-
-    /*const frontLeftWheel  = this.getFrontLeftWheel();
-    const frontRightWheel = this.getFrontRightWheel();
-
-    /*frontLeftWheel.rotation.z  = Utils.clamp(frontLeftWheel.rotation.z  + turnRotation, -0.5, 0.5);
-
-    // Lamborghini right wheel orientation is inverted
-    if(this.getName() === "Lamborghini")
-      frontRightWheel.rotation.z = Utils.clamp(frontRightWheel.rotation.z - turnRotation, -0.5, 0.5);
-    else
-      frontRightWheel.rotation.z = Utils.clamp(frontRightWheel.rotation.z + turnRotation, -0.5, 0.5);
-
-    // If X rotation, Z rotation is affected
-    frontLeftWheel.rotation.x  += deltaTime;
-    frontRightWheel.rotation.x += deltaTime;
-    this.getBackLeftWheel().rotation.x  += deltaTime;
-    this.getBackRightWheel().rotation.x += deltaTime;*/
-
-    //const speed = Math.abs(this.vehicle.getCurrentSpeedKmHour());
 
     const speed = Math.abs(this.getCurrentSpeedKmHour());
 
-    /*console.log("this.getFrontLeftWheel().rotation.x: " + this.getFrontLeftWheel().rotation.x);
-    console.log("this.getFrontRightWheel().rotation.x: " + this.getFrontRightWheel().rotation.x);
-
-    this.getFrontLeftWheel().rotation.z  = this.steeringAngle;
-    this.getFrontRightWheel().rotation.z = this.steeringAngle;*/
-
-
-    /*if (this.steeringAngle != 0) {
-      this.getFrontLeftWheel().rotation.x  = -1.57;
-      this.getFrontRightWheel().rotation.x = -1.57;
-
-      this.getFrontLeftWheel().rotation.z  = this.steeringAngle;
-
-      // Lamborghini and Tesla have right wheel orientation inverted
-      if(this.getName() === "Lamborghini Aventador S" || this.getName() === "Tesla Model S")
-        this.getFrontRightWheel().rotation.z = -this.steeringAngle;
-      else
-        this.getFrontRightWheel().rotation.z = this.steeringAngle;
-    }
-    else {
-      this.getFrontLeftWheel().rotation.z  = this.steeringAngle;
-      this.getFrontRightWheel().rotation.z = this.steeringAngle;
-
-      this.getFrontLeftWheel().rotation.x  = speed;
-      this.getFrontRightWheel().rotation.x = speed;
-    }*/
-
+    // If Z rotation (steering), also X rotation (rolling) is affected so use only X axis
     this.getFrontLeftWheel().rotation.x  += speed;
     this.getFrontRightWheel().rotation.x += speed;
 
@@ -247,6 +204,7 @@ class Car extends Model {
     return this.isForwardMovement() ? speed : -speed;
   }
 
+  // Return car orientation
   getOrientation() {
     return this.orientation;
   }
@@ -255,40 +213,74 @@ class Car extends Model {
     return this.velocityVec;
   }
 
-  // Return true if forward movement, false if reverse
+  // Return true if forward movement, false if reverse.
+  // Dot product to calculate if orientation and velocity vectors are facing the same direction.
+  // - Positive if |a| > 0, |b| > 0 and -90° < theta < 90°
+  // - Zero if |a| > 0, |b| > 0 or theta = 90° => a and b are orthogonal
+  // - Negative if |a| > 0, |b| > 0 and theta > 90°
   isForwardMovement() {
     return this.dot > 0;
   }
 
-  move(moveX, moveY, moveZ, deltaTime) {
-    /*if (moveX == 0 && moveY == 0 && moveZ == 0) return;
-    const speed = Math.abs(this.getCurrentSpeedKmHour()).toFixed(2);
-    const turnRotation = this.getTurnSpeed() * moveX * 10000 * speed / this.getMaxSpeed();
+  move(moveX, moveY, moveZ, deltaTime=0) {
 
-    let forceZ = 0;
-    // Forward movement along -Z axis
-    if (moveZ > 0)        forceZ = 20000;
-    else if (moveZ < 0)   forceZ = -30000;
+    const removeNoise = (v) => {
+      v.x = Math.abs(v.x) > 0.7 ? v.x : 0;
+      v.y = Math.abs(v.y) > 0.7 ? v.y : 0;
+      v.z = Math.abs(v.z) > 0.7 ? v.z : 0;
+    }
 
-    console.log("Speed: " + speed + ' km/h');
-    console.log("turnRotation:");
-    console.log(turnRotation);
+    // PROVA
+    /*let ms = this.getPhysicsBody().getMotionState();
+    if (ms) {
+      const transform = new Ammo.btTransform();
+      ms.getWorldTransform(transform);
 
-    const resultantImpulse = new Ammo.btVector3(turnRotation, 0, forceZ);
-    let resultantImpulse = new Ammo.btVector3(0, 0, forceZ);
+      let relativeForce = new Ammo.btVector3(0,0, 25000);
 
-    super.getPhysicsBody().applyCentralForce( resultantImpulse );
+      const relativeTransform = new Ammo.btTransform();
+      relativeTransform.setOrigin(relativeForce);
 
-    resultantImpulse = new Ammo.btVector3(turnRotation, 0, 0);
-    const pos = super.getPosition();
-    super.getPhysicsBody().applyForce( resultantImpulse, new Ammo.btVector3(pos.x, pos.y, pos.z - 2) );*/
+      relativeForce = (transform.op_mul(relativeTransform)).getOrigin();
+      this.getPhysicsBody().applyForce(relativeForce, transform.getOrigin());
+    }*/
+    // FINE PROVA
+
+    // PROVA 2
+    /*console.log("orientation:");
+    console.log(this.orientation);
+
+    super.get3DModel().getWorldDirection(this.orientation);
+
+    const velocity = super.getPhysicsBody().getLinearVelocity();
+
+    const engineForce = 25000,   // Force
+    //const engineForce = 1000,  // Impulse
+          speed = velocity.length().toFixed(2);
+
+    // Init forces for the longitudinal movement
+    this.tractionForce.copy(this.orientation);
+    // Remove noise
+    removeNoise(this.tractionForce);
+
+    // Compute them
+    this.tractionForce.multiplyScalar(engineForce);
+
+    console.log("tractionForce");
+    console.log(this.tractionForce);
+
+    console.log(-0.0075);
+
+    if (speed < this.maxSpeed)
+      super.getPhysicsBody().applyForce(
+        new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z),
+        new Ammo.btVector3(-0.0075, 0, 0) );
+        //new Ammo.btVector3(-0.005, 0, 0) );
+        //new Ammo.btVector3(-0.01, 0, 0) );*/
+    // FINE PROVA 2
 
 
-
-
-
-
-
+    // ORIGINALE
     console.log("orientation:");
     console.log(this.orientation);
 
@@ -300,11 +292,9 @@ class Car extends Model {
 
     this.velocityVec.set( velocity.x(), velocity.y(), velocity.z() );
     // Remove noise
-    /*this.velocityVec.x = Math.abs(this.velocityVec.x) > 0.7 ? this.velocityVec.x : 0;
-    this.velocityVec.y = Math.abs(this.velocityVec.y) > 0.7 ? this.velocityVec.y : 0;
-    this.velocityVec.z = Math.abs(this.velocityVec.z) > 0.7 ? this.velocityVec.z : 0;//*/
-    console.log("velocity vector:");
-    console.log(this.velocityVec);
+    //removeNoise(this.velocityVec);
+    //console.log("velocity vector:");
+    //console.log(this.velocityVec);
 
     // Dot product to calculate if orientation and velocity vectors are facing the same direction.
     // - Positive if |a| > 0, |b| > 0 and -90° < theta < 90°
@@ -331,9 +321,7 @@ class Car extends Model {
     // Init forces for the longitudinal movement
     this.tractionForce.copy(this.orientation);
     // Remove noise
-    /*this.tractionForce.x = Math.abs(this.tractionForce.x) > 0.7 ? this.tractionForce.x : 0;
-    this.tractionForce.y = Math.abs(this.tractionForce.y) > 0.7 ? this.tractionForce.y : 0;
-    this.tractionForce.z = Math.abs(this.tractionForce.z) > 0.7 ? this.tractionForce.z : 0;//*/
+    //removeNoise(this.tractionForce);
     this.airResistance.set(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
     this.rollingResistance.set(velocity.x().toFixed(2), velocity.y().toFixed(2), velocity.z().toFixed(2));
 
@@ -415,7 +403,7 @@ class Car extends Model {
     //}
 
 
-    console.log("tractionForce");
+    /*console.log("INITIAL tractionForce");
     console.log(this.tractionForce);
     console.log("airResistance");
     console.log(this.airResistance);
@@ -424,7 +412,6 @@ class Car extends Model {
 
     // Compute resultant longitudinal force subtracting resistant forces
     this.tractionForce.add(this.airResistance).add(this.rollingResistance);
-    //this.tractionForce.multiplyScalar(deltaTime);
 
     /*const axis = new THREE.Vector3(0, 1, 0);
     const r = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) : Utils.toRadiants(-this.steeringAngle * 40);
@@ -432,65 +419,57 @@ class Car extends Model {
     // Compute resultant longitudinal force subtracting resistant forces
     this.tractionForce.add(this.airResistance).add(this.rollingResistance).applyAxisAngle(axis, r);//*/
 
-    console.log("tractionForce");
-    console.log(this.tractionForce);
+    //console.log("INTERMEDIATE tractionForce");
+    //console.log(this.tractionForce);
+
+    // Boost the steering force
+    this.tractionForce.x = (engineForce-5000) * moveX;
+
+    //console.log("FINAL tractionForce");
+    //console.log(this.tractionForce);
 
     // IN THE GAME THE PLAYER WILL NEVER GO IN REVERSE
     if (this.isForwardMovement()) {
       if (speed < this.maxSpeed)
-        super.getPhysicsBody().applyCentralForce(
-          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );
-      //else
-      //  super.getPhysicsBody().setLinearVelocity( );
-
-    //super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(0, 0, tractionForce.z) );
+        super.getPhysicsBody().applyForce(
+          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z),
+          new Ammo.btVector3(-0.0075, 0, 0) );
+        /*super.getPhysicsBody().applyCentralForce(
+          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );*/
 
     // WITH APPLY QUATERNION ON tractionForce
     //super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(0, 0, -tractionForce.z) );
     //super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(-tractionForce.x, tractionForce.y, -tractionForce.z) );
     }
 
-    // IN THE GAME THE PLAYER NEVER WILL GO IN REVERSE
+    // IN THE GAME THE PLAYER WILL NEVER GO IN REVERSE
     else if (speed < this.maxSpeedReverse)
-        super.getPhysicsBody().applyCentralForce(
-          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );
-      /*else
-        //super.getPhysicsBody().setLinearVelocity( );
-        super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(tractionForce.x, tractionForce.y, tractionForce.z).operator*=(0.9) );*/
+      super.getPhysicsBody().applyForce(
+        new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z),
+        new Ammo.btVector3(-0.0075, 0, 0) );
+        /*super.getPhysicsBody().applyCentralForce(
+          new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z) );*/
 
     this.rotateWheels();
 
     // Curves
-    console.log("this.steeringAngle: " + this.steeringAngle);
+    //console.log("this.steeringAngle: " + this.steeringAngle);
 
     if (this.steeringAngle == 0)  return;
 
     // Low speed turning
     // Reverse the steering angle if reverse movement
     const rad = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) : Utils.toRadiants(-this.steeringAngle * 40);
+    //console.log("rad: " + rad);
 
-    // PROVA
-    //let rad = this.steeringAngle > 0 ? Math.PI/7 : -Math.PI/7;
-    //rad = this.isForwardMovement() ? rad : -rad;
-    console.log("rad: " + rad);
+    // Ok for parking mode (DEBUG)
+    //const radius = this.axlesDistance / Math.sin(rad);
 
-    const radius = this.axlesDistance / Math.sin(rad);
-
+    const radius = 130 / Math.sin(rad);
     const angularVelocity = speed / radius;
-
-    // PROVA
-    //let angularVelocity = this.steeringAngle > 0 ? 0.35 : -0.35;
-    //angularVelocity = this.isForwardMovement() ? angularVelocity : -angularVelocity;
-    console.log("angularVelocity: " + angularVelocity);
+    //console.log("angularVelocity: " + angularVelocity);
 
     super.getPhysicsBody().setAngularVelocity( new Ammo.btVector3(0, angularVelocity, 0) );
-
-    /*const turnCenter = super.getPosition().clone();
-    // Calculate center of the turning
-    turnCenter.x = moveX > 0 ? turnCenter.x + radius : turnCenter.x - radius;
-    // Forward movement along -Z axis, so center of the curve requires a sum and not a sub
-    turnCenter.z += this.axlesDistance / 2;
-    turnCenter.multiplyScalar( super.getMass() * (speed * speed) / radius );//*/
 
     // High speed turning
     /*if (this.getCurrentSpeedKmHour() > 40) {

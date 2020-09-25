@@ -76,9 +76,10 @@ class Player {
 						}
 					}
 
-          console.log("getPosition(): ");
-          console.log(this.getPosition());
-          this.model.move(turnDirection, 0, forwardDirection, deltaTime);
+          //console.log("getPosition(): ");
+          //console.log(this.getPosition());
+          //this.model.move(turnDirection, 0, forwardDirection);
+          this.model.move(turnDirection, 0, -1); // Auto-acceleration
         }
 
         updateVehiclePhysics();

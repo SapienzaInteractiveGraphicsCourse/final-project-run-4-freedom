@@ -5,7 +5,7 @@ Run as fast as you can to achieve your coveted goal in 4 different scenarios.
 GIF/VIDEO/PHOTOS
 
 ## Getting Started
-To start playing you don't need to clone this repo, since the game is available online at the following [link]().
+To start playing you don't need to clone this repo, since the game is available online at the following [link](https://sapienzainteractivegraphicscourse.github.io/final-project-run-4-freedom/).
 
 If you want to modify our code, clone this repo and as a workaround for the cross-origin policy issue, start a web server on the local machine (e.g. via python3 -m http.server). Finally, enter the following URL in your browser http://localhost:8000/index.html.
 

@@ -1,69 +1,65 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<title>Run 4 Freedom</title>
+    <head>
+        <title>Run 4 Freedom</title>
 
-		<meta charset="utf-8">
-		<meta name="viewport"
-			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<meta name="description"
-			content="Final project of the Interactive Graphics 19-20 course @ Sapienza University of Rome">
-		<meta name="keywords" content="">
-		<meta name="author" content="Ivan Fardin, Francesco Ottaviani and Samuele Olivieri Pennesi">
+        <meta charset="utf-8">
+        <meta name="viewport"
+            content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description"
+            content="Final project of the Interactive Graphics 19-20 course @ Sapienza University of Rome">
+        <meta name="keywords" content="">
+        <meta name="author" content="Ivan Fardin, Francesco Ottaviani and Samuele Olivieri Pennesi">
 
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/menu.js"></script>
 
-		<script src="js/libs/ammo.js"></script>
-		<script src="js/main.js" type="module"></script>
-	</head>
+    </head>
 
-	<body>
-		<!-- Loading phase -->
-		<div id="loading">
-			<div id="loadingText" class="wavy">
-				<span style="--i:1;">L</span>
-				<span style="--i:2;">o</span>
-				<span style="--i:3;">a</span>
-				<span style="--i:4;">d</span>
-				<span style="--i:5;">i</span>
-				<span style="--i:6;">n</span>
-				<span style="--i:7;">g</span>
-				<span style="--i:8;">.</span>
-				<span style="--i:9;">.</span>
-				<span style="--i:10;">.</span>
-			</div>
-			<div id="loadingBar" class="progress">
-				<div class="progress-bg">
-					<div id="progressbar"></div>
-				</div>
-			</div>
-		</div>
+    <body id="menu">
+        <div class="sp-container">
+            <div class="sp-content">
+                <div class="sp-globe italic highlight"></div>
+                <h2 class="frame-1">ESCAPE FROM THE PRISON!</h2>
+                <h2 class="frame-2">
+                    <span>RUN </span>
+                    <span>4 </span>
+                    <span>FREEDOM</span>
+                </h2>
+                <div id="btn-group">
+                    <div id="scenario" class="italic"> select scenario </div>
+                    <div id="scenarioBtn" class="italic">
+                        <button id="cityBtn" class="eButton italic" onclick="onClick('city', 'env');">city</button>
+                        <button id="countryBtn" class="eButton italic"
+                            onclick="onClick('country', 'env');">country</button>
+                        <button id="forestBtn" class="eButton italic"
+                            onclick="onClick('forest', 'env');">forest</button>
+                        <button id="highwayBtn" class="eButton italic"
+                            onclick="onClick('highway', 'env');">highway</button>
+                    </div>
+                    <div id="vehicle" class="italic"> select vehicle </div>
+                    <div id="vehicleBtn" class="italic">
+                        <button id="bmwBtn" class="vButton italic" onclick="onClick('bmw', 'dif');">BMW</button>
+                        <button id="lamboBtn" class="vButton italic"
+                            onclick="onClick('lambo', 'dif');">Lamborghini</button>
+                        <button id="teslaBtn" class="vButton italic" onclick="onClick('tesla', 'dif');">Tesla</button>
+                    </div>
+                    <div id="tutorialBtn" class="italic" onclick="on();"> tutorial </div> -->
+                    <!-- <div id="creditsBtn" class="italic"> about us </div> -->
+                    <a id="startBtn" class="italic highlight hide" href="game.html"> play </a>
 
-		<p id="playBtn" class="hide center">
-			<span class="btn btn-primary btn-lg btn-custom">Play</span>
-		</p>
-
-		<!-- In-Play values -->
-		<div id="speedometer" class="hide">0.0 km/h</div>
-		<div id="score" class="hide">Score: 0</div>
-
-		<!-- Pause phase -->
-		<div id="pause" class="hide">Pause</div>
-		<div id="resume" class="hide">Resume</div>
-
-		<!-- Game Over phase -->
-		<div id="gameover" class="hide">Game Over</div>
-
-		<!-- Score -->
-		<div id="finalscore" class="hide"></div>
-		<div id="highscore" class="hide"></div>
-
-		<!-- Buttons -->
-		<a href="index.html" id="restart" class="hide">Restart</a>
-		<a href="menu.html" id="mainmenu" class="hide">Main Menu</a>
-
-		<canvas id="canvas" class="hide"></canvas>
-	</body>
+                    <div id="overlay" onclick="off();">
+                        <div id="text">For the vehicle:
+                            Use the arrow keys or WASD to move it.
+                            For the character:
+                            With left and right arrows or A and D move your character left or right,
+                            with the up arrow or W make it jump.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 
 </html>
