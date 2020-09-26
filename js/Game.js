@@ -7,6 +7,7 @@ class Game {
     this.rigidBodies  = [];
     this.player = null;
     this.police = null;
+    this.isPaused = false;
   }
 
   getScore() {
@@ -72,6 +73,28 @@ class Game {
     this.player.update(deltaTime);
     this.police.update(deltaTime);
   }
+  
+  
+  pauseGame() {
+    if (this.inputManager.pauseAction()) {
+      if (!this.isPaused) {
+        this.isPaused = true;
+        document.getElementById("pause").style.display = "inherit";
+        document.getElementById("resumeBtn").style.display = "inherit";
+        //document.getElementById("resume").onclick(this.invertPause());
+      }
+      else {
+        this.isPaused = false;
+        document.getElementById("pause").style.display = "none";
+        document.getElementById("resumeBtn").style.display = "none";
+      }
+    }
+    return this.isPaused;
+  }
+
+  /* invertPause() {
+    this.isPaused = !this.isPaused;
+  } */
 }
 
 export {Game}

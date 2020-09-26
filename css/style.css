@@ -37,6 +37,7 @@ canvas {
 	-o-background-size: cover;
 	background-size: cover;
 	font-family: overwatch-italic;
+	overflow: scroll;
 }
 .container {
 	width: 100%;
@@ -54,6 +55,7 @@ h1.main, p.demos {
 	animation-delay: 18s;
 }
 .sp-container {
+	overflow-x: hidden;
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -79,7 +81,7 @@ h1.main, p.demos {
 	line-height: 100px;
 	height: 90px;
 	margin-top: -50px;
-	font-size: 180px;
+	font-size: 140px;
 	width: 100%;
 	text-align: center;
 	color: transparent;
@@ -126,7 +128,7 @@ h1.main, p.demos {
 }
  #btn-group{
   position: relative;
-  top: 8%;
+  top: 4%;
 } 
 
 .sp-globe {
@@ -716,16 +718,16 @@ button:hover {
 	animation: blurFadeIn 1s linear 0s backwards;
 }
 
-#resume {
+#resumeBtn {
 	position: absolute;
-    padding-top: 27%;
+    padding-top: 20%;
     top: 0;
     bottom: 0;
     text-align: center;
     width: 100%;
     color: white;
     font-family: overwatch-italic;
-	font-size: 100px;
+	font-size: 60px;
 	
 	transition: all .05s ease-in;
 	
@@ -735,7 +737,7 @@ button:hover {
 	animation: blurFadeIn 1s linear 0.5s backwards;
 }
 
-#restart {
+#returnBtn {
 	position: absolute;
     padding-top: 35%;
     top: 0;
@@ -744,7 +746,7 @@ button:hover {
     width: 100%;
     color: white;
     font-family: overwatch-italic;
-	font-size: 100px;
+	font-size: 60px;
 	
 	transition: all .05s ease-in;
 	
@@ -754,24 +756,20 @@ button:hover {
 	animation: blurFadeIn 1s linear 0.5s backwards;
 }
 
-#mainmenu {
-	position: absolute;
-    padding-top: 43%;
-    top: 0;
-    bottom: 0;
-    text-align: center;
-    width: 100%;
-    color: white;
-    font-family: overwatch-italic;
-	font-size: 100px;
-	
-	transition: all .05s ease-in;
-	
-	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
-	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
-	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
-	animation: blurFadeIn 1s linear 0.5s backwards;
+/* #restart {
+	font-size: 20px;
+	text-align: left;
+} */
+
+#mainmenu, #restart {
+	color: white;
+} 
+
+#mainmenu:hover, #resume:hover, #restart:hover {
+	color: orange;
 }
+
+
 
 /* Import from Bootstrap */
 .btn {

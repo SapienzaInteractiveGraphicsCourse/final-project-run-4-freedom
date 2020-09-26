@@ -74,6 +74,10 @@ class InputManager {
   backAction() {
     return this.keys.down.down || this.keys.S.down;
   }
+  
+  pauseAction() {
+    return this.keys.spacebar.down || this.keys.P.down;
+  }
 
 }
 

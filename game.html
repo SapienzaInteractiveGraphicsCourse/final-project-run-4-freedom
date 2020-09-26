@@ -50,18 +50,23 @@
 
 		<!-- Pause phase -->
 		<div id="pause" class="hide">Pause</div>
-		<div id="resume" class="hide">Resume</div>
-
-		<!-- Game Over phase -->
-		<div id="gameover" class="hide">Game Over</div>
+		<div id="resumeBtn" class="hide">
+			<a id="resume"> Resume </a>
+			<br>
+			<a href="menu.html" id="mainmenu"> Return to Main Menu </a>
+		</div>
 
 		<!-- Score -->
 		<div id="finalscore" class="hide"></div>
 		<div id="highscore" class="hide"></div>
 
-		<!-- Buttons -->
-		<a href="game.html" id="restart" class="hide">Restart</a>
-		<a href="index.html" id="mainmenu" class="hide">Main Menu</a>
+    <!-- Game Over phase -->
+		<div id="gameover" class="hide">Game Over</div>
+		<div id="returnBtn" class="hide">
+			<a href="index.html" id="restart"> Restart </a>
+      <br>
+			<a href="menu.html" id="mainmenu"> Main Menu </a>
+		</div>
 
 		<canvas id="canvas" class="hide"></canvas>
 	</body>

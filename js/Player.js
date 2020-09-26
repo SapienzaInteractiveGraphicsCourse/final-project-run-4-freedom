@@ -85,6 +85,10 @@ class Player {
         updateVehiclePhysics();
       }
 
+      if (this.inputManager.pauseAction()) {
+        this.game.pauseGame();
+      }
+      
       /*else if (this.model instanceof Character) {
         // Animate body components
         const run = () => {

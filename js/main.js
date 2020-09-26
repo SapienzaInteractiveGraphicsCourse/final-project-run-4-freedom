@@ -1714,8 +1714,7 @@ window.onload = function main() {
     requestAnimationFrame(animate);
 
     function animate(time) {
-      if (isBlur) return;
-
+      
       stats.begin();
 
       if (Utils.resizeRendererToDisplaySize(renderer)) {
@@ -1743,8 +1742,16 @@ window.onload = function main() {
       //console.log("renderer.info.render.calls: " + renderer.info.render.calls);
 
       stats.end();
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+      
+      if (!isPlay || game.isPaused) {
+        setTimeout(function () {
+          game.pauseGame();
+        }, 60000);
+      }
+      else {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
     }
 
 
@@ -1866,13 +1873,8 @@ window.onload = function main() {
         const highscore = document.getElementById("highscore");
         highscore.style.display = "inherit";
 
-        const restart = document.getElementById("restart");
-        //restart.onclick = window.location.replace("index.html");
+        const restart = document.getElementById("returnBtn");
         restart.style.display = "inherit";
-
-        const mainmenu = document.getElementById("mainmenu");
-        //mainmenu.onclick = window.location.replace("index.html");
-        mainmenu.style.display = "inherit";
 
         isPlay = false;
         isBlur = true;
