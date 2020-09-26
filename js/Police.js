@@ -90,8 +90,8 @@ class Police {
     }
 
     incrementInterpolation() {
-      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.0001, 0.008, 0.7);
-      console.log("this.interpolationFactor: " + this.interpolationFactor);
+      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.00005, 0.008, 0.08);
+      //console.log("this.interpolationFactor: " + this.interpolationFactor);
     }
 
   }

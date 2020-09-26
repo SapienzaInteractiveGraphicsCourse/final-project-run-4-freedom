@@ -44,6 +44,10 @@ class InputManager {
     addKey(83, 'S');
     addKey(68, 'D');
 
+    // Pause
+    addKey(32, 'spacebar');
+    addKey(80, 'P');
+
     window.addEventListener('keydown', (e) => {
       setKeyStatusFromKeyCode(e.keyCode, true);
     });
@@ -74,9 +78,9 @@ class InputManager {
   backAction() {
     return this.keys.down.down || this.keys.S.down;
   }
-  
+
   pauseAction() {
-    return this.keys.spacebar.down || this.keys.P.down;
+    return this.keys.spacebar.justPressed || this.keys.P.justPressed;
   }
 
 }

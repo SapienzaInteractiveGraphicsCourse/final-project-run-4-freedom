@@ -71,30 +71,29 @@ class Game {
     this.police.incrementInterpolation();
 
     this.player.update(deltaTime);
-    this.police.update(deltaTime);
+    //this.police.update(deltaTime);
   }
-  
-  
+
+  // Pause or resume the game
   pauseGame() {
-    if (this.inputManager.pauseAction()) {
       if (!this.isPaused) {
-        this.isPaused = true;
-        document.getElementById("pause").style.display = "inherit";
+        // Pause
+        document.getElementById("pause").style.display     = "inherit";
         document.getElementById("resumeBtn").style.display = "inherit";
-        //document.getElementById("resume").onclick(this.invertPause());
       }
       else {
-        this.isPaused = false;
-        document.getElementById("pause").style.display = "none";
+        // Resume
+        document.getElementById("pause").style.display     = "none";
         document.getElementById("resumeBtn").style.display = "none";
       }
-    }
+
+      this.isPaused = !this.isPaused;
+  }
+
+  isPaused() {
     return this.isPaused;
   }
 
-  /* invertPause() {
-    this.isPaused = !this.isPaused;
-  } */
 }
 
 export {Game}

@@ -22,8 +22,8 @@ class Model {
     const box     = new THREE.Box3().setFromObject(model3D);
     const boxSize = new THREE.Vector3();
     box.getSize(boxSize);
-    console.log("boxSize:");
-    console.log(boxSize);
+    //console.log("boxSize:");
+    //console.log(boxSize);
 
     // Ammojs Section
     let transform = new Ammo.btTransform();
@@ -38,10 +38,10 @@ class Model {
                           boxSize.z * modelInfo.boxSizeZFactor )
     );
 
-    let localInertia = new Ammo.btVector3(0, 0, 0);
+    const localInertia = new Ammo.btVector3(0, 0, 0);
     collisionShape.calculateLocalInertia(modelInfo.mass, localInertia);
 
-    let rbInfo = new Ammo.btRigidBodyConstructionInfo(modelInfo.mass, motionState, collisionShape, localInertia);
+    const rbInfo = new Ammo.btRigidBodyConstructionInfo(modelInfo.mass, motionState, collisionShape, localInertia);
     this.physicsBody = new Ammo.btRigidBody(rbInfo);
     const DISABLE_DEACTIVATION = 4;
     this.physicsBody.setActivationState(DISABLE_DEACTIVATION);

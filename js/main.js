@@ -9,6 +9,7 @@ import { InputManager } from "./InputManager.js";
 import { Game }         from "./Game.js";
 import { Player }       from "./Player.js";
 import { Police }       from "./Police.js";
+import { Model }        from "./Model.js";
 import { Car }          from "./Car.js";
 import { PoliceCar }    from "./PoliceCar.js";
 import { Character }    from "./Character.js";
@@ -228,16 +229,16 @@ window.onload = function main() {
             rotation: [0, -Math.PI / 2, 0],
         },
 
-        // Street elements
+        // Road elements
         barTable: {
-            url: 'src/environment/city/street/bar_table/scene.gltf',
+            url: 'src/environment/city/road/bar_table/scene.gltf',
             position: [-29, 2, -410],
             scale:    [0.08, 0.08, 0.08],
             rotation: [0, 0, 0],
         },
 
         bench: {
-            url: 'src/environment/city/street/bench/scene.gltf',
+            url: 'src/environment/city/road/bench/scene.gltf',
             //position: [-29, 1.6, -7],
             position: [-35, 1.6, -170],
             scale:    [3.5, 3.5, 3.5],
@@ -245,7 +246,7 @@ window.onload = function main() {
         },
 
         dumpster: {
-            url: 'src/environment/city/street/dumpster/scene.gltf',
+            url: 'src/environment/city/road/dumpster/scene.gltf',
             //position: [45, 1.8, 20],
             position: [38, 1.8, -450],
             scale:    [5.3, 5.3, 5.3],
@@ -253,7 +254,7 @@ window.onload = function main() {
         },
 
         menuSign: {
-            url: 'src/environment/city/street/menu_sign/scene.gltf',
+            url: 'src/environment/city/road/menu_sign/scene.gltf',
             //position: [31, 2, 5],
             position: [31, 2, -390],
             scale:    [0.015, 0.015, 0.015],
@@ -261,7 +262,7 @@ window.onload = function main() {
         },
 
         simpleMetalFence: {
-            url: 'src/environment/city/street/simple_metal_fence/scene.gltf',
+            url: 'src/environment/city/road/simple_metal_fence/scene.gltf',
             //position: [-25, 1.3, 5],
             position: [-30, 1.3, -1050],
             scale:    [0.25, 0.25, 0.25],
@@ -269,7 +270,7 @@ window.onload = function main() {
         },
 
         speedSign30: {
-            url: 'src/environment/city/street/speed_sign_30/scene.gltf',
+            url: 'src/environment/city/road/speed_sign_30/scene.gltf',
             //position: [25, 0, -12],
             position: [25, 0, -300],
             scale:    [0.035, 0.035, 0.035],
@@ -277,7 +278,7 @@ window.onload = function main() {
         },
 
         speedSign40: {
-            url: 'src/environment/city/street/speed_sign_40/scene.gltf',
+            url: 'src/environment/city/road/speed_sign_40/scene.gltf',
             //position: [25, 3.3, -8],
             position: [25, 3.3, -500],
             scale:    [4.5, 4.5, 4.5],
@@ -285,7 +286,7 @@ window.onload = function main() {
         },
 
         stopSign: {
-            url: 'src/environment/city/street/stop_sign/scene.gltf',
+            url: 'src/environment/city/road/stop_sign/scene.gltf',
             //position: [25, 0, -20],
             position: [25, 0, -15],
             scale:    [4.3, 4.3, 4.3],
@@ -293,7 +294,7 @@ window.onload = function main() {
         },
 
         trafficLight: {
-            url: 'src/environment/city/street/traffic_light/scene.gltf',
+            url: 'src/environment/city/road/traffic_light/scene.gltf',
             //position: [25, 0, -25],
             position: [25, 0, -1000],
             scale:    [0.15, 0.15, 0.15],
@@ -301,7 +302,7 @@ window.onload = function main() {
         },
 
         trashCan3: {
-            url: 'src/environment/city/street/trash_can_3/scene.gltf',
+            url: 'src/environment/city/road/trash_can_3/scene.gltf',
             //position: [-29, 1.6, -10],
             position: [-35, 1.6, -180],
             scale:    [2, 2, 2],
@@ -309,7 +310,7 @@ window.onload = function main() {
         },
 
         tree: {
-            url: 'src/environment/city/street/tree/scene.gltf',
+            url: 'src/environment/city/road/tree/scene.gltf',
             //position: [30, 0, -30],
             position: [30, 0, -55],
             scale:    [0.03, 0.03, 0.03],
@@ -317,14 +318,14 @@ window.onload = function main() {
         },
 
         sidewalks1: {
-            url: 'src/environment/city/street/sidewalks/scene.gltf',
+            url: 'src/environment/city/road/sidewalks/scene.gltf',
             position: [0, 0, 0],
             scale:    [1, 1, 1],
             rotation: [0, 0, 0],
         },
 
         sidewalks2: {
-            url: 'src/environment/city/street/sidewalks/scene.gltf',
+            url: 'src/environment/city/road/sidewalks/scene.gltf',
             position: [0, 0, -630],
             scale:    [1, 1, 1],
             rotation: [0, 0, 0],
@@ -419,7 +420,7 @@ window.onload = function main() {
             url: 'src/environment/highway/road/billboard/scene.gltf',
             position: [65, 0, -90],
             scale:    [0.15, 0.15, 0.15],
-            rotation: [0, 0, 0],
+            rotation: [0, 0, 0]
         },
 
         highwayFenceSx: {
@@ -428,14 +429,14 @@ window.onload = function main() {
             position: [-45, 1.6, 0],
             //scale:    [1.5, 1.5, 1.5],
             scale: [3, 3, 500],
-            rotation: [0, 0, 0],
+            rotation: [0, 0, 0]
         },
 
         highwayFenceDx: {
             url: 'src/environment/highway/road/highway_fence/scene.gltf',
             position: [45, 1.6, 0],
             scale:    [3, 3, 500],
-            rotation: [0, 0, 0],
+            rotation: [0, 0, 0]
         },
 
         highwayFenceSx2: {
@@ -444,28 +445,42 @@ window.onload = function main() {
             position: [-45, 1.6, -500],
             //scale:    [1.5, 1.5, 1.5],
             scale: [3, 3, 500],
-            rotation: [0, 0, 0],
+            rotation: [0, 0, 0]
         },
 
         highwayFenceDx2: {
             url: 'src/environment/highway/road/highway_fence/scene.gltf',
             position: [45, 1.6, -500],
             scale: [3, 3, 500],
-            rotation: [0, 0, 0],
+            rotation: [0, 0, 0]
         },
 
         jerseyGroup: {
             url: 'src/environment/highway/road/jersey_barrier_group/scene.gltf',
-            position: [0, 1.8, 50],
+            position: [0, 1.8, -250],
             scale: [1, 1, 1],
             rotation: [0, 0, 0],
+
+            modelInfo: {
+              mass: 0, // Kg
+              boxSizeXFactor: 0.6,
+              boxSizeYFactor: 0.5,
+              boxSizeZFactor: 0.5,
+            }
         },
 
         jerseyGroup2: {
             url: 'src/environment/highway/road/jersey_barrier_group/scene.gltf',
-            position: [0, 1.8, -100],
+            position: [0, 1.8, -1200],
             scale: [1, 1, 1],
             rotation: [0, 0, 0],
+
+            modelInfo: {
+              mass: 0, // Kg
+              boxSizeXFactor: 0.6,
+              boxSizeYFactor: 0.5,
+              boxSizeZFactor: 0.5
+            }
         }
     };
 
@@ -492,14 +507,14 @@ window.onload = function main() {
         },
 
         tree: {
-            url: 'src/environment/city/street/tree/scene.gltf',
+            url: 'src/environment/city/road/tree/scene.gltf',
             position: [40, 0, -170],
             scale:    [0.02, 0.02, 0.02],
             rotation: [0, Math.PI / 2, 0],
         },
 
         pineTree: {
-            url: 'src/environment/city/street/pine_tree/scene.gltf',
+            url: 'src/environment/city/road/pine_tree/scene.gltf',
             position: [-40, 0, -100],
             scale:    [0.02, 0.02, 0.02],
             rotation: [0, Math.PI / 2, 0],
@@ -1304,9 +1319,9 @@ window.onload = function main() {
     let chosenEnv   = Utils.getCookie("env"),
         environment = environments[chosenEnv];
 
-    /*let chosenCar     = Utils.getCookie("car"),
+    let chosenCar     = Utils.getCookie("car"),
         selectedModel = dynamicModels[chosenCar];//*/
-    let selectedModel = dynamicModels.bmwI8;
+    //let selectedModel = dynamicModels.bmwI8;
     //let selectedModel = dynamicModels.lamborghini;
     //let selectedModel = dynamicModels.audiR8;
     //let selectedModel = dynamicModels.tesla;
@@ -1529,6 +1544,8 @@ window.onload = function main() {
       scene.background = new THREE.Color(color);
     }*/
 
+    let cameraOffset = 21;
+
     // Infinite terrain with a texture
     if (environment == environments.CITY) {
       // City environment
@@ -1540,7 +1557,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI/2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/street_blank.png", texInfo);
+      setEnvironment("src/textures/street_blank.png", texInfo);
 
       texInfo = {
         repeat: { x: 2, y: 4000 },
@@ -1549,7 +1566,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI/2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/street_texture.jpg", texInfo, false);
+      setEnvironment("src/textures/street_texture.jpg", texInfo, false);
 
       lanexUp   = [6, 14];
       lanexDown = [-14, -6];
@@ -1565,7 +1582,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI/2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/desert_texture.jpg", texInfo);
+      setEnvironment("src/textures/desert_texture.jpg", texInfo);
 
       texInfo = {
         repeat: { x: 1, y: 3000 },
@@ -1574,7 +1591,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI/2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/road66.jpg", texInfo, false);
+      setEnvironment("src/textures/road66.jpg", texInfo, false);
 
       lanexUp   = [5];
       lanexDown = [-5];
@@ -1588,7 +1605,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI/2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/terrain_texture.jpg", texInfo);
+      setEnvironment("src/textures/terrain_texture.jpg", texInfo);
 
       texInfo = {
         repeat: { x: 3000, y: 3 },
@@ -1597,10 +1614,12 @@ window.onload = function main() {
         rotation: { x: -Math.PI/2, y: 0, z: Math.PI/2 }
       };
 
-      setEnvironment("/src/textures/highway_texture.jpg", texInfo, false);
+      setEnvironment("src/textures/highway_texture.jpg", texInfo, false);
 
       lanexUp = [5, 15, 25, 35];
       lanexDown = [-5, -15, -25, -35];
+
+      cameraOffset = 31;
     }
     else {
       // Forest environment
@@ -1611,7 +1630,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/terrain_texture.jpg", texInfo);
+      setEnvironment("src/textures/terrain_texture.jpg", texInfo);
 
       texInfo = {
         repeat: { x: 1, y: 300 },
@@ -1620,7 +1639,7 @@ window.onload = function main() {
         rotation: { x: -Math.PI / 2, y: 0, z: 0 }
       };
 
-      setEnvironment("/src/textures/forest.jpg", texInfo, false);
+      setEnvironment("src/textures/forest.jpg", texInfo, false);
     }
 
     { // Lateral limits
@@ -1665,7 +1684,7 @@ window.onload = function main() {
     }
 
     { // Clouds
-      const tex = new THREE.TextureLoader().load("/src/textures/cloud.png");
+      const tex = new THREE.TextureLoader().load("src/textures/cloud.png");
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       tex.repeat.set(1, 1);
       tex.wrapT = THREE.RepeatWrapping;
@@ -1704,6 +1723,11 @@ window.onload = function main() {
 
     scene.add(myCube);*/
 
+    // Resume game when RESUME is clicked
+    document.getElementById("resumeBtn").onclick = function () {
+      game.pauseGame();
+    }
+
     // Show app stats
     const stats = new Stats();
     stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -1714,7 +1738,8 @@ window.onload = function main() {
     requestAnimationFrame(animate);
 
     function animate(time) {
-      
+      if (isBlur) return;
+
       stats.begin();
 
       if (Utils.resizeRendererToDisplaySize(renderer)) {
@@ -1735,23 +1760,23 @@ window.onload = function main() {
       console.log("before: " + before + "\n");
       console.log("deltaTime: " + deltaTime + "\n");*/
 
-      updateGameLogic(time);
+      // Check if pause input
+      if (inputManager.pauseAction())
+        game.pauseGame();
+
+      // Check if game is paused to update or not logic and physics
+      if (!game.isPaused) {
+        updateGameLogic(time);
+        updatePhysics();
+      }
+
       inputManager.update();
-      updatePhysics();
 
       //console.log("renderer.info.render.calls: " + renderer.info.render.calls);
 
       stats.end();
-      
-      if (!isPlay || game.isPaused) {
-        setTimeout(function () {
-          game.pauseGame();
-        }, 60000);
-      }
-      else {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-      }
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
     }
 
 
@@ -1776,7 +1801,7 @@ window.onload = function main() {
 
         // Update camera
         zPosPlayer = player.getPosition().z;
-        camera.position.z = zPosPlayer + 21;
+        camera.position.z = zPosPlayer + cameraOffset;
         camera.lookAt(0, 5, zPosPlayer);
         camera.updateProjectionMatrix();//*/
 
@@ -2037,52 +2062,49 @@ window.onload = function main() {
 
           if (currentCar) {
             // Check if currentCar is near to the player and move it
-            if ( Math.abs(zPosPlayer > carPosition.z - 200) || model.gltf.scene.visible == false ) {
+            if ( Math.abs(zPosPlayer > carPosition.z - 200) || model.gltf.scene.visible == false ) { // 200
               model.gltf.scene.visible = true;
               // Move car forward according to its orientation
               currentCar.move(0, 0, -1);
-
-              // Depending on car orientation move cars in the same direction of the player (-1) or viceversa (1)
-              /*if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan)
-                currentCar.move(0, 0, -1);
-              else
-                currentCar.move(0, 0, 1);*/
-
             }
-            // Otherwise translate it far away resetting initial orientation and picking random the lane
+            // Otherwise translate it far away resetting orientation and picking at random the lane
             else {
-              /*if (model == dynamicModels.audiR8 || model == dynamicModels.bmwE30 || model == dynamicModels.fordFoxSedan)
-                var random = lanexUp[ Math.floor(Math.random() * lanexUp.length) ];
-              else
-                var random = lanexDown[ Math.floor(Math.random() * lanexDown.length) ];*/
+              console.log("============ TRANSLATE CAR ============");
+              console.log("car name: " + currentCar.getName());
+              console.log("BEFORE carPosition.z:" + carPosition.z);
+              const orientation = new THREE.Vector3();
+              console.log("BEFORE car orientation:");
+              console.log(currentCar.get3DModel().getWorldDirection(orientation));
+              //const random = placeCar(model, false, carPosition.z-500);
+              const random = placeCar(model, false, zPosPlayer - 210);
+              console.log("AFTER carPosition.z:" + carPosition.z);
+              console.log("AFTER car orientation:");
+              console.log(currentCar.get3DModel().getWorldDirection(orientation));
 
-              const random = placeCar(model);
+              currentCar.getPhysicsBody().setLinearVelocity( new Ammo.btVector3(0,0,0) );
 
               let ms = currentCar.getPhysicsBody().getMotionState();
               if (ms) {
-                const transform = new Ammo.btTransform();
-                ms.getWorldTransform(transform);
-                transform.setOrigin( new Ammo.btVector3(
+                ms.getWorldTransform(TRANSFORM_AUX);
+                TRANSFORM_AUX.setOrigin( new Ammo.btVector3(
                   random,
                   carPosition.y,
-                  carPosition.z - 500) );
-                /*const quaternion = currentCar.getInitialQuaternion();
-                transform.setRotation( new Ammo.btQuaternion(
-                  quaternion.x,
-                  quaternion.y,
-                  quaternion.z,
-                  quaternion.w) );*/
+                  carPosition.z) );
+                //  carPosition.z - 500) );
                 const quaternion = currentCar.get3DModel().quaternion;
-                transform.setRotation( new Ammo.btQuaternion(
+                console.log("quaternion:" );
+                console.log(quaternion);
+                TRANSFORM_AUX.setRotation( new Ammo.btQuaternion(
                   quaternion.x,
                   quaternion.y,
                   quaternion.z,
                   quaternion.w) );
-                ms = new Ammo.btDefaultMotionState(transform);
+                ms = new Ammo.btDefaultMotionState(TRANSFORM_AUX);
                 currentCar.getPhysicsBody().setMotionState(ms);
               }
 
               model.gltf.scene.visible = false;
+              console.log("============ END TRANSLATE CAR ============");
             }
           }
         }
@@ -2128,6 +2150,9 @@ window.onload = function main() {
           o.receiveShadow = true;
         }
       });
+
+      if (model.modelInfo)
+        model.object = new Model(modelScene, model.modelInfo, game);
 
       //scene.add(modelScene);
     }
@@ -2249,30 +2274,38 @@ window.onload = function main() {
       }
     }
 
-    function placeCar(model, initZ=false) {
+    function placeCar(model, randomZ, zNew=0) {
       if (!model)  return;
 
       const modelScene = model.gltf.scene;
+      console.log("********* PLACE CAR *********");
+      console.log("model name: " + model.carInfo.carName);
 
       // Place car on the lanes randomly
-      let randomX = Math.random(), randomZ = initZ ? randomX * 470 + randomX * 630 : modelScene.position.z;
+      let randomX = Math.random(),
+          zCar = randomZ ? randomX * 470 /*+ randomX * 630*/ : zNew;
+      console.log("randomX: " + randomX);
       if (randomX < 0.5) {
         // Car is placed facing the same direction of the player
+        console.log("same direction");
         randomX = lanexUp[ Math.floor(randomX * lanexUp.length) ];
 
-        modelScene.position.set(randomX, model.position[1], randomZ);
+        modelScene.position.set(randomX, model.position[1], zCar);
         modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 30);
       }
       else {
         // Car is placed facing the opposite direction of the player
+        console.log("opposite direction");
         randomX = lanexDown[ Math.floor(randomX * lanexUp.length) ];
 
-        modelScene.position.set(randomX, model.position[1], randomZ);
+        modelScene.position.set(randomX, model.position[1], zCar);
         modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z + 30);
       }
 
       console.log("randomX: " + randomX);
-      console.log("randomZ: " + randomZ);
+      console.log("randomZ: " + zCar);
+      console.log("********* END PLACE CAR *********");
+
       return randomX;
     }
 
@@ -2516,7 +2549,7 @@ window.onload = function main() {
 
     // Add some road crosswalks to the scene
     function addRoadCrosswalks() {
-      const tex = new THREE.TextureLoader().load("/src/textures/street_crosswalks.png");
+      const tex = new THREE.TextureLoader().load("src/textures/street_crosswalks.png");
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       tex.repeat.set(3, 1);
       tex.wrapT = THREE.RepeatWrapping;

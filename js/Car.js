@@ -95,7 +95,8 @@ class Car extends Model {
   // Return current speed in Km/h, negative value if reverse
   getCurrentSpeedKmHour() {
     const speed = Utils.toKmHour( super.getPhysicsBody().getLinearVelocity().length() );
-    return this.isForwardMovement() ? speed : -speed;
+    //return this.isForwardMovement() ? speed : -speed;
+    return speed;
   }
 
   // Return car orientation
@@ -112,9 +113,9 @@ class Car extends Model {
   // - Positive if |a| > 0, |b| > 0 and -90° < theta < 90°
   // - Zero if |a| > 0, |b| > 0 or theta = 90° => a and b are orthogonal
   // - Negative if |a| > 0, |b| > 0 and theta > 90°
-  isForwardMovement() {
+  /*isForwardMovement() {
     return this.dot > 0;
-  }
+  }*/
 
   // Move the car along the 3 axes:
   // - moveX = -1 => left movement    ; moveX = 1 => right movement
@@ -130,10 +131,18 @@ class Car extends Model {
       v.z = Math.abs(v.z) > 0.7 ? v.z : 0;
     }
 
-    //console.log("orientation:");
-    //console.log(this.orientation);
-
     super.get3DModel().getWorldDirection(this.orientation);
+
+
+    if (this.getName() == "Bmw i8") {
+      console.log("car name: " + this.getName());
+      console.log("orientation:");
+      console.log(this.orientation);
+    }
+
+    /*console.log("car name: " + this.getName());
+    console.log("orientation:");
+    console.log(this.orientation);*/
 
     const airResistanceCoef = 0.8,
           friction          = 1;
@@ -149,7 +158,7 @@ class Car extends Model {
     // - Positive if |a| > 0, |b| > 0 and -90° < theta < 90°
     // - Zero if |a| > 0, |b| > 0 or theta = 90° => a and b are orthogonal
     // - Negative if |a| > 0, |b| > 0 and theta > 90°
-    this.dot = this.orientation.dot(this.velocityVec);
+    //this.dot = this.orientation.dot(this.velocityVec);
 
     let engineForce = 0,
         speed = velocity.length().toFixed(2);
@@ -293,7 +302,7 @@ class Car extends Model {
     //console.log("correction: " + correction);
 
     // IN THE GAME THE PLAYER WILL NEVER GO IN REVERSE
-    if (this.isForwardMovement()) {
+    //if (this.isForwardMovement()) {
       if (speed < this.maxSpeed)
         super.getPhysicsBody().applyForce(
           new Ammo.btVector3(this.tractionForce.x, this.tractionForce.y, this.tractionForce.z),
@@ -305,7 +314,7 @@ class Car extends Model {
     // WITH APPLY QUATERNION ON tractionForce
     //super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(0, 0, -tractionForce.z) );
     //super.getPhysicsBody().applyCentralForce( new Ammo.btVector3(-tractionForce.x, tractionForce.y, -tractionForce.z) );
-    }
+    /*}
 
     // IN THE GAME THE PLAYER WILL NEVER GO IN REVERSE
     else if (speed < this.maxSpeedReverse)
@@ -324,7 +333,8 @@ class Car extends Model {
 
     // Low speed turning
     // Reverse the steering angle if reverse movement
-    const rad = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) : Utils.toRadiants(-this.steeringAngle * 40);
+    //const rad = this.isForwardMovement() ? Utils.toRadiants(this.steeringAngle * 40) : Utils.toRadiants(-this.steeringAngle * 40);
+    const rad = Utils.toRadiants(this.steeringAngle * 40);
     //console.log("rad: " + rad);
 
     // Ok for parking mode (DEBUG)
