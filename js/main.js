@@ -581,7 +581,7 @@ window.onload = function main() {
                     boxSizeYFactor: 0.04,
                     boxSizeZFactor: 0.6,
                     carName: "Chevrolet Suburban Sheriff",
-                    engineForce: 38000
+                    engineForce: 40000
                 },
                 wheelsNames: ["DEF-WheelFtL_Car_Rig", "DEF-WheelFtR_Car_Rig",
                     "DEF-WheelBkL_Car_Rig", "DEF-WheelBkR_Car_Rig"],
@@ -661,11 +661,11 @@ window.onload = function main() {
                 carInfo: {
                     mass: 1700,    // Kg
                     maxSpeed: 450, // Km/h
-                    boxSizeXFactor: 0.9,
+                    boxSizeXFactor: 0.5,
                     boxSizeYFactor: 0.4,
-                    boxSizeZFactor: 0.63,
+                    boxSizeZFactor: 0.4,
                     carName: "Audi R8",
-                    engineForce: 25000,
+                    engineForce: 26500,
                     leftBalance: -0.0075,
                     rightBalance: -0.0075
                 },
@@ -861,8 +861,11 @@ window.onload = function main() {
 
         let policeSelModel = dynamicModels.chevroletSheriff;
 
-        if (selectedModel == dynamicModels.bmwI8 || selectedModel == dynamicModels.tesla)
-          dynamicModels.chevroletSheriff.carInfo.engineForce = 52000;
+
+        if (selectedModel == dynamicModels.bmwI8)
+          dynamicModels.chevroletSheriff.carInfo.engineForce = 53000;
+        else if (selectedModel == dynamicModels.tesla)
+          dynamicModels.chevroletSheriff.carInfo.engineForce = 45000;
 
         loadModels(staticModels);
         loadModels(dynamicModels);
