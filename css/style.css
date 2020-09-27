@@ -30,30 +30,34 @@ canvas {
   user-select: none;
 }
 
-#menu {
-	background: #310404 url("/src/images/background.jpeg") no-repeat center center fixed;
+/*#menu {
+	background: #310404 url("src/images/background.jpeg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: 100% 100%;
 	font-family: overwatch-italic;
 	overflow: scroll;
-}
+}*/
+
 .container {
 	width: 100%;
 	position: relative;
 	overflow: hidden;
 }
+
 a {
 	text-decoration: none;
 	height: fit-content;
 }
+
 h1.main, p.demos {
 	-webkit-animation-delay: 18s;
 	-moz-animation-delay: 18s;
 	-ms-animation-delay: 18s;
 	animation-delay: 18s;
 }
+
 .sp-container {
 	display: block;
 	overflow-x: hidden;
@@ -68,6 +72,7 @@ h1.main, p.demos {
 	background: -ms-radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0.7));
 	background: radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0.7));
 }
+
 .sp-content {
 	position: absolute;
 	width: 100%;
@@ -76,6 +81,7 @@ h1.main, p.demos {
 	top: 0px;
 	z-index: 1000;
 }
+
 .sp-container h2 {
 	position: absolute;
 	top: 50%;
@@ -91,12 +97,14 @@ h1.main, p.demos {
 	-ms-animation: blurFadeInOut 3s ease-in backwards;
 	animation: blurFadeInOut 3s ease-in backwards;
 }
+
 .sp-container h2.frame-1 {
 	-webkit-animation-delay: 0s;
 	-moz-animation-delay: 0s;
 	-ms-animation-delay: 0s;
 	animation-delay: 0s;
 }
+
 .sp-container h2.frame-2 {
   position: absolute;
   top: 10%;
@@ -107,6 +115,7 @@ h1.main, p.demos {
 	color: transparent;
   text-shadow: 0px 0px 1px #fff;
 }
+
 .sp-container h2.frame-2 span {
 	-webkit-animation: blurFadeIn 3s ease-in 2s backwards;
 	-moz-animation: blurFadeIn 1s ease-in 2s backwards;
@@ -115,22 +124,25 @@ h1.main, p.demos {
 	color: transparent;
 	text-shadow: 0px 0px 1px #fff;
 }
+
 .sp-container h2.frame-2 span:nth-child(2) {
 	-webkit-animation-delay: 3s;
 	-moz-animation-delay: 3s;
 	-ms-animation-delay: 3s;
 	animation-delay: 3s;
 }
+
 .sp-container h2.frame-2 span:nth-child(3) {
 	-webkit-animation-delay: 4s;
 	-moz-animation-delay: 4s;
 	-ms-animation-delay: 4s;
 	animation-delay: 4s;
 }
+
  #btn-group{
   position: relative;
   top: 4%;
-} 
+}
 
 .sp-globe {
 	position: absolute;
@@ -153,6 +165,7 @@ h1.main, p.demos {
 	-ms-transform: scale(5);
 	transform: scale(5);
 }
+
 .sp-circle-link {
 	position: absolute;
 	left: 50%;
@@ -178,6 +191,7 @@ h1.main, p.demos {
 	-ms-transform: scale(1) rotate(0deg);
 	transform: scale(1) rotate(0deg);
 }
+
 .sp-circle-link:hover {
 	background: #85373b;
 	color: #fff;
@@ -196,13 +210,13 @@ h1.main, p.demos {
     text-shadow: 0px 0px 3px #cecece;
     transform-origin: bottom;
 	transition: all .05s ease-in;
-	
+
 	-webkit-animation: blurFadeIn 1s linear 6s backwards;
 	-moz-animation: blurFadeIn 1s linear 6s backwards;
 	-ms-animation: blurFadeIn 1s linear 6s backwards;
 	animation: blurFadeIn 1s linear 6s backwards;
   }
-  
+
   .italic.highlight {
     color: #f3c026;
     text-shadow: 0px 0px 5px #bb7e29;
@@ -237,33 +251,33 @@ h1.main, p.demos {
   color: black;
 }
 
-#audiR8Btn {
-	background-image: url('/src/images/audi.jpeg');
+/*#audiR8Btn {
+	background-image: url('src/images/audi.jpeg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
 }
 
 #bmwI8Btn {
-	background-image: url('/src/images/bmw.jpeg');
+	background-image: url('src/images/bmw.jpeg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
 }
 
 #lamborghiniBtn {
-	background-image: url('/src/images/lamborghini.jpeg');
+	background-image: url('src/images/lamborghini.jpeg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
 }
 
 #teslaBtn {
-	background-image: url('/src/images/tesla.jpeg');
+	background-image: url('src/images/tesla.jpeg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
-}
+}*/
 
 button:hover {
 	opacity: 0.5;
@@ -301,22 +315,22 @@ button:hover {
 	animation: blurFadeIn 1s linear 0s backwards;
 }
 
-#cityBtn {
-	background-image: url('/src/images/city.png');
+/*#cityBtn {
+	background-image: url('src/images/city.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
 }
 
 #highwayBtn {
-	background-image: url('/src/images/highway.png');
+	background-image: url('src/images/highway.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
 }
 
 #countryBtn {
-	background-image: url('/src/images/country.png');
+	background-image: url('src/images/country.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 100% 100%;
@@ -326,7 +340,7 @@ button:hover {
 	width: 250px;
 	height: 250px;
 	background-color: #FF0000;
-	background-image: url('/src/sounds/');
+	background-image: url('src/sounds/');
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -336,7 +350,7 @@ button:hover {
 	width: 250px;
 	height: 250px;
 	background-color: #FF0000;
-	background-image: url('/src/sounds/head.png');
+	background-image: url('src/sounds/head.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -357,8 +371,9 @@ button:hover {
 
 img {
 	display: block;
-    margin-left: auto;
+  margin-left: auto;
 	margin-right: auto;
+  margin-top: 10%;
 	width: 50%;
 	height: 50%;
 }
@@ -707,9 +722,9 @@ img {
     color: white;
     font-family: overwatch-italic;
 	font-size: 100px;
-	
+
 	transition: all .05s ease-in;
-	
+
 	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
 	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
 	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
@@ -726,9 +741,9 @@ img {
     color: white;
     font-family: overwatch-italic;
 	font-size: 100px;
-	
+
 	transition: all .05s ease-in;
-	
+
 	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
 	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
 	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
@@ -748,9 +763,9 @@ img {
     color: red;
     font-family: overwatch-italic;
 	font-size: 200px;
-	
+
 	transition: all .05s ease-in;
-	
+
 	-webkit-animation: blurFadeIn 1s linear 0s backwards;
 	-moz-animation: blurFadeIn 1s linear 0s backwards;
 	-ms-animation: blurFadeIn 1s linear 0s backwards;
@@ -767,9 +782,9 @@ img {
     color: white;
     font-family: overwatch-italic;
 	font-size: 60px;
-	
+
 	transition: all .05s ease-in;
-	
+
 	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
 	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
 	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
@@ -786,9 +801,9 @@ img {
     color: white;
     font-family: overwatch-italic;
 	font-size: 60px;
-	
+
 	transition: all .05s ease-in;
-	
+
 	-webkit-animation: blurFadeIn 1s linear 0.5s backwards;
 	-moz-animation: blurFadeIn 1s linear 0.5s backwards;
 	-ms-animation: blurFadeIn 1s linear 0.5s backwards;
@@ -802,7 +817,7 @@ img {
 
 #mainmenu, #restart {
 	color: white;
-} 
+}
 
 #mainmenu:hover, #resume:hover, #restart:hover {
 	color: orange;
