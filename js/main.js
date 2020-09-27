@@ -83,7 +83,7 @@ window.onload = function main() {
 
         // DISABLE WHEN GAME IS READY
         // Controls for zooming and moving around the scene
-        const controls = new OrbitControls(camera, canvas);
+        /*const controls = new OrbitControls(camera, canvas);
         controls.target.set(0, 5, 0);
         controls.update();//*/
 
