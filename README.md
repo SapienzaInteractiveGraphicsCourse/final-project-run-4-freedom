@@ -1,6 +1,6 @@
 # Run 4 Freedom
 A road, a sound of sirens, endless obstacles between you and your freedom.
-Run as fast as you can to achieve your coveted goal in 4 different scenarios.
+Run as fast as you can to achieve your coveted goal in 3 different scenarios.
 
 ### City
 ![City scenario](src/images/city.png)
@@ -15,6 +15,8 @@ Run as fast as you can to achieve your coveted goal in 4 different scenarios.
 To start playing you don't need to clone this repo, since the game is available online at the following [link](https://sapienzainteractivegraphicscourse.github.io/final-project-run-4-freedom/).
 
 If you want to modify our code, clone this repo and as a workaround for the cross-origin policy issue, start a web server on the local machine (e.g. via python3 -m http.server). Finally, enter the following URL in your browser http://localhost:8000/index.html.
+
+The first loading may take some time, be patient.
 
 ## Built With
 [three.js](https://threejs.org/) (a JavaScript 3D library with the aim to create an easy to use, lightweight, 3D library with a default WebGL renderer).

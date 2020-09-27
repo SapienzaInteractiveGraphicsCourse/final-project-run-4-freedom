@@ -10,7 +10,7 @@ class Police {
       this.model        = null;
       this.name         = null;
 
-      this.interpolationFactor = 0.005;
+      //this.interpolationFactor = 0.005;
     }
 
     // Get current model for the police (model is not 3D model)
@@ -27,7 +27,7 @@ class Police {
     update(deltaTime) {
       if(!deltaTime || !this.model)   return;
 
-      const move = () => {
+      /*const move = () => {
         // Make the police chasing the player
         const posPlayer = this.game.getPlayer().getPosition();
         const posPolice = this.getPosition();
@@ -52,7 +52,49 @@ class Police {
         }
       }
 
-      move();
+      move();*/
+
+
+      const turnDirection = (this.inputManager.rightAction() ?  1 : 0) +
+                            (this.inputManager.leftAction()  ? -1 : 0);
+
+      /*const turnRotation = this.model.getTurnSpeed() * turnDirection * deltaTime;
+
+      const forwardDirection = (this.inputManager.backAction()    ?  1 : 0) +
+                               (this.inputManager.forwardAction() ? -1 : 0);*/
+
+      if (this.model) {
+        const updateVehiclePhysics = () => {
+					if (this.inputManager.leftAction()) {
+						if (this.model.steeringAngle < this.model.steeringClamp)
+							this.model.steeringAngle += this.model.steeringIncrement;
+					}
+					else {
+						if (this.inputManager.rightAction()) {
+							if (this.model.steeringAngle > -this.model.steeringClamp)
+								this.model.steeringAngle -= this.model.steeringIncrement;
+						}
+						else {
+							if (this.model.steeringAngle < -this.model.steeringIncrement)
+								this.model.steeringAngle += this.model.steeringIncrement;
+							else {
+								if (this.model.steeringAngle > this.model.steeringIncrement)
+									this.model.steeringAngle -= this.model.steeringIncrement;
+								else
+									this.model.steeringAngle = 0;
+							}
+						}
+					}
+
+          //console.log("getPosition(): ");
+          //console.log(this.getPosition());
+          //this.model.move(turnDirection, 0, forwardDirection);
+          this.model.move(turnDirection, 0, -1); // Auto-acceleration
+        }
+
+        updateVehiclePhysics();
+      }
+
 
       if (this.model instanceof Car) {
         this.model.rotateWheels();
@@ -90,10 +132,10 @@ class Police {
       return this.model ? this.model.getCurrentSpeedKmHour() : null;
     }
 
-    incrementInterpolation() {
+    /*incrementInterpolation() {
       this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.00005, 0.005, 0.4);
       //console.log("this.interpolationFactor: " + this.interpolationFactor);
-    }
+    }*/
 
   }
 

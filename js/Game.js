@@ -8,7 +8,7 @@ class Game {
 
     this.player = null;
     this.police = null;
-    
+
     this.isPaused = false;
   }
 
@@ -70,7 +70,7 @@ class Game {
   update(deltaTime) {
     if(!deltaTime || !this.player || !this.police)   return;
 
-    this.police.incrementInterpolation();
+    //this.police.incrementInterpolation();
 
     this.player.update(deltaTime);
     this.police.update(deltaTime);

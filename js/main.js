@@ -1,18 +1,18 @@
-import * as THREE from "https://unpkg.com/three@0.118.3/build/three.module.js";
-import { GLTFLoader } from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
+import * as THREE        from "https://unpkg.com/three@0.118.3/build/three.module.js";
+import { GLTFLoader }    from "https://unpkg.com/three@0.118.3/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "https://unpkg.com/three@0.118.3/examples/jsm/controls/OrbitControls.js";
-import { GUI } from "https://unpkg.com/three@0.118.3/examples/jsm/libs/dat.gui.module.js";
-import Stats from "https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js";
+import { GUI }           from "https://unpkg.com/three@0.118.3/examples/jsm/libs/dat.gui.module.js";
+import Stats             from "https://unpkg.com/three@0.118.3/examples/jsm/libs/stats.module.js";
 
-import { Utils } from "./Utils.js";
+import { Utils }        from "./Utils.js";
 import { InputManager } from "./InputManager.js";
-import { Game } from "./Game.js";
-import { Player } from "./Player.js";
-import { Police } from "./Police.js";
-import { Model } from "./Model.js";
-import { Car } from "./Car.js";
-import { PoliceCar } from "./PoliceCar.js";
-import { Character } from "./Character.js";
+import { Game }         from "./Game.js";
+import { Player }       from "./Player.js";
+import { Police }       from "./Police.js";
+import { Model }        from "./Model.js";
+import { Car }          from "./Car.js";
+import { PoliceCar }    from "./PoliceCar.js";
+import { Character }    from "./Character.js";
 
 "use strict"
 
@@ -83,7 +83,7 @@ window.onload = function main() {
 
         // DISABLE WHEN GAME IS READY
         // Controls for zooming and moving around the scene
-        /*const controls = new OrbitControls(camera, canvas);
+        const controls = new OrbitControls(camera, canvas);
         controls.target.set(0, 5, 0);
         controls.update();//*/
 
@@ -397,7 +397,7 @@ window.onload = function main() {
                 url: 'src/environment/country - desert/road/old_rusty_car_2/scene.gltf',
                 //position: [10, 0, -45],
                 position: [-30, 0, -90],
-                scale: [0.076, 0.076, 0.076],
+                scale: [0.05, 0.05, 0.05],
                 rotation: [0, 0, 0],
             },
 
@@ -570,17 +570,18 @@ window.onload = function main() {
             chevroletSheriff: {
                 url: 'src/vehicles/police/chevrolet_suburban_sheriff/scene.gltf',
                 //position: [-10, 0, 25],
-                position: [-10, 1, 25],
+                position: [10, 0.3, 25],
                 scale: [2.4, 2.4, 2.4],
                 rotation: [0, Math.PI, 0],
 
                 carInfo: {
                     mass: 2634,    // Kg
-                    maxSpeed: 174, // Km/h
+                    maxSpeed: 450, //174, // Km/h
                     boxSizeXFactor: 0.6,
                     boxSizeYFactor: 0.04,
                     boxSizeZFactor: 0.6,
-                    carName: "Chevrolet Suburban Sheriff"
+                    carName: "Chevrolet Suburban Sheriff",
+                    engineForce: 38000
                 },
                 wheelsNames: ["DEF-WheelFtL_Car_Rig", "DEF-WheelFtR_Car_Rig",
                     "DEF-WheelBkL_Car_Rig", "DEF-WheelBkR_Car_Rig"],
@@ -591,7 +592,7 @@ window.onload = function main() {
             bmwI8: {
                 url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                 //position: [0, 1.5, 0],
-                position: [-10, 1.5, 0],
+                position: [10, 1.5, 0],
                 scale: [0.027, 0.025, 0.027],
                 rotation: [0, Math.PI, 0],
 
@@ -611,7 +612,8 @@ window.onload = function main() {
 
             lamborghini: {
                 url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
-                position: [-10, 1.73, 0],
+                //position: [-10, 1.73, 0],
+                position: [10, 1.73, 0],
                 scale: [0.013, 0.013, 0.013],
                 rotation: [0, Math.PI, 0],
 
@@ -631,8 +633,7 @@ window.onload = function main() {
 
             tesla: {
                 url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
-                //position: [10, 0.35, 0],
-                position: [-10, 0.35, 0],
+                position: [10, 0.35, 0],
                 scale: [0.026, 0.024, 0.026],
                 rotation: [0, Math.PI, 0],
 
@@ -653,7 +654,7 @@ window.onload = function main() {
             audiR8: {
                 url: 'src/vehicles/cars/audi_r8/scene.gltf',
                 //position: [20, 0.5, 0],
-                position: [-10, 0.5, 0],
+                position: [10, 0.5, 0],
                 scale: [0.026, 0.025, 0.026],
                 rotation: [0, 0, 0],
 
@@ -860,6 +861,9 @@ window.onload = function main() {
 
         let policeSelModel = dynamicModels.chevroletSheriff;
 
+        if (selectedModel == dynamicModels.bmwI8 || selectedModel == dynamicModels.tesla)
+          dynamicModels.chevroletSheriff.carInfo.engineForce = 52000;
+
         loadModels(staticModels);
         loadModels(dynamicModels);
 
@@ -941,9 +945,9 @@ window.onload = function main() {
         }
 
         const inputManager = new InputManager();
-        const game = new Game(inputManager, "easy", physicsWorld);
-        const player = new Player(game);
-        const police = new Police(game);
+        const game         = new Game(inputManager, "easy", physicsWorld);
+        const player       = new Player(game);
+        const police       = new Police(game);
         game.setPlayer(player);
         game.setPolice(police);
 
@@ -1003,7 +1007,7 @@ window.onload = function main() {
 
         const sunlightPositionIncrement = 0.15;
 
-        const helper = new THREE.DirectionalLightHelper(sunlight);
+        /*const helper = new THREE.DirectionalLightHelper(sunlight);
         scene.add(helper);
 
         gui.add(sunlight, 'intensity', 0, 100, 0.01);
@@ -1480,9 +1484,37 @@ window.onload = function main() {
         // Move cars independently (IA) but the player and police car
         function moveCars(zPosPlayer, setOfModels) {
             for (const model of Object.values(setOfModels)) {
-                if (model != playerModel && model != policeSelModel) {
+              if (model != playerModel) {
                     const carPosition = model.gltf.scene.position,
                         currentCar = model.car;
+
+                        if (model == policeSelModel) {
+                          if ( Math.abs(zPosPlayer - carPosition.z) > 60 ) {
+                            let ms = policeModel.getPhysicsBody().getMotionState();
+                            if (ms) {
+                                ms.getWorldTransform(TRANSFORM_AUX);
+                                TRANSFORM_AUX.setOrigin(new Ammo.btVector3(
+                                    playerModel.getPosition().x,
+                                    policeModel.getPosition().y,
+                                    zPosPlayer + 20));
+                                policeModel.get3DModel().lookAt(
+                                  policeModel.getPosition().x,
+                                  policeModel.getPosition().y,
+                                  policeModel.getPosition().z - 30);
+                                const quaternion = policeModel.get3DModel().quaternion;
+                                //console.log("quaternion:");
+                                //console.log(quaternion);
+                                TRANSFORM_AUX.setRotation(new Ammo.btQuaternion(
+                                    quaternion.x,
+                                    quaternion.y,
+                                    quaternion.z,
+                                    quaternion.w));
+                                ms = new Ammo.btDefaultMotionState(TRANSFORM_AUX);
+                                policeModel.getPhysicsBody().setMotionState(ms);
+                            }
+                          }
+                          continue;
+                        }
 
                     if (currentCar) {
                         // Check if currentCar is near to the player and move it
@@ -1531,7 +1563,7 @@ window.onload = function main() {
                             }
 
                             model.gltf.scene.visible = false;
-                            console.log("============ END TRANSLATE CAR ============");
+                            //console.log("============ END TRANSLATE CAR ============");
                         }
                     }
                 }
@@ -1725,7 +1757,7 @@ window.onload = function main() {
 
             // Place car on the lanes randomly
             let randomX = Math.random(),
-                zCar = randomZ ? -randomX * 470 - randomX * 170 : zNew;
+                zCar = randomZ ? -20 - randomX * 470 - randomX * 170 : zNew;
             //console.log("randomX: " + randomX);
             if (randomX < 0.5) {
                 // Car is placed facing the same direction of the player
