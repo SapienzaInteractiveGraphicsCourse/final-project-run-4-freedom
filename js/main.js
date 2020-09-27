@@ -484,6 +484,10 @@ window.onload = function main() {
             }
         };
 
+        //MODIFICHE FOREST
+
+        /*
+
         const staticModelsForest = {
 
             lowpolyAbete: {
@@ -566,6 +570,11 @@ window.onload = function main() {
 
         };
 
+
+        */
+
+        /*
+
         let dynamicModelsOld = {
             // Cars
             /*policeCar:          { url: 'src/vehicles/cars/police_car/scene.gltf',
@@ -584,6 +593,8 @@ window.onload = function main() {
                                   wheelsNames: ["DEF-WheelFtL_Car_Rig", "DEF-WheelFtR_Car_Rig", "DEF-WheelBkL_Car_Rig",
                                     "DEF-WheelBkR_Car_Rig"]
                                 },*/
+
+            /*
             chevroletSheriff: {
                 url: 'src/vehicles/police/chevrolet_suburban_sheriff/scene.gltf',
                 position: [0, 0, 25],
@@ -676,6 +687,8 @@ window.onload = function main() {
                                   },
                                   wheelsNames: null // static model (due to its 3D model)
                                 },*/
+
+            /*
             audiR8: {
                 url: 'src/vehicles/cars/audi_r8/scene.gltf',
                 position: [20, 0.5, 0],
@@ -1348,14 +1361,18 @@ window.onload = function main() {
                                   componentsNames: ["rp_nathan_animated_003_walking_head_07"]
                                   // TODO when hierarchical structure is defined
                                 }//,*/
+
+        /*
         };
+
+        */
 
 
 
         const dynamicModelsBase = {
             chevroletSheriff: {
                 url: 'src/vehicles/police/chevrolet_suburban_sheriff/scene.gltf',
-                position: [0, 0, 25],
+                position: [-10, 0, 25],
                 scale: [2.4, 2.4, 2.4],
                 rotation: [0, Math.PI, 0],
 
@@ -1381,10 +1398,10 @@ window.onload = function main() {
 
                 carInfo: {
                     mass: 1920,    // Kg
-                    maxSpeed: 250, // Km/h
+                    maxSpeed: 450, // Km/h
                     boxSizeXFactor: 0.4,
-                    boxSizeYFactor: 0.52,
-                    boxSizeZFactor: 0.2,
+                    boxSizeYFactor: 0.5,
+                    boxSizeZFactor: 0.4,
                     carName: "Bmw i8",
                     engineForce: 40000,
                     leftBalance: -0.01,
@@ -1400,7 +1417,7 @@ window.onload = function main() {
 
                 carInfo: {
                     mass: 1625,    // Kg
-                    maxSpeed: 350, // Km/h
+                    maxSpeed: 450, // Km/h
                     boxSizeXFactor: 0.4,
                     boxSizeYFactor: 0.6,
                     boxSizeZFactor: 0.3,
@@ -1419,9 +1436,9 @@ window.onload = function main() {
 
                 carInfo: {
                     mass: 2316,    // Kg
-                    maxSpeed: 261, // Km/h
+                    maxSpeed: 450, // Km/h
                     boxSizeXFactor: 0.5,
-                    boxSizeYFactor: 0.11,
+                    boxSizeYFactor: 0.5,
                     boxSizeZFactor: 0.4,
                     carName: "Tesla Model S",
                     engineForce: 40000,
@@ -1440,9 +1457,9 @@ window.onload = function main() {
 
                 carInfo: {
                     mass: 1700,    // Kg
-                    maxSpeed: 325, // Km/h
+                    maxSpeed: 450, // Km/h
                     boxSizeXFactor: 0.9,
-                    boxSizeYFactor: 0.15,
+                    boxSizeYFactor: 0.4,
                     boxSizeZFactor: 0.63,
                     carName: "Audi R8",
                     engineForce: 25000,
@@ -1464,17 +1481,18 @@ window.onload = function main() {
 
 
 
-
+            
+            
             dodgeViper: {
                 url: 'src/vehicles/cars/srt_viper_gts_2013/scene.gltf',
-                position: [10, 2, -20],
+                position: [10, 1, -20],
                 scale: [2.5, 2.5, 2.5],
                 rotation: [0, 0, 0],
 
                 carInfo: {
                     mass: 1556,    // Kg
                     maxSpeed: 331, // Km/h
-                    boxSizeXFactor: 0.7,
+                    boxSizeXFactor: 0.9,
                     boxSizeYFactor: 0.5,
                     boxSizeZFactor: 0.7,
                     carName: "Dodge Viper GTS"
@@ -1491,7 +1509,7 @@ window.onload = function main() {
 
             nissanGT: {
                 url: 'src/vehicles/cars/nissan_gt/scene.gltf',
-                position: [-40, 0.3, -20],
+                position: [-40, 0.2, -20],
                 scale: [0.025, 0.025, 0.025],
                 rotation: [0, 0, 0],
 
@@ -1499,8 +1517,8 @@ window.onload = function main() {
                     mass: 1740,    // Kg
                     maxSpeed: 333, // Km/h
                     boxSizeXFactor: 0.8,
-                    boxSizeYFactor: 0.08,
-                    boxSizeZFactor: 0.7,
+                    boxSizeYFactor: 0.3,
+                    boxSizeZFactor: 0.6,
                     carName: "Nissan GT"
                 },
                 wheelsNames: ["wheel", "wheel001", "wheel003", "wheel002"]
@@ -1517,12 +1535,16 @@ window.onload = function main() {
                     mass: 1787,    // Kg
                     maxSpeed: 201, // Km/h
                     boxSizeXFactor: 0.85,
-                    boxSizeYFactor: 0.4,
+                    boxSizeYFactor: 0.3,
                     boxSizeZFactor: 0.7,
                     carName: "Range Rover Evoque"
                 },
                 wheelsNames: ["wheel", "wheel001", "wheel002", "wheel003"]
             }
+
+            
+
+            
 
 
 
@@ -1534,10 +1556,11 @@ window.onload = function main() {
 
 
 
-
+            
+            /*
             lowpolyCar: {
                 url: 'src/vehicles/cars/low_poly_car/scene.gltf',
-                position: [-10, 2, -50],
+                position: [-10, 0, -50],
                 scale: [2.5, 2.5, 2.5],
                 rotation: [0, 0, 0],
 
@@ -1552,28 +1575,33 @@ window.onload = function main() {
                 wheelsNames: ["FRWheel", "RRWheel", "FLWheel", "RLWheel"]
             },
 
+            
 
 
 
 
 
+            
 
             lowpolyTaxiOldStyle: {
                 url: 'src/vehicles/cars/low_poly_taxi_old_style/scene.gltf',
                 position: [14, 0, -150],
-                scale: [0.02, 0.02, 0.02],
+                scale: [0.015, 0.015, 0.015],
                 rotation: [0, Math.PI, 0],
 
                 carInfo: {
                     mass: 1000,    // Kg
                     maxSpeed: 100, // Km/h
-                    boxSizeXFactor: 0.5,
+                    boxSizeXFactor: 0.8,
                     boxSizeYFactor: 0.5,
-                    boxSizeZFactor: 0.5,
+                    boxSizeZFactor: 0.4,
                     carName: "Low Poly Taxi Old Style"
                 },
                 wheelsNames: ["wheel_1", "wheel_2", "wheel_3", "wheel_4"]
             },
+
+            
+            
             lowpolySmallCar: {
                 url: 'src/vehicles/cars/low_poly_small_car/scene.gltf',
                 position: [30, 0, -40],
@@ -1583,15 +1611,18 @@ window.onload = function main() {
                 carInfo: {
                     mass: 800,    // Kg
                     maxSpeed: 90, // Km/h
-                    boxSizeXFactor: 0.5,
-                    boxSizeYFactor: 0.5,
-                    boxSizeZFactor: 0.5,
+                    boxSizeXFactor: 1.2,
+                    boxSizeYFactor: 0.3,
+                    boxSizeZFactor: 0.4,
                     carName: "Low Poly Small Car"
                 },
                 wheelsNames: ["FR_Wheel", "RR_Wheel", "FL_Wheel", "RL_Wheel"]
             },
 
+            
 
+
+            
             bmwE30: {
                 url: 'src/vehicles/cars/bmw_e30/scene.gltf',
                 position: [30, 0, 0],
@@ -1602,12 +1633,14 @@ window.onload = function main() {
                     mass: 1080,    // Kg
                     maxSpeed: 197, // Km/h
                     boxSizeXFactor: 0.7,
-                    boxSizeYFactor: 0.05,
+                    boxSizeYFactor: 0.15,
                     boxSizeZFactor: 0.65,
                     carName: "Bmw E30"
                 },
                 wheelsNames: ["F_wheelL_5", "F_wheelR_6", "B_wheelL_7", "B_wheelR_8"]
-            },
+            }
+            */
+            
 
 
 
@@ -1622,7 +1655,15 @@ window.onload = function main() {
         const environments = {
             CITY: 0,
             COUNTRY: 1,
+
+
+            //MODIFICHE FOREST
+
+            /*
             FOREST: 2,
+            */
+
+
             HIGHWAY: 3
         };
 
@@ -1643,20 +1684,38 @@ window.onload = function main() {
 
         let staticModels = {};
 
+        // Create a loading manager for 3D models
+        const manager = new THREE.LoadingManager();
+        manager.onLoad = init;
+
+        // Load the 3D models
+        const gltfLoader = new GLTFLoader(manager);
+
         switch (environment) {
             case environments.CITY:
                 staticModels = staticModelsCity;
+                loadModels(dynamicModelsCity);
                 break;
             case environments.COUNTRY:
                 staticModels = staticModelsCountry;
                 break;
             case environments.HIGHWAY:
                 staticModels = staticModelsHighway;
+                loadModels(dynamicModelsCity);
+                loadModels(dynamicModelsHighway);
                 break;
+
+            //MODIFICHE FOREST
+            /*
             case environments.FOREST:
                 staticModels = staticModelsForest;
                 break;
+            */
         };
+
+        loadModels(staticModels);
+        //loadModels(dynamicModels);
+        loadModels(dynamicModelsBase);
 
         let playerModel, policeModel;
         let lanexUp, lanexDown;
@@ -1664,9 +1723,7 @@ window.onload = function main() {
         let isPlay = true;
         let isBlur = false;
 
-        // Create a loading manager for 3D models
-        const manager = new THREE.LoadingManager();
-        manager.onLoad = init;
+        
 
         // Create a progress bar to show during loading
         const progressBar = document.getElementById('progressbar');
@@ -1674,13 +1731,10 @@ window.onload = function main() {
             progressBar.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
         };
 
-        // Load the 3D models
-        const gltfLoader = new GLTFLoader(manager);
-        loadModels(staticModels);
-        //loadModels(dynamicModels);
-        loadModels(dynamicModelsBase);
-        loadModels(dynamicModelsCity);
-        loadModels(dynamicModelsHighway);
+        
+        
+        
+        
 
 
 
@@ -1893,8 +1947,8 @@ window.onload = function main() {
 
             setEnvironment("src/textures/street_texture.jpg", texInfo, false);
 
-            lanexUp = [5, 14];
-            lanexDown = [-14, -5];
+            lanexUp = [5, 16];
+            lanexDown = [-16, -5];
 
             addRoadCrosswalks();
         }
@@ -1946,6 +2000,11 @@ window.onload = function main() {
 
             cameraOffset = 31;
         }
+
+
+        //FOREST MODIFICHE
+
+        /*
         else {
             // Forest environment
             let texInfo = {
@@ -1967,6 +2026,8 @@ window.onload = function main() {
             setEnvironment("src/textures/forest.jpg", texInfo, false);
         }
 
+        */
+
         { // Lateral limits
             // Add left limit
             const leftLimit = {
@@ -1976,7 +2037,13 @@ window.onload = function main() {
 
             if (environment == environments.COUNTRY) leftLimit.position.x = 13;
             else if (environment == environments.HIGHWAY) leftLimit.position.x = 50;
+
+
+            //MODIFICHE FOREST
+
+            /*
             else if (environment == environments.FOREST) leftLimit.position.x = 25;
+            */
 
             addLimit(leftLimit);
 
@@ -2685,7 +2752,9 @@ window.onload = function main() {
             if (randomX < 0.5) {
                 // Car is placed facing the same direction of the player
                 console.log("same direction");
-                randomX = lanexUp[Math.floor(randomX * lanexUp.length)];
+
+                let newRandom = Math.random();
+                randomX = lanexUp[Math.floor(newRandom * lanexUp.length)];
 
                 modelScene.position.set(randomX, model.position[1], zCar);
                 modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 30);
@@ -2693,7 +2762,9 @@ window.onload = function main() {
             else {
                 // Car is placed facing the opposite direction of the player
                 console.log("opposite direction");
-                randomX = lanexDown[Math.floor(randomX * lanexUp.length)];
+            
+                let newRandom = Math.random();
+                randomX = lanexDown[Math.floor(newRandom * lanexDown.length)];
 
                 modelScene.position.set(randomX, model.position[1], zCar);
                 modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z + 30);
