@@ -31,11 +31,11 @@ canvas {
 }
 
 #menu {
-	background: #310404 url(https://i.ytimg.com/vi/wOvQAhzWCrM/maxresdefault.jpg) no-repeat center center fixed;
+	background: #310404 url("/src/images/background.jpeg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: cover;
+	background-size: 100% 100%;
 	font-family: overwatch-italic;
 	overflow: scroll;
 }
@@ -55,6 +55,7 @@ h1.main, p.demos {
 	animation-delay: 18s;
 }
 .sp-container {
+	display: block;
 	overflow-x: hidden;
 	position: fixed;
 	top: 0px;
@@ -236,8 +237,36 @@ h1.main, p.demos {
   color: black;
 }
 
+#audiR8Btn {
+	background-image: url('/src/images/audi.jpeg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;
+}
+
+#bmwI8Btn {
+	background-image: url('/src/images/bmw.jpeg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;
+}
+
+#lamborghiniBtn {
+	background-image: url('/src/images/lamborghini.jpeg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;
+}
+
+#teslaBtn {
+	background-image: url('/src/images/tesla.jpeg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;
+}
+
 button:hover {
-	background-color: red;
+	opacity: 0.5;
 }
 
 #scenarioBtn button {
@@ -248,7 +277,7 @@ button:hover {
 #vehicleBtn button {
 	position: relative;
 	top: 30px;
-	width: 150px;
+	width: 250px;
 	height: 150px;
 	/* background-image: url('');
 	background-repeat: no-repeat;
@@ -263,6 +292,7 @@ button:hover {
 #startBtn {
 	position: relative;
 	top: 80px;
+	left: 0%;
 	font-size: 100px;
 
 	-webkit-animation: blurFadeIn 1s linear 0s backwards;
@@ -271,29 +301,32 @@ button:hover {
 	animation: blurFadeIn 1s linear 0s backwards;
 }
 
-/* #highwayBtn {
-	width: 250px;
-	height: 250px;
-	background-color: #FF0000;
-	background-image: url('');
+#cityBtn {
+	background-image: url('/src/images/city.png');
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-size: 100% 100%;
+}
+
+#highwayBtn {
+	background-image: url('/src/images/highway.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;
 }
 
 #countryBtn {
-	width: 250px;
-	height: 250px;
-	background-color: #FF0000;
-	background-image: url('');
+	background-image: url('/src/images/country.png');
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-size: 100% 100%;
 }
 
-#forestBtn {
+/*#forestBtn {
 	width: 250px;
 	height: 250px;
 	background-color: #FF0000;
-	background-image: url('');
+	background-image: url('/src/sounds/');
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -322,18 +355,24 @@ button:hover {
   cursor: pointer;
 }
 
-#text{
-  background-color: rgba(255, 255, 255, 0.74);
-  font-family: 'Electrolize', sans-serif;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 70px;
-  color: rgb(0, 0, 0);
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
+img {
+	display: block;
+    margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	height: 50%;
 }
 
+#characterTxt {
+	position: relative;
+	top: 50px;
+	font-size: 30px;
+
+	-webkit-animation: blurFadeIn 1s linear 0s backwards;
+	-moz-animation: blurFadeIn 1s linear 0s backwards;
+	-ms-animation: blurFadeIn 1s linear 0s backwards;
+	animation: blurFadeIn 1s linear 0s backwards;
+}
 /**/
 
 /* @keyframes moving {

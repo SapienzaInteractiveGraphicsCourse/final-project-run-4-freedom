@@ -21,46 +21,39 @@
         <div class="sp-container">
             <div class="sp-content">
                 <div class="sp-globe italic highlight"></div>
-                <h2 class="frame-1">ESCAPE FROM THE PRISON!</h2>
+                <h2 class="frame-1">Escape from the police!</h2>
                 <h2 class="frame-2">
-                    <span>RUN </span>
+                    <span>Run </span>
                     <span>4 </span>
-                    <span>FREEDOM</span>
+                    <span>Freedom</span>
                 </h2>
                 <div id="btn-group">
                     <div id="scenario" class="italic"> select scenario </div>
                     <div id="scenarioBtn" class="italic">
-                        <button id="cityBtn" class="eButton italic" onclick="onClick('city', 'env');">city</button>
-                        <button id="countryBtn" class="eButton italic"
-                            onclick="onClick('country', 'env');">country desert</button>
-                        <button id="forestBtn" class="eButton italic"
-                            onclick="onClick('forest', 'env');">forest</button>
-                        <button id="highwayBtn" class="eButton italic"
-                            onclick="onClick('highway', 'env');">highway</button>
+                        <button id="cityBtn" class="eButton italic" onclick="onClick('city', 'env');"></button>
+                        <button id="highwayBtn" class="eButton italic" onclick="onClick('highway', 'env');"></button>
+                        <button id="countryBtn" class="eButton italic" onclick="onClick('country', 'env');"></button>
+                        <button id="forestBtn" class="eButton italic" onclick="onClick('forest', 'env');"></button>
                     </div>
                     <div id="vehicle" class="italic"> select vehicle </div>
                     <div id="vehicleBtn" class="italic">
-                        <button id="audiR8Btn" class="vButton italic" onclick="onClick('audiR8', 'car');" >Audi
-                            R8</button>
-                        <button id="bmwI8Btn" class="vButton italic" onclick="onClick('bmwI8', 'car');" >BMW
-                            I8</button>
+                        <button id="audiR8Btn" class="vButton italic" onclick="onClick('audiR8', 'car');"
+                            disabled></button>
+                        <button id="bmwI8Btn" class="vButton italic" onclick="onClick('bmwI8', 'car');"
+                            disabled></button>
                         <button id="lamborghiniBtn" class="vButton italic" onclick="onClick('lamborghini', 'car');"
-                            >Lamborghini Aventador J</button>
+                            disabled></button>
                         <button id="teslaBtn" class="vButton italic" onclick="onClick('tesla', 'car');"
-                            >Tesla Model S</button>
+                            disabled></button>
                     </div>
-                    <div id="tutorialBtn" class="italic" onclick="on();"> tutorial </div>
-                    <!-- <div id="creditsBtn" class="italic"> about us </div> -->
-                    <a id="startBtn" class="italic highlight hide" href="game.html"> play </a>
-
-                    <div id="overlay" onclick="off();">
-                        <div id="text">For the vehicle:
-                            Use the arrow keys or WASD to move it.
-                            For the character:
-                            With left and right arrows or A and D move your character left or right,
-                            with the up arrow or W make it jump.
-                        </div>
+                    <div id="tutorialBtn" class="italic" onclick="onTutorial();"> tutorial </div>
+                    <div id="overlay" onclick="offTutorial();">
+                        <img src="src/images/tutorial.png">
                     </div>
+                    <a id="startBtn" class="italic highlight hide" href="index.html"> play </a>
+                    <p id="characterTxt" class="italic hide"> This scenario can be played only with a human
+                        character!
+                    </p>
                 </div>
             </div>
         </div>

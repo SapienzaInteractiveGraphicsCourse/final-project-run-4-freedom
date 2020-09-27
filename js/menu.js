@@ -1,13 +1,19 @@
 var selectedScenario = false;
 var selectedVehicle = false;
+var buttons;
+var i;
 
 function onLoading() {
     setCookie("env", "");
     setCookie("car", "");
+    buttons = document.getElementsByClassName('vButton');
     var env = getCookie("env").toLowerCase();
     var dif = getCookie("car");
-    if (env != '')
+    if (env != '') {
         document.getElementById(env + "Btn").style.backgroundColor = 'green';
+
+
+    }
     if (dif != '')
         document.getElementById(dif + "Btn").style.backgroundColor = 'green';
     if (env && dif) {
@@ -20,10 +26,25 @@ function onLoading() {
 
 /* Menu buttons */
 function onClick(button, type) {
-    var i;
-    var buttons;
     if (type == 'env') {
         selectedScenario = true;
+        buttons = document.getElementsByClassName('vButton');
+        if (button != "forest") {
+            if (getCookie("car") == "nathan")
+                selectedVehicle = false;
+            document.getElementById("characterTxt").style.display = "none";
+            for (i = 0; i < buttons.length; i++)
+                buttons[i].removeAttribute("disabled");
+        }
+        else {
+            for (i = 0; i < buttons.length; i++) {
+                buttons[i].setAttribute("disabled", false);
+                buttons[i].style.opacity = 1;
+            }
+            setCookie("car", "nathan");
+            selectedVehicle = true;
+            document.getElementById("characterTxt").style.display = "inherit";
+        }
         buttons = document.getElementsByClassName('eButton');
         setCookie('env', button.toUpperCase());
 
@@ -35,11 +56,15 @@ function onClick(button, type) {
     }
 
     for (i = 0; i < buttons.length; i++)
-        buttons[i].style.backgroundColor = 'transparent';
-    document.getElementById(button + "Btn").style.backgroundColor = 'green';
+        buttons[i].style.opacity = 1;
+    document.getElementById(button + "Btn").style.opacity = 0.1;
+    console.log(selectedScenario + " e " + selectedVehicle);
 
     if (selectedScenario && selectedVehicle)
         document.getElementById("startBtn").style.display = "inherit";
+    else
+        document.getElementById("startBtn").style.display = "none";
+
 }
 
 function playGame() {
@@ -69,11 +94,11 @@ function getCookie(cname) {
 
 /* */
 
-function on() {
+function onTutorial() {
     document.getElementById("overlay").style.display = "block";
 }
 
-function off() {
+function offTutorial() {
     document.getElementById("overlay").style.display = "none";
 }
 
