@@ -3,13 +3,13 @@ A road, a sound of sirens, endless obstacles between you and your freedom.
 Run as fast as you can to achieve your coveted goal in 4 different scenarios.
 
 ### City
-![City scenario](images/city.png)
+![City scenario](src/images/city.png)
 
 ### Country desert
-![Country desert scenario](images/country.png)
+![Country desert scenario](src/images/country.png)
 
 ### Highway
-![Highway scenario](images/highway.png)
+![Highway scenario](src/images/highway.png)
 
 ## Getting Started
 To start playing you don't need to clone this repo, since the game is available online at the following [link](https://sapienzainteractivegraphicscourse.github.io/final-project-run-4-freedom/).
