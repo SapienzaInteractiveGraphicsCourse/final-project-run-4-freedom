@@ -10,7 +10,7 @@ class Police {
       this.model        = null;
       this.name         = null;
 
-      this.interpolationFactor = 0.008;
+      this.interpolationFactor = 0.005;
     }
 
     // Get current model for the police (model is not 3D model)
@@ -30,16 +30,17 @@ class Police {
       const move = () => {
         // Make the police chasing the player
         const posPlayer = this.game.getPlayer().getPosition();
-        const posPolice = this.getPosition().lerp(posPlayer, this.interpolationFactor);
+        const posPolice = this.getPosition();
+        const newPos   = posPolice.lerp(posPlayer, this.interpolationFactor);
 
         let ms = this.model.getPhysicsBody().getMotionState();
         if (ms) {
             const transform = new Ammo.btTransform();
             ms.getWorldTransform(transform);
             transform.setOrigin( new Ammo.btVector3(
-              posPolice.x,
+              newPos.x,
               posPolice.y,
-              posPolice.z ) );
+              newPos.z ) );
             transform.setRotation( new Ammo.btQuaternion(
               this.model.get3DModel().quaternion.x,
               this.model.get3DModel().quaternion.y,
@@ -90,7 +91,7 @@ class Police {
     }
 
     incrementInterpolation() {
-      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.00005, 0.008, 0.08);
+      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.00005, 0.005, 0.2);
       //console.log("this.interpolationFactor: " + this.interpolationFactor);
     }
 

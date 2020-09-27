@@ -5,8 +5,10 @@ class Game {
     this.inputManager = inputManager;
     this.physicsWorld = physicsWorld;
     this.rigidBodies  = [];
+
     this.player = null;
     this.police = null;
+    
     this.isPaused = false;
   }
 
@@ -71,7 +73,7 @@ class Game {
     this.police.incrementInterpolation();
 
     this.player.update(deltaTime);
-    //this.police.update(deltaTime);
+    this.police.update(deltaTime);
   }
 
   // Pause or resume the game

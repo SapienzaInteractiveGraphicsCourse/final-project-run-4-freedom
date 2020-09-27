@@ -8,15 +8,12 @@ class Model {
     this.mass = modelInfo.mass;
 
     // Debug
-    console.log("model3D.position: ");
+    /*console.log("model3D.position: ");
     console.log(model3D.position);
     console.log("model3D.quaternion.x: " + model3D.quaternion.x);
     console.log("model3D.quaternion.y: " + model3D.quaternion.y);
     console.log("model3D.quaternion.z: " + model3D.quaternion.z);
-    console.log("model3D.quaternion.w: " + model3D.quaternion.w);
-
-    // Store initial quaternion for respawning
-    this.initialQuaternion = model3D.quaternion.clone();
+    console.log("model3D.quaternion.w: " + model3D.quaternion.w);*/
 
     // 3D model bounding box
     const box     = new THREE.Box3().setFromObject(model3D);
@@ -65,10 +62,6 @@ class Model {
 
   getPosition() {
     return this.model3D.position;
-  }
-
-  getInitialQuaternion() {
-    return this.initialQuaternion;
   }
 
 }
