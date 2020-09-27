@@ -29,17 +29,22 @@ function onClick(button, type) {
     if (type == 'env') {
         selectedScenario = true;
         buttons = document.getElementsByClassName('vButton');
+
+        
         if (button != "forest") {
+            /*
             if (getCookie("car") == "nathan")
                 selectedVehicle = false;
+            
             document.getElementById("characterTxt").style.display = "none";
+            */
             for (i = 0; i < buttons.length; i++)
                 buttons[i].removeAttribute("disabled");
         }
         else {
             for (i = 0; i < buttons.length; i++) {
                 buttons[i].setAttribute("disabled", false);
-                buttons[i].style.opacity = 1;
+                buttons[i].style.opacity = 0.1;
             }
             setCookie("car", "nathan");
             selectedVehicle = true;
@@ -56,8 +61,8 @@ function onClick(button, type) {
     }
 
     for (i = 0; i < buttons.length; i++)
-        buttons[i].style.opacity = 1;
-    document.getElementById(button + "Btn").style.opacity = 0.1;
+        buttons[i].style.opacity = 0.1;
+    document.getElementById(button + "Btn").style.opacity = 1;
     console.log(selectedScenario + " e " + selectedVehicle);
 
     if (selectedScenario && selectedVehicle)

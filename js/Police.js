@@ -91,7 +91,7 @@ class Police {
     }
 
     incrementInterpolation() {
-      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.00005, 0.005, 0.2);
+      this.interpolationFactor = Utils.clamp(this.interpolationFactor + 0.00005, 0.005, 0.4);
       //console.log("this.interpolationFactor: " + this.interpolationFactor);
     }
 

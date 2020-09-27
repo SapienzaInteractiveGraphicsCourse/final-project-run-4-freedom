@@ -702,7 +702,7 @@ window.onload = function main() {
                     maxSpeed: 333, // Km/h
                     boxSizeXFactor: 0.8,
                     boxSizeYFactor: 0.3,
-                    boxSizeZFactor: 0.6,
+                    boxSizeZFactor: 0.55,
                     carName: "Nissan GT"
                 },
                 wheelsNames: ["wheel", "wheel001", "wheel003", "wheel002"]
@@ -756,7 +756,7 @@ window.onload = function main() {
                     maxSpeed: 100, // Km/h
                     boxSizeXFactor: 0.8,
                     boxSizeYFactor: 0.5,
-                    boxSizeZFactor: 0.4,
+                    boxSizeZFactor: 0.37,
                     carName: "Low Poly Taxi Old Style"
                 },
                 wheelsNames: ["wheel_1", "wheel_2", "wheel_3", "wheel_4"]
@@ -790,7 +790,7 @@ window.onload = function main() {
                     maxSpeed: 197, // Km/h
                     boxSizeXFactor: 0.7,
                     boxSizeYFactor: 0.15,
-                    boxSizeZFactor: 0.65,
+                    boxSizeZFactor: 0.55,
                     carName: "Bmw E30"
                 },
                 wheelsNames: ["F_wheelL_5", "F_wheelR_6", "B_wheelL_7", "B_wheelR_8"]
