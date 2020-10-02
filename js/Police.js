@@ -24,8 +24,8 @@ class Police {
     }
 
     // Called in main animate function
-    update(deltaTime) {
-      if(!deltaTime || !this.model)   return;
+    update(deltaTime, playerPos) {
+      if(!deltaTime || !this.model || !playerPos)   return;
 
       /*const move = () => {
         // Make the police chasing the player
@@ -55,7 +55,7 @@ class Police {
       move();*/
 
 
-      const turnDirection = (this.inputManager.rightAction() ?  1 : 0) +
+      /*const turnDirection = (this.inputManager.rightAction() ?  1 : 0) +
                             (this.inputManager.leftAction()  ? -1 : 0);
 
       /*const turnRotation = this.model.getTurnSpeed() * turnDirection * deltaTime;
@@ -63,14 +63,23 @@ class Police {
       const forwardDirection = (this.inputManager.backAction()    ?  1 : 0) +
                                (this.inputManager.forwardAction() ? -1 : 0);*/
 
+      const policePos = this.getPosition();
+      if(!policePos)  return;
+
+      const turnDirection = (playerPos.x > policePos.x  ?  1 : 0) +
+                            (playerPos.x < policePos.x  ? -1 : 0);
+
+      const forwardDirection = (playerPos.z > policePos.z  ?  1 : 0) +
+                               (playerPos.z < policePos.z  ? -1 : 0);
+
       if (this.model) {
         const updateVehiclePhysics = () => {
-					if (this.inputManager.leftAction()) {
+					if (turnDirection < 0) {
 						if (this.model.steeringAngle < this.model.steeringClamp)
 							this.model.steeringAngle += this.model.steeringIncrement;
 					}
 					else {
-						if (this.inputManager.rightAction()) {
+						if (turnDirection > 0) {
 							if (this.model.steeringAngle > -this.model.steeringClamp)
 								this.model.steeringAngle -= this.model.steeringIncrement;
 						}
@@ -86,10 +95,8 @@ class Police {
 						}
 					}
 
-          //console.log("getPosition(): ");
-          //console.log(this.getPosition());
-          //this.model.move(turnDirection, 0, forwardDirection);
-          this.model.move(turnDirection, 0, -1); // Auto-acceleration
+          this.model.move(turnDirection, 0, forwardDirection);
+          //this.model.move(turnDirection, 0, -1); // Auto-acceleration
         }
 
         updateVehiclePhysics();

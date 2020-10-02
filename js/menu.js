@@ -30,12 +30,12 @@ function onClick(button, type) {
         selectedScenario = true;
         buttons = document.getElementsByClassName('vButton');
 
-        
+
         if (button != "forest") {
             /*
             if (getCookie("car") == "nathan")
                 selectedVehicle = false;
-            
+
             document.getElementById("characterTxt").style.display = "none";
             */
             for (i = 0; i < buttons.length; i++)
@@ -63,7 +63,7 @@ function onClick(button, type) {
     for (i = 0; i < buttons.length; i++)
         buttons[i].style.opacity = 0.1;
     document.getElementById(button + "Btn").style.opacity = 1;
-    console.log(selectedScenario + " e " + selectedVehicle);
+    //console.log(selectedScenario + " e " + selectedVehicle);
 
     if (selectedScenario && selectedVehicle)
         document.getElementById("startBtn").style.display = "inherit";

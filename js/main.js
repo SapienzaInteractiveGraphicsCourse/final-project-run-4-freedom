@@ -83,7 +83,7 @@ window.onload = function main() {
 
         // DISABLE WHEN GAME IS READY
         // Controls for zooming and moving around the scene
-        const controls = new OrbitControls(camera, canvas);
+        /*const controls = new OrbitControls(camera, canvas);
         controls.target.set(0, 5, 0);
         controls.update();//*/
 
@@ -571,12 +571,12 @@ window.onload = function main() {
                 url: 'src/vehicles/police/chevrolet_suburban_sheriff/scene.gltf',
                 //position: [-10, 0, 25],
                 position: [10, 0.3, 25],
-                scale: [2.4, 2.4, 2.4],
+                scale:    [2.4, 2.4, 2.4],
                 rotation: [0, Math.PI, 0],
 
                 carInfo: {
                     mass: 2634,    // Kg
-                    maxSpeed: 450, //174, // Km/h
+                    maxSpeed: 440, //174, // Km/h
                     boxSizeXFactor: 0.6,
                     boxSizeYFactor: 0.04,
                     boxSizeZFactor: 0.6,
@@ -589,11 +589,32 @@ window.onload = function main() {
                     "Cylinder008", "Cylinder009", "Cylinder010", "Cylinder011"]
             },
 
+            audiR8: {
+                url: 'src/vehicles/cars/audi_r8/scene.gltf',
+                //position: [20, 0.5, 0],
+                position: [10, 0.5, 0],
+                scale:    [0.026, 0.025, 0.026],
+                rotation: [0, 0, 0],
+
+                carInfo: {
+                    mass: 1700,    // Kg
+                    maxSpeed: 450, // Km/h
+                    boxSizeXFactor: 0.5,
+                    boxSizeYFactor: 0.4,
+                    boxSizeZFactor: 0.4,
+                    carName: "Audi R8",
+                    engineForce: 28500,
+                    leftBalance:  -0.0075,
+                    rightBalance: -0.0075
+                },
+                wheelsNames: ["object008", "object031", "object035", "object034"]
+            },
+
             bmwI8: {
                 url: 'src/vehicles/cars/bmw_i8/scene.gltf',
                 //position: [0, 1.5, 0],
                 position: [10, 1.5, 0],
-                scale: [0.027, 0.025, 0.027],
+                scale:    [0.027, 0.025, 0.027],
                 rotation: [0, Math.PI, 0],
 
                 carInfo: {
@@ -614,7 +635,7 @@ window.onload = function main() {
                 url: 'src/vehicles/cars/lamborghini_aventador_j/scene.gltf',
                 //position: [-10, 1.73, 0],
                 position: [10, 1.73, 0],
-                scale: [0.013, 0.013, 0.013],
+                scale:    [0.013, 0.013, 0.013],
                 rotation: [0, Math.PI, 0],
 
                 carInfo: {
@@ -624,7 +645,7 @@ window.onload = function main() {
                     boxSizeYFactor: 0.6,
                     boxSizeZFactor: 0.3,
                     carName: "Lamborghini Aventador S",
-                    engineForce: 25000,
+                    engineForce: 26800,
                     leftBalance: -0.025,
                     rightBalance: 0
                 },
@@ -634,7 +655,7 @@ window.onload = function main() {
             tesla: {
                 url: 'src/vehicles/cars/tesla_model_s/scene.gltf',
                 position: [10, 0.35, 0],
-                scale: [0.026, 0.024, 0.026],
+                scale:    [0.026, 0.024, 0.026],
                 rotation: [0, Math.PI, 0],
 
                 carInfo: {
@@ -645,33 +666,11 @@ window.onload = function main() {
                     boxSizeZFactor: 0.4,
                     carName: "Tesla Model S",
                     engineForce: 40000,
-                    leftBalance: -0.0075,
+                    leftBalance:  -0.0075,
                     rightBalance: -0.0075
                 },
                 wheelsNames: ["wheel", "wheel001", "wheel003", "wheel002"]
-            },
-
-            audiR8: {
-                url: 'src/vehicles/cars/audi_r8/scene.gltf',
-                //position: [20, 0.5, 0],
-                position: [10, 0.5, 0],
-                scale: [0.026, 0.025, 0.026],
-                rotation: [0, 0, 0],
-
-                carInfo: {
-                    mass: 1700,    // Kg
-                    maxSpeed: 450, // Km/h
-                    boxSizeXFactor: 0.5,
-                    boxSizeYFactor: 0.4,
-                    boxSizeZFactor: 0.4,
-                    carName: "Audi R8",
-                    engineForce: 26500,
-                    leftBalance: -0.0075,
-                    rightBalance: -0.0075
-                },
-                wheelsNames: ["object008", "object031", "object035", "object034"]
             }
-
         };
 
         const dynamicModelsCity = {
@@ -861,9 +860,8 @@ window.onload = function main() {
 
         let policeSelModel = dynamicModels.chevroletSheriff;
 
-
         if (selectedModel == dynamicModels.bmwI8)
-          dynamicModels.chevroletSheriff.carInfo.engineForce = 53000;
+          dynamicModels.chevroletSheriff.carInfo.engineForce = 50000;
         else if (selectedModel == dynamicModels.tesla)
           dynamicModels.chevroletSheriff.carInfo.engineForce = 45000;
 
@@ -1499,7 +1497,7 @@ window.onload = function main() {
                                 TRANSFORM_AUX.setOrigin(new Ammo.btVector3(
                                     playerModel.getPosition().x,
                                     policeModel.getPosition().y,
-                                    zPosPlayer + 20));
+                                    zPosPlayer + cameraOffset + 5));
                                 policeModel.get3DModel().lookAt(
                                   policeModel.getPosition().x,
                                   policeModel.getPosition().y,
@@ -1706,7 +1704,7 @@ window.onload = function main() {
             if (model == selectedModel) {
                 // Create the PositionalAudio object (passing in the listener)
                 audioObjects.car = new THREE.PositionalAudio(listener);
-                applySound(modelScene, 'src/sounds/Car acceleration.mka', audioObjects.car);
+                applySound(modelScene, 'src/sounds/Car acceleration.mp3', audioObjects.car);
 
                 // Set the directionalLight target in order to track the player model
                 sunlight.target = modelScene;
@@ -1723,7 +1721,7 @@ window.onload = function main() {
             else if (model == policeSelModel) {
                 // Create the PositionalAudio object (passing in the listener)
                 audioObjects.policeCar = new THREE.PositionalAudio(listener);
-                applySound(modelScene, 'src/sounds/Police siren.mka', audioObjects.policeCar);
+                applySound(modelScene, 'src/sounds/Police siren.mp3', audioObjects.policeCar);
 
                 components.roofLights = model.roofLightsNames ? roofLights : null;
 
@@ -1740,14 +1738,13 @@ window.onload = function main() {
                 // Place car on the lanes randomly
                 placeCar(model, true);
 
-                modelScene.scale.set(...model.scale)
+                modelScene.scale.set(...model.scale);
+
+                // Set max speed IA cars
+                //model.carInfo.maxSpeed = 300;
 
                 // Create the car and store its reference
                 model.car = new Car(modelScene, model.carInfo, game, components);
-
-
-                //Max speed IA cars
-                model.car.maxSpeed = 35;
             }
         }
 
@@ -1787,7 +1784,7 @@ window.onload = function main() {
                 modelScene.position.set(randomX, model.position[1], zCar);
 
                 // Dodge Viper and low poly car have Z axis opposite than the other cars
-                if (model == model.dodgeViper || model == dynamicModels.lowpolyCar)
+                if (model == dynamicModels.dodgeViper || model == dynamicModels.lowpolyCar)
                   modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z - 30);
                 else
                   modelScene.lookAt(modelScene.position.x, modelScene.position.y, modelScene.position.z + 30);
@@ -1991,7 +1988,7 @@ window.onload = function main() {
 
             // Create the PositionalAudio object (passing in the listener)
             audioObjects.character = new THREE.PositionalAudio(listener);
-            applySound(modelScene, 'src/sounds/Running footsteps.mka', audioObjects.character);
+            applySound(modelScene, 'src/sounds/Running footsteps.mp3', audioObjects.character);
 
             //updateCamera(modelScene);
         }*/

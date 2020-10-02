@@ -73,7 +73,7 @@ class Game {
     //this.police.incrementInterpolation();
 
     this.player.update(deltaTime);
-    this.police.update(deltaTime);
+    this.police.update(deltaTime, this.player.getPosition());
   }
 
   // Pause or resume the game
